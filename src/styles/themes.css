@@ -1,0 +1,112 @@
+/**
+ * Design tokens — the single source of truth for color in the app.
+ *
+ * Every component reads these through the semantic Tailwind classes
+ * generated in app/globals.css (`bg-background`, `text-foreground`,
+ * `border-border`, ...), never a raw hex value. Changing the product's
+ * palette means editing exactly this file.
+ *
+ * Palette: near-neutral zinc scale (the Linear/Vercel/Notion "premium
+ * dashboard" base) plus one brand accent (indigo) reserved for primary
+ * actions, active nav state, links, and focus rings — so the eye has
+ * exactly one color to associate with "interactive / on-brand".
+ *
+ * `.dark` is applied to <html> by the theme system (src/lib/providers) —
+ * see next-themes config. No `prefers-color-scheme` media query here on
+ * purpose: theme is an explicit user choice (or system-synced default),
+ * not something CSS decides unilaterally underneath next-themes.
+ */
+
+:root {
+  --radius: 0.625rem;
+
+  /* @fontsource-variable/inter (imported in app/layout.tsx) registers the
+     'Inter Variable' @font-face; this is the only place that names it, so
+     swapping fonts later is a one-line change here. */
+  --font-inter: "Inter Variable", "Inter", ui-sans-serif, system-ui,
+    -apple-system, sans-serif;
+  --font-geist-mono: ui-monospace, "SF Mono", "Cascadia Code", "Roboto Mono",
+    monospace;
+
+  --background: #ffffff;
+  --foreground: #09090b;
+
+  --card: #ffffff;
+  --card-foreground: #09090b;
+  --popover: #ffffff;
+  --popover-foreground: #09090b;
+
+  --primary: #18181b;
+  --primary-foreground: #fafafa;
+  --secondary: #f4f4f5;
+  --secondary-foreground: #18181b;
+
+  --muted: #f4f4f5;
+  --muted-foreground: #71717a;
+  --accent: #f4f4f5;
+  --accent-foreground: #18181b;
+
+  --destructive: #dc2626;
+  --destructive-foreground: #fef2f2;
+  --success: #16a34a;
+  --success-foreground: #f0fdf4;
+  --warning: #d97706;
+  --warning-foreground: #fffbeb;
+
+  --border: #e4e4e7;
+  --input: #e4e4e7;
+  --ring: #6366f1;
+
+  --brand: #4f46e5;
+  --brand-foreground: #ffffff;
+
+  --sidebar: #fafafa;
+  --sidebar-foreground: #3f3f46;
+  --sidebar-border: #e4e4e7;
+  --sidebar-accent: #eef2ff;
+  --sidebar-accent-foreground: #4338ca;
+  --sidebar-primary: #4f46e5;
+  --sidebar-primary-foreground: #ffffff;
+}
+
+.dark {
+  --background: #09090b;
+  --foreground: #fafafa;
+
+  --card: #131316;
+  --card-foreground: #fafafa;
+  --popover: #131316;
+  --popover-foreground: #fafafa;
+
+  --primary: #fafafa;
+  --primary-foreground: #18181b;
+  --secondary: #27272a;
+  --secondary-foreground: #fafafa;
+
+  --muted: #27272a;
+  --muted-foreground: #a1a1aa;
+  --accent: #27272a;
+  --accent-foreground: #fafafa;
+
+  --destructive: #f87171;
+  --destructive-foreground: #450a0a;
+  --success: #4ade80;
+  --success-foreground: #052e16;
+  --warning: #fbbf24;
+  --warning-foreground: #451a03;
+
+  --border: #27272a;
+  --input: #27272a;
+  --ring: #818cf8;
+
+  --brand: #6366f1;
+  --brand-foreground: #ffffff;
+
+  --sidebar: #050506;
+  --sidebar-foreground: #d4d4d8;
+  --sidebar-border: #1f1f23;
+  --sidebar-accent: #18181b;
+  --sidebar-accent-foreground: #a5b4fc;
+  --sidebar-primary: #6366f1;
+  --sidebar-primary-foreground: #ffffff;
+}
