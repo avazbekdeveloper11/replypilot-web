@@ -1,4 +1,5 @@
 import type * as React from "react";
+import { useTranslations } from "next-intl";
 
 import { PageHeader } from "@/components/layout/page-header";
 import { EmptyState } from "@/components/data/empty-state";
@@ -20,14 +21,11 @@ export function ComingSoon({
   description: string;
   icon?: React.ComponentType<React.SVGProps<SVGSVGElement>>;
 }) {
+  const t = useTranslations("common");
   return (
     <>
       <PageHeader title={title} />
-      <EmptyState
-        icon={icon}
-        title="Coming in the next milestone"
-        description={description}
-      />
+      <EmptyState icon={icon} title={t("comingInNextMilestone")} description={description} />
     </>
   );
 }

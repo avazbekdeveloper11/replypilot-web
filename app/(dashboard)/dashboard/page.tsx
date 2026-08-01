@@ -1,17 +1,17 @@
 import type { Metadata } from "next";
+import { getTranslations } from "next-intl/server";
 
 import { PageHeader } from "@/components/layout/page-header";
 import { DashboardView } from "@/features/dashboard/components/dashboard-view";
 
 export const metadata: Metadata = { title: "Dashboard" };
 
-export default function DashboardPage() {
+export default async function DashboardPage() {
+  const t = await getTranslations("dashboard");
+
   return (
     <>
-      <PageHeader
-        title="Dashboard"
-        description="Live from your connected Instagram accounts and conversations."
-      />
+      <PageHeader title={t("pageTitle")} description={t("pageDescription")} />
       <DashboardView />
     </>
   );

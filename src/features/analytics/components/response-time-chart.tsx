@@ -1,16 +1,22 @@
 "use client";
 
+import { useLocale, useTranslations } from "next-intl";
 import { CartesianGrid, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { ErrorState } from "@/components/feedback/error-state";
+import { intlLocale, type Locale } from "@/i18n/config";
 
 import { useResponseTime } from "../hooks/use-response-time";
 import { formatChartDate, formatSeconds } from "../lib/format";
 
 export function ResponseTimeChart() {
   const { data, isPending, isError, error, refetch } = useResponseTime(14);
+  const t = useTranslations("analytics");
+  const tt = useTranslations("time");
+  const locale = useLocale() as Locale;
+  const loc = intlLocale(locale);
 
   const points = (data ?? []).map((p) => ({
     date: p.date,
@@ -21,14 +27,14 @@ export function ResponseTimeChart() {
   return (
     <Card>
       <CardHeader>
-        <CardTitle className="text-sm font-medium">Average first-response time</CardTitle>
+        <CardTitle className="text-sm font-medium">{t("avgFirstResponseTime")}</CardTitle>
       </CardHeader>
       <CardContent>
         {isPending ? (
           <Skeleton className="h-64 w-full" />
         ) : isError ? (
           <ErrorState
-            title="Couldn't load chart data"
+            title={t("couldntLoadChartData")}
             description={error instanceof Error ? error.message : undefined}
             onRetry={() => refetch()}
           />
@@ -39,7 +45,7 @@ export function ResponseTimeChart() {
                 <CartesianGrid strokeDasharray="3 3" stroke="var(--color-border)" vertical={false} />
                 <XAxis
                   dataKey="date"
-                  tickFormatter={formatChartDate}
+                  tickFormatter={(d: string) => formatChartDate(d, loc)}
                   tick={{ fontSize: 11, fill: "var(--color-muted-foreground)" }}
                   axisLine={false}
                   tickLine={false}
@@ -48,14 +54,14 @@ export function ResponseTimeChart() {
                   tick={{ fontSize: 11, fill: "var(--color-muted-foreground)" }}
                   axisLine={false}
                   tickLine={false}
-                  label={{ value: "minutes", angle: -90, position: "insideLeft", fontSize: 11, fill: "var(--color-muted-foreground)" }}
+                  label={{ value: t("minutes"), angle: -90, position: "insideLeft", fontSize: 11, fill: "var(--color-muted-foreground)" }}
                 />
                 <Tooltip
                   formatter={(_value, _name, item) => {
                     const seconds = item.payload?.seconds as number | undefined;
-                    return [seconds != null ? formatSeconds(seconds) : "No data", "Avg response time"];
+                    return [seconds != null ? formatSeconds(seconds, tt) : t("noData"), t("avgResponseTime")];
                   }}
-                  labelFormatter={(label) => formatChartDate(label as string)}
+                  labelFormatter={(label) => formatChartDate(label as string, loc)}
                   contentStyle={{
                     backgroundColor: "var(--color-popover)",
                     border: "1px solid var(--color-border)",

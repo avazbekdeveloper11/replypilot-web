@@ -3,6 +3,7 @@
 import * as React from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useTranslations } from "next-intl";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -19,7 +20,7 @@ import { ApiError } from "@/lib/api/errors";
 import type { Organization } from "@/features/auth/types";
 
 import {
-  organizationSettingsSchema,
+  buildOrganizationSettingsSchema,
   type OrganizationSettingsValues,
 } from "../schemas/organization.schema";
 import { useUpdateOrganization } from "../hooks/use-update-organization";
@@ -30,6 +31,13 @@ const TIMEZONES = listTimezones();
 export function OrganizationForm({ organization }: { organization: Organization }) {
   const mutation = useUpdateOrganization();
   const [justSaved, setJustSaved] = React.useState(false);
+  const t = useTranslations("settings");
+  const tv = useTranslations("validation");
+
+  const organizationSettingsSchema = React.useMemo(
+    () => buildOrganizationSettingsSchema(tv),
+    [tv],
+  );
 
   const form = useForm<OrganizationSettingsValues>({
     resolver: zodResolver(organizationSettingsSchema),
@@ -49,7 +57,7 @@ export function OrganizationForm({ organization }: { organization: Organization 
   return (
     <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-4" noValidate>
       <div className="flex flex-col gap-1.5">
-        <Label htmlFor="org-name">Organization name</Label>
+        <Label htmlFor="org-name">{t("organizationNameLabel")}</Label>
         <Input
           id="org-name"
           aria-invalid={!!form.formState.errors.name}
@@ -61,22 +69,19 @@ export function OrganizationForm({ organization }: { organization: Organization 
       </div>
 
       <div className="flex flex-col gap-1.5">
-        <Label htmlFor="org-slug">Workspace URL slug</Label>
+        <Label htmlFor="org-slug">{t("workspaceUrlSlugLabel")}</Label>
         <Input id="org-slug" value={organization.slug} disabled />
-        <p className="text-xs text-muted-foreground">
-          The slug isn&apos;t editable here — it&apos;s embedded in the Instagram connection
-          flow and any links already shared.
-        </p>
+        <p className="text-xs text-muted-foreground">{t("slugHint")}</p>
       </div>
 
       <div className="flex flex-col gap-1.5">
-        <Label htmlFor="org-timezone">Timezone</Label>
+        <Label htmlFor="org-timezone">{t("timezoneLabel")}</Label>
         <Select
           value={form.watch("timezone")}
           onValueChange={(value) => form.setValue("timezone", value, { shouldValidate: true })}
         >
           <SelectTrigger id="org-timezone" className="w-full">
-            <SelectValue placeholder="Select a timezone" />
+            <SelectValue placeholder={t("selectTimezonePlaceholder")} />
           </SelectTrigger>
           <SelectContent className="max-h-72">
             {TIMEZONES.map((tz) => (
@@ -95,17 +100,17 @@ export function OrganizationForm({ organization }: { organization: Organization 
         <FormAlert variant="error">
           {mutation.error instanceof ApiError
             ? mutation.error.message
-            : "Something went wrong. Please try again."}
+            : t("genericError")}
         </FormAlert>
       )}
 
       {justSaved && !mutation.isError && (
-        <FormAlert variant="success">Organization settings updated.</FormAlert>
+        <FormAlert variant="success">{t("settingsUpdated")}</FormAlert>
       )}
 
       <div>
         <Button type="submit" disabled={mutation.isPending}>
-          {mutation.isPending ? "Saving…" : "Save changes"}
+          {mutation.isPending ? t("saving") : t("saveChanges")}
         </Button>
       </div>
     </form>

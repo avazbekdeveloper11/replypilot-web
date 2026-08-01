@@ -3,6 +3,7 @@
 import * as React from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useTranslations } from "next-intl";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -12,7 +13,10 @@ import { FormAlert } from "@/components/feedback/form-alert";
 import { ApiError } from "@/lib/api/errors";
 import type { User } from "@/features/auth/types";
 
-import { updateProfileSchema, type UpdateProfileValues } from "../schemas/update-profile.schema";
+import {
+  buildUpdateProfileSchema,
+  type UpdateProfileValues,
+} from "../schemas/update-profile.schema";
 import { useUpdateProfile } from "../hooks/use-update-profile";
 
 function initialsFor(name: string) {
@@ -28,6 +32,10 @@ function initialsFor(name: string) {
 export function ProfileForm({ user }: { user: User }) {
   const mutation = useUpdateProfile();
   const [justSaved, setJustSaved] = React.useState(false);
+  const t = useTranslations("profile");
+  const tv = useTranslations("validation");
+
+  const updateProfileSchema = React.useMemo(() => buildUpdateProfileSchema(tv), [tv]);
 
   const form = useForm<UpdateProfileValues>({
     resolver: zodResolver(updateProfileSchema),
@@ -62,7 +70,7 @@ export function ProfileForm({ user }: { user: User }) {
       </div>
 
       <div className="flex flex-col gap-1.5">
-        <Label htmlFor="full_name">Full name</Label>
+        <Label htmlFor="full_name">{t("fullNameLabel")}</Label>
         <Input
           id="full_name"
           aria-invalid={!!form.formState.errors.full_name}
@@ -74,7 +82,7 @@ export function ProfileForm({ user }: { user: User }) {
       </div>
 
       <div className="flex flex-col gap-1.5">
-        <Label htmlFor="avatar_url">Avatar URL</Label>
+        <Label htmlFor="avatar_url">{t("avatarUrlLabel")}</Label>
         <Input
           id="avatar_url"
           placeholder="https://…"
@@ -87,27 +95,24 @@ export function ProfileForm({ user }: { user: User }) {
       </div>
 
       <div className="flex flex-col gap-1.5">
-        <Label htmlFor="email">Email</Label>
+        <Label htmlFor="email">{t("emailLabel")}</Label>
         <Input id="email" value={user.email} disabled />
-        <p className="text-xs text-muted-foreground">
-          Email can&apos;t be changed here — this account has no re-verification flow for a new
-          address yet.
-        </p>
+        <p className="text-xs text-muted-foreground">{t("emailChangeHint")}</p>
       </div>
 
       {mutation.isError && (
         <FormAlert variant="error">
-          {mutation.error instanceof ApiError
-            ? mutation.error.message
-            : "Something went wrong. Please try again."}
+          {mutation.error instanceof ApiError ? mutation.error.message : t("genericError")}
         </FormAlert>
       )}
 
-      {justSaved && !mutation.isError && <FormAlert variant="success">Profile updated.</FormAlert>}
+      {justSaved && !mutation.isError && (
+        <FormAlert variant="success">{t("profileUpdated")}</FormAlert>
+      )}
 
       <div>
         <Button type="submit" disabled={mutation.isPending}>
-          {mutation.isPending ? "Saving…" : "Save changes"}
+          {mutation.isPending ? t("saving") : t("saveChanges")}
         </Button>
       </div>
     </form>

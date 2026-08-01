@@ -5,8 +5,13 @@ import { z } from "zod";
 // assuming a specific key shape (see the chat history: a pasted token that
 // turned out not to even be in the expected format). Validate presence,
 // not shape — the backend call itself is the real validation.
-export const geminiSettingsSchema = z.object({
-  api_key: z.string().min(10, "Doesn't look like a real API key"),
-});
+//
+// Factory, not a constant — see features/auth/schemas/login.schema.ts's
+// doc comment on why.
+export function buildGeminiSettingsSchema(t: (key: string) => string) {
+  return z.object({
+    api_key: z.string().min(10, t("apiKeyInvalid")),
+  });
+}
 
-export type GeminiSettingsValues = z.infer<typeof geminiSettingsSchema>;
+export type GeminiSettingsValues = z.infer<ReturnType<typeof buildGeminiSettingsSchema>>;

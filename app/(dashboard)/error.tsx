@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
+import { useTranslations } from "next-intl";
 
 import { ErrorState } from "@/components/feedback/error-state";
 
@@ -17,6 +18,8 @@ export default function DashboardError({
   error: Error & { digest?: string };
   reset: () => void;
 }) {
+  const t = useTranslations("errors");
+
   useEffect(() => {
     // TODO: send to error reporting once observability is wired.
     console.error(error);
@@ -24,8 +27,8 @@ export default function DashboardError({
 
   return (
     <ErrorState
-      title="This page couldn't load"
-      description={error.message || "An unexpected error occurred."}
+      title={t("pageLoadFailed")}
+      description={error.message || t("unexpectedError")}
       onRetry={reset}
     />
   );

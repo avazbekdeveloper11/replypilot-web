@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+import { useTranslations } from "next-intl";
 import { TrashIcon } from "@heroicons/react/24/outline";
 
 import { Button } from "@/components/ui/button";
@@ -21,6 +22,7 @@ import type { KnowledgeDocument } from "../types";
 export function DocumentRowActions({ document }: { document: KnowledgeDocument }) {
   const [confirmOpen, setConfirmOpen] = React.useState(false);
   const deleteMutation = useDeleteDocument();
+  const t = useTranslations("knowledgeBase");
 
   function submitDelete() {
     deleteMutation.mutate(document.id, { onSuccess: () => setConfirmOpen(false) });
@@ -31,7 +33,7 @@ export function DocumentRowActions({ document }: { document: KnowledgeDocument }
       <Button
         variant="ghost"
         size="icon"
-        aria-label="Delete document"
+        aria-label={t("deleteDocument")}
         onClick={() => {
           deleteMutation.reset();
           setConfirmOpen(true);
@@ -43,18 +45,15 @@ export function DocumentRowActions({ document }: { document: KnowledgeDocument }
       <Dialog open={confirmOpen} onOpenChange={setConfirmOpen}>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Delete &quot;{document.title}&quot;?</DialogTitle>
-            <DialogDescription>
-              Removes the document and every chunk/embedding derived from it. The AI
-              stops drawing on it immediately. This can&apos;t be undone.
-            </DialogDescription>
+            <DialogTitle>{t("deleteDocumentTitle", { title: document.title })}</DialogTitle>
+            <DialogDescription>{t("deleteDocumentDescription")}</DialogDescription>
           </DialogHeader>
 
           {deleteMutation.isError && (
             <FormAlert variant="error">
               {deleteMutation.error instanceof ApiError
                 ? deleteMutation.error.message
-                : "Something went wrong. Please try again."}
+                : t("genericError")}
             </FormAlert>
           )}
 
@@ -64,7 +63,7 @@ export function DocumentRowActions({ document }: { document: KnowledgeDocument }
               onClick={submitDelete}
               disabled={deleteMutation.isPending}
             >
-              {deleteMutation.isPending ? "Deleting…" : "Delete"}
+              {deleteMutation.isPending ? t("deleting") : t("delete")}
             </Button>
           </DialogFooter>
         </DialogContent>

@@ -1,6 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 import { SparklesIcon } from "@heroicons/react/24/outline";
 
 import { Badge } from "@/components/ui/badge";
@@ -24,6 +25,8 @@ export function AIInboxList() {
   const { data, isPending, isError, error, refetch, fetchNextPage, hasNextPage, isFetchingNextPage } =
     useConversations("pending_human");
   const takeOverMutation = useTakeOverConversation();
+  const t = useTranslations("aiInbox");
+  const tt = useTranslations("time");
 
   const conversations = data?.pages.flat() ?? [];
 
@@ -43,7 +46,7 @@ export function AIInboxList() {
         <CardContent className="p-0">
           <ErrorState
             className="py-16"
-            title="Couldn't load the AI Inbox"
+            title={t("couldntLoadAiInbox")}
             description={error instanceof Error ? error.message : undefined}
             onRetry={() => refetch()}
           />
@@ -59,8 +62,8 @@ export function AIInboxList() {
           <EmptyState
             className="py-16"
             icon={SparklesIcon}
-            title="Nothing waiting on a human"
-            description="The AI is confidently handling every open conversation right now — low-confidence handoffs will show up here."
+            title={t("nothingWaitingTitle")}
+            description={t("nothingWaitingDescription")}
           />
         </CardContent>
       </Card>
@@ -80,7 +83,7 @@ export function AIInboxList() {
                 <div className="min-w-0 flex-1">
                   <div className="flex items-center gap-2">
                     <span className="truncate text-sm font-medium text-foreground">
-                      {conv.customer_username ?? "Unknown customer"}
+                      {conv.customer_username ?? t("unknownCustomer")}
                     </span>
                     {conv.unread_count > 0 && <Badge variant="brand">{conv.unread_count}</Badge>}
                   </div>
@@ -91,7 +94,7 @@ export function AIInboxList() {
                   )}
                 </div>
                 <span className="w-20 shrink-0 text-right text-xs text-muted-foreground">
-                  {conv.last_message_at ? formatRelativeTime(conv.last_message_at) : "—"}
+                  {conv.last_message_at ? formatRelativeTime(conv.last_message_at, tt) : "—"}
                 </span>
                 <Button
                   size="sm"
@@ -102,7 +105,7 @@ export function AIInboxList() {
                     });
                   }}
                 >
-                  Take over
+                  {t("takeOver")}
                 </Button>
               </li>
             ))}
@@ -117,7 +120,7 @@ export function AIInboxList() {
           onClick={() => fetchNextPage()}
           disabled={isFetchingNextPage}
         >
-          {isFetchingNextPage ? "Loading…" : "Load more"}
+          {isFetchingNextPage ? t("loadingMore") : t("loadMore")}
         </Button>
       )}
     </div>

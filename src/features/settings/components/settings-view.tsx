@@ -1,5 +1,7 @@
 "use client";
 
+import { useTranslations } from "next-intl";
+
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ErrorState } from "@/components/feedback/error-state";
 
@@ -19,12 +21,13 @@ import { OrganizationForm } from "./organization-form";
  */
 export function SettingsView() {
   const { data: organization, isPending, isError, error, refetch } = useOrganization();
+  const t = useTranslations("settings");
 
   if (isPending) {
     return (
       <Card>
         <CardContent className="py-10 text-center text-sm text-muted-foreground">
-          Loading organization settings…
+          {t("loadingSettings")}
         </CardContent>
       </Card>
     );
@@ -36,7 +39,7 @@ export function SettingsView() {
         <CardContent className="p-0">
           <ErrorState
             className="py-16"
-            title="Couldn't load organization settings"
+            title={t("couldntLoadSettings")}
             description={error instanceof Error ? error.message : undefined}
             onRetry={() => refetch()}
           />
@@ -48,7 +51,7 @@ export function SettingsView() {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Organization</CardTitle>
+        <CardTitle>{t("organization")}</CardTitle>
       </CardHeader>
       <CardContent>
         <OrganizationForm organization={organization} />

@@ -1,6 +1,7 @@
 "use client";
 
 import { UsersIcon } from "@heroicons/react/24/outline";
+import { useTranslations } from "next-intl";
 
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
@@ -37,13 +38,15 @@ function initials(name: string): string {
 
 export function TeamMembersTable() {
   const { data, isPending, isError, error, refetch } = useTeamMembers();
+  const t = useTranslations("team");
+  const ts = useTranslations("memberStatus");
 
   if (isPending) return <TableSkeleton columns={4} rows={5} />;
 
   if (isError) {
     return (
       <ErrorState
-        title="Couldn't load team members"
+        title={t("couldntLoadMembers")}
         description={error instanceof Error ? error.message : undefined}
         onRetry={() => refetch()}
       />
@@ -54,8 +57,8 @@ export function TeamMembersTable() {
     return (
       <EmptyState
         icon={UsersIcon}
-        title="No team members yet"
-        description="Invite someone to start collaborating on this workspace."
+        title={t("noMembersYet")}
+        description={t("noMembersDescription")}
       />
     );
   }
@@ -64,9 +67,9 @@ export function TeamMembersTable() {
     <Table>
       <TableHeader>
         <TableRow>
-          <TableHead>Member</TableHead>
-          <TableHead>Role</TableHead>
-          <TableHead>Status</TableHead>
+          <TableHead>{t("member")}</TableHead>
+          <TableHead>{t("role")}</TableHead>
+          <TableHead>{t("status")}</TableHead>
           <TableHead className="w-10" />
         </TableRow>
       </TableHeader>
@@ -86,10 +89,13 @@ export function TeamMembersTable() {
                 </div>
               </div>
             </TableCell>
+            {/* member.role.name is backend/tenant-defined data (an
+               organization can rename or add roles), not app copy — never
+               translated, same as organization names elsewhere. */}
             <TableCell className="text-sm">{member.role.name}</TableCell>
             <TableCell>
               <Badge variant={STATUS_VARIANT[member.status] ?? "secondary"}>
-                {member.status}
+                {ts.has(member.status) ? ts(member.status) : member.status}
               </Badge>
             </TableCell>
             <TableCell>

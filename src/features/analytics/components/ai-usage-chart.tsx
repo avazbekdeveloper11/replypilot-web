@@ -1,10 +1,12 @@
 "use client";
 
+import { useLocale, useTranslations } from "next-intl";
 import { Bar, BarChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { ErrorState } from "@/components/feedback/error-state";
+import { intlLocale, type Locale } from "@/i18n/config";
 
 import { useAIUsage } from "../hooks/use-ai-usage";
 import { formatChartDate } from "../lib/format";
@@ -15,18 +17,21 @@ import { formatChartDate } from "../lib/format";
  * on hover. */
 export function AIUsageChart() {
   const { data, isPending, isError, error, refetch } = useAIUsage(14);
+  const t = useTranslations("analytics");
+  const locale = useLocale() as Locale;
+  const loc = intlLocale(locale);
 
   return (
     <Card>
       <CardHeader>
-        <CardTitle className="text-sm font-medium">AI replies sent</CardTitle>
+        <CardTitle className="text-sm font-medium">{t("aiRepliesSent")}</CardTitle>
       </CardHeader>
       <CardContent>
         {isPending ? (
           <Skeleton className="h-64 w-full" />
         ) : isError ? (
           <ErrorState
-            title="Couldn't load chart data"
+            title={t("couldntLoadChartData")}
             description={error instanceof Error ? error.message : undefined}
             onRetry={() => refetch()}
           />
@@ -37,7 +42,7 @@ export function AIUsageChart() {
                 <CartesianGrid strokeDasharray="3 3" stroke="var(--color-border)" vertical={false} />
                 <XAxis
                   dataKey="date"
-                  tickFormatter={formatChartDate}
+                  tickFormatter={(d: string) => formatChartDate(d, loc)}
                   tick={{ fontSize: 11, fill: "var(--color-muted-foreground)" }}
                   axisLine={false}
                   tickLine={false}
@@ -50,9 +55,9 @@ export function AIUsageChart() {
                 />
                 <Tooltip
                   formatter={(value, name) =>
-                    name === "response_count" ? [value, "Replies sent"] : [value, name]
+                    name === "response_count" ? [value, t("repliesSent")] : [value, name]
                   }
-                  labelFormatter={(label) => formatChartDate(label as string)}
+                  labelFormatter={(label) => formatChartDate(label as string, loc)}
                   contentStyle={{
                     backgroundColor: "var(--color-popover)",
                     border: "1px solid var(--color-border)",

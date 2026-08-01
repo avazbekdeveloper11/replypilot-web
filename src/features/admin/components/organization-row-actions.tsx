@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+import { useTranslations } from "next-intl";
 import { EllipsisHorizontalIcon } from "@heroicons/react/24/outline";
 
 import { Button } from "@/components/ui/button";
@@ -35,6 +36,7 @@ import type { AdminOrganization } from "../types";
 export function OrganizationRowActions({ org }: { org: AdminOrganization }) {
   const [suspendOpen, setSuspendOpen] = React.useState(false);
   const [reactivateOpen, setReactivateOpen] = React.useState(false);
+  const t = useTranslations("admin");
 
   const suspendMutation = useSuspendOrganization();
   const reactivateMutation = useReactivateOrganization();
@@ -45,7 +47,7 @@ export function OrganizationRowActions({ org }: { org: AdminOrganization }) {
     <>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <Button variant="ghost" size="icon" aria-label="Organization actions">
+          <Button variant="ghost" size="icon" aria-label={t("organizationActions")}>
             <EllipsisHorizontalIcon className="size-4" />
           </Button>
         </DropdownMenuTrigger>
@@ -57,7 +59,7 @@ export function OrganizationRowActions({ org }: { org: AdminOrganization }) {
                 setReactivateOpen(true);
               }}
             >
-              Reactivate
+              {t("reactivate")}
             </DropdownMenuItem>
           ) : (
             <DropdownMenuItem
@@ -67,7 +69,7 @@ export function OrganizationRowActions({ org }: { org: AdminOrganization }) {
                 setSuspendOpen(true);
               }}
             >
-              Suspend
+              {t("suspend")}
             </DropdownMenuItem>
           )}
         </DropdownMenuContent>
@@ -76,19 +78,15 @@ export function OrganizationRowActions({ org }: { org: AdminOrganization }) {
       <Dialog open={suspendOpen} onOpenChange={setSuspendOpen}>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Suspend {org.organization.name}?</DialogTitle>
-            <DialogDescription>
-              Blocks login for every member of this organization, starting at their
-              next login or token refresh. This does not cancel their Stripe
-              subscription — handle billing separately if needed.
-            </DialogDescription>
+            <DialogTitle>{t("suspendTitle", { name: org.organization.name })}</DialogTitle>
+            <DialogDescription>{t("suspendDescription")}</DialogDescription>
           </DialogHeader>
 
           {suspendMutation.isError && (
             <FormAlert variant="error">
               {suspendMutation.error instanceof ApiError
                 ? suspendMutation.error.message
-                : "Something went wrong. Please try again."}
+                : t("genericError")}
             </FormAlert>
           )}
 
@@ -102,7 +100,7 @@ export function OrganizationRowActions({ org }: { org: AdminOrganization }) {
                 })
               }
             >
-              {suspendMutation.isPending ? "Suspending…" : "Suspend"}
+              {suspendMutation.isPending ? t("suspending") : t("suspend")}
             </Button>
           </DialogFooter>
         </DialogContent>
@@ -111,15 +109,15 @@ export function OrganizationRowActions({ org }: { org: AdminOrganization }) {
       <Dialog open={reactivateOpen} onOpenChange={setReactivateOpen}>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Reactivate {org.organization.name}?</DialogTitle>
-            <DialogDescription>Restores login access for this organization.</DialogDescription>
+            <DialogTitle>{t("reactivateTitle", { name: org.organization.name })}</DialogTitle>
+            <DialogDescription>{t("reactivateDescription")}</DialogDescription>
           </DialogHeader>
 
           {reactivateMutation.isError && (
             <FormAlert variant="error">
               {reactivateMutation.error instanceof ApiError
                 ? reactivateMutation.error.message
-                : "Something went wrong. Please try again."}
+                : t("genericError")}
             </FormAlert>
           )}
 
@@ -132,7 +130,7 @@ export function OrganizationRowActions({ org }: { org: AdminOrganization }) {
                 })
               }
             >
-              {reactivateMutation.isPending ? "Reactivating…" : "Reactivate"}
+              {reactivateMutation.isPending ? t("reactivating") : t("reactivate")}
             </Button>
           </DialogFooter>
         </DialogContent>

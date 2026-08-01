@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+import { useLocale, useTranslations } from "next-intl";
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -10,6 +11,7 @@ import { ErrorState } from "@/components/feedback/error-state";
 import { TableSkeleton } from "@/components/feedback/table-skeleton";
 import { FormAlert } from "@/components/feedback/form-alert";
 import { ApiError } from "@/lib/api/errors";
+import { intlLocale, type Locale } from "@/i18n/config";
 
 import { usePlans } from "../hooks/use-plans";
 import { useSubscription } from "../hooks/use-subscription";
@@ -21,6 +23,8 @@ export function PlanComparison() {
   const plansQuery = usePlans();
   const subscriptionQuery = useSubscription();
   const checkoutMutation = useCheckout();
+  const t = useTranslations("billing");
+  const locale = useLocale() as Locale;
 
   if (plansQuery.isPending) {
     return (
@@ -38,7 +42,7 @@ export function PlanComparison() {
         <CardContent className="p-0">
           <ErrorState
             className="py-16"
-            title="Couldn't load plans"
+            title={t("couldntLoadPlans")}
             description={plansQuery.error instanceof Error ? plansQuery.error.message : undefined}
             onRetry={() => plansQuery.refetch()}
           />
@@ -54,8 +58,8 @@ export function PlanComparison() {
     <div className="flex flex-col gap-4">
       <Tabs value={period} onValueChange={(v) => setPeriod(v as "monthly" | "yearly")}>
         <TabsList>
-          <TabsTrigger value="monthly">Monthly</TabsTrigger>
-          <TabsTrigger value="yearly">Yearly</TabsTrigger>
+          <TabsTrigger value="monthly">{t("monthly")}</TabsTrigger>
+          <TabsTrigger value="yearly">{t("yearly")}</TabsTrigger>
         </TabsList>
       </Tabs>
 
@@ -63,7 +67,7 @@ export function PlanComparison() {
         <FormAlert variant="error">
           {checkoutMutation.error instanceof ApiError
             ? checkoutMutation.error.message
-            : "Couldn't start checkout. Please try again."}
+            : t("couldntStartCheckout")}
         </FormAlert>
       )}
 
@@ -78,22 +82,28 @@ export function PlanComparison() {
                 <div>
                   <div className="flex items-center gap-2">
                     <h3 className="text-base font-semibold text-foreground">{plan.name}</h3>
-                    {isCurrent && <Badge variant="brand">Current plan</Badge>}
+                    {isCurrent && <Badge variant="brand">{t("currentPlan")}</Badge>}
                   </div>
                   <p className="mt-1 text-2xl font-semibold text-foreground">
-                    {formatPriceCents(priceCents)}
+                    {formatPriceCents(priceCents, intlLocale(locale), t("custom"))}
                     {priceCents > 0 && (
                       <span className="text-sm font-normal text-muted-foreground">
                         {" "}
-                        / {period === "yearly" ? "year" : "month"}
+                        / {period === "yearly" ? t("year") : t("month")}
                       </span>
                     )}
                   </p>
                 </div>
 
                 <ul className="flex flex-col gap-1 text-sm text-muted-foreground">
-                  <li>{plan.message_limit ? `${plan.message_limit.toLocaleString()} messages/mo` : "Unlimited messages"}</li>
-                  <li>{plan.seat_limit ? `${plan.seat_limit} seats` : "Unlimited seats"}</li>
+                  <li>
+                    {plan.message_limit
+                      ? t("messagesPerMonth", { count: plan.message_limit.toLocaleString(intlLocale(locale)) })
+                      : t("unlimitedMessages")}
+                  </li>
+                  <li>
+                    {plan.seat_limit ? t("seats", { count: plan.seat_limit }) : t("unlimitedSeats")}
+                  </li>
                 </ul>
 
                 <Button
@@ -103,12 +113,12 @@ export function PlanComparison() {
                   onClick={() => checkoutMutation.mutate({ planCode: plan.code, period })}
                 >
                   {isCurrent
-                    ? "Current plan"
+                    ? t("currentPlan")
                     : !plan.self_serve
-                      ? "Contact sales"
+                      ? t("contactSales")
                       : checkoutMutation.isPending
-                        ? "Redirecting…"
-                        : "Upgrade"}
+                        ? t("redirecting")
+                        : t("upgrade")}
                 </Button>
               </CardContent>
             </Card>

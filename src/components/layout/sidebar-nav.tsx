@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useTranslations } from "next-intl";
 
 import { getNavigation } from "@/config/navigation";
 import { cn } from "@/lib/utils";
@@ -32,14 +33,15 @@ export function SidebarNav({
   const pathname = usePathname();
   const { data: me } = useMe();
   const navGroups = getNavigation(me?.is_platform_admin ?? false);
+  const t = useTranslations("nav");
 
   return (
     <nav className="flex flex-1 flex-col gap-6 overflow-y-auto px-3 py-4">
       {navGroups.map((group) => (
-        <div key={group.label} className="flex flex-col gap-1">
+        <div key={group.labelKey} className="flex flex-col gap-1">
           {!collapsed && (
             <p className="px-2 pb-1 text-xs font-medium text-sidebar-foreground/50">
-              {group.label}
+              {t(group.labelKey)}
             </p>
           )}
           {group.items.map((item) => {
@@ -70,7 +72,9 @@ export function SidebarNav({
                   )}
                   aria-hidden="true"
                 />
-                {!collapsed && <span className="truncate">{item.title}</span>}
+                {!collapsed && (
+                  <span className="truncate">{t(item.titleKey)}</span>
+                )}
               </Link>
             );
 
@@ -79,7 +83,9 @@ export function SidebarNav({
             return (
               <Tooltip key={item.href}>
                 <TooltipTrigger asChild>{link}</TooltipTrigger>
-                <TooltipContent side="right">{item.title}</TooltipContent>
+                <TooltipContent side="right">
+                  {t(item.titleKey)}
+                </TooltipContent>
               </Tooltip>
             );
           })}

@@ -3,6 +3,7 @@
 import * as React from "react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
+import { useTranslations } from "next-intl";
 import { CheckCircleIcon, ExclamationTriangleIcon } from "@heroicons/react/24/outline";
 
 import { Card, CardContent } from "@/components/ui/card";
@@ -25,6 +26,7 @@ export function InstagramCallbackView() {
   const searchParams = useSearchParams();
   const mutation = useCompleteInstagramConnect();
   const attempted = React.useRef(false);
+  const t = useTranslations("instagram");
 
   React.useEffect(() => {
     if (attempted.current) return;
@@ -54,10 +56,10 @@ export function InstagramCallbackView() {
       <Card>
         <CardContent className="flex flex-col items-center gap-3 py-16 text-center">
           <ExclamationTriangleIcon className="size-10 text-destructive" aria-hidden="true" />
-          <p className="text-sm font-medium text-foreground">Instagram connection cancelled</p>
+          <p className="text-sm font-medium text-foreground">{t("connectionCancelled")}</p>
           <p className="max-w-sm text-sm text-muted-foreground">{oauthError}</p>
           <Button asChild>
-            <Link href="/instagram">Back to Instagram accounts</Link>
+            <Link href="/instagram">{t("backToAccounts")}</Link>
           </Button>
         </CardContent>
       </Card>
@@ -70,13 +72,11 @@ export function InstagramCallbackView() {
         <CardContent className="flex flex-col items-center gap-3 py-16 text-center">
           <CheckCircleIcon className="size-10 text-success" aria-hidden="true" />
           <p className="text-sm font-medium text-foreground">
-            @{mutation.data.username ?? "Account"} connected
+            {t("accountConnected", { username: mutation.data.username ?? t("unknownUsername") })}
           </p>
-          <p className="max-w-sm text-sm text-muted-foreground">
-            ReplyPilot can now read and reply to this account&apos;s DMs.
-          </p>
+          <p className="max-w-sm text-sm text-muted-foreground">{t("accountConnectedHint")}</p>
           <Button asChild>
-            <Link href="/instagram">Back to Instagram accounts</Link>
+            <Link href="/instagram">{t("backToAccounts")}</Link>
           </Button>
         </CardContent>
       </Card>
@@ -88,14 +88,12 @@ export function InstagramCallbackView() {
       <Card>
         <CardContent className="flex flex-col items-center gap-3 py-16 text-center">
           <ExclamationTriangleIcon className="size-10 text-destructive" aria-hidden="true" />
-          <p className="text-sm font-medium text-foreground">Couldn&apos;t connect Instagram</p>
+          <p className="text-sm font-medium text-foreground">{t("couldntConnect")}</p>
           <p className="max-w-sm text-sm text-muted-foreground">
-            {mutation.error instanceof ApiError
-              ? mutation.error.message
-              : "Something went wrong. Please try again."}
+            {mutation.error instanceof ApiError ? mutation.error.message : t("genericError")}
           </p>
           <Button asChild>
-            <Link href="/instagram">Back to Instagram accounts</Link>
+            <Link href="/instagram">{t("backToAccounts")}</Link>
           </Button>
         </CardContent>
       </Card>
@@ -105,7 +103,7 @@ export function InstagramCallbackView() {
   return (
     <Card>
       <CardContent className="flex flex-col items-center gap-3 py-16 text-center">
-        <p className="text-sm text-muted-foreground">Connecting your Instagram account…</p>
+        <p className="text-sm text-muted-foreground">{t("connecting")}</p>
       </CardContent>
     </Card>
   );

@@ -2,6 +2,7 @@
 
 import * as React from "react";
 import Link from "next/link";
+import { useTranslations } from "next-intl";
 import { ChatBubbleLeftRightIcon } from "@heroicons/react/24/outline";
 
 import { Badge } from "@/components/ui/badge";
@@ -24,25 +25,30 @@ const STATUS_VARIANT: Record<string, "brand" | "warning" | "secondary" | "succes
   closed: "secondary",
 };
 
-const STATUS_LABEL: Record<string, string> = {
-  ai_active: "AI active",
-  pending_human: "Pending human",
-  human_active: "Human active",
-  resolved: "Resolved",
-  closed: "Closed",
+/** Keys into the shared "conversationStatus" namespace (also used by
+ * features/dashboard and features/ai-inbox — same status vocabulary). */
+const STATUS_LABEL_KEY: Record<string, string> = {
+  ai_active: "aiActive",
+  pending_human: "pendingHuman",
+  human_active: "humanActive",
+  resolved: "resolved",
+  closed: "closed",
 };
 
-const FILTERS: { value: ConversationStatus | "all"; label: string }[] = [
-  { value: "all", label: "All" },
-  { value: "ai_active", label: "AI active" },
-  { value: "pending_human", label: "Pending human" },
-  { value: "human_active", label: "Human active" },
-  { value: "resolved", label: "Resolved" },
-  { value: "closed", label: "Closed" },
+const FILTER_VALUES: (ConversationStatus | "all")[] = [
+  "all",
+  "ai_active",
+  "pending_human",
+  "human_active",
+  "resolved",
+  "closed",
 ];
 
 export function ConversationList() {
   const [filter, setFilter] = React.useState<ConversationStatus | "all">("all");
+  const t = useTranslations("conversations");
+  const ts = useTranslations("conversationStatus");
+  const tt = useTranslations("time");
   const {
     data,
     isPending,
@@ -60,9 +66,9 @@ export function ConversationList() {
     <div className="flex flex-col gap-4">
       <Tabs value={filter} onValueChange={(v) => setFilter(v as ConversationStatus | "all")}>
         <TabsList>
-          {FILTERS.map((f) => (
-            <TabsTrigger key={f.value} value={f.value}>
-              {f.label}
+          {FILTER_VALUES.map((value) => (
+            <TabsTrigger key={value} value={value}>
+              {value === "all" ? ts("all") : ts(STATUS_LABEL_KEY[value])}
             </TabsTrigger>
           ))}
         </TabsList>
@@ -77,7 +83,7 @@ export function ConversationList() {
           ) : isError ? (
             <ErrorState
               className="py-16"
-              title="Couldn't load conversations"
+              title={t("couldntLoadConversations")}
               description={error instanceof Error ? error.message : undefined}
               onRetry={() => refetch()}
             />
@@ -85,8 +91,8 @@ export function ConversationList() {
             <EmptyState
               className="py-16"
               icon={ChatBubbleLeftRightIcon}
-              title="No conversations here"
-              description="New Instagram DMs will show up here as soon as a connected account receives one."
+              title={t("noConversationsHere")}
+              description={t("noConversationsDescription")}
             />
           ) : (
             <ul className="divide-y divide-border">
@@ -99,7 +105,7 @@ export function ConversationList() {
                     <div className="min-w-0 flex-1">
                       <div className="flex items-center gap-2">
                         <span className="truncate text-sm font-medium text-foreground">
-                          {conv.customer_username ?? "Unknown customer"}
+                          {conv.customer_username ?? t("unknownCustomer")}
                         </span>
                         {conv.unread_count > 0 && (
                           <Badge variant="brand">{conv.unread_count}</Badge>
@@ -112,10 +118,10 @@ export function ConversationList() {
                       )}
                     </div>
                     <Badge variant={STATUS_VARIANT[conv.status] ?? "secondary"}>
-                      {STATUS_LABEL[conv.status] ?? conv.status}
+                      {STATUS_LABEL_KEY[conv.status] ? ts(STATUS_LABEL_KEY[conv.status]) : conv.status}
                     </Badge>
                     <span className="w-20 shrink-0 text-right text-xs text-muted-foreground">
-                      {conv.last_message_at ? formatRelativeTime(conv.last_message_at) : "—"}
+                      {conv.last_message_at ? formatRelativeTime(conv.last_message_at, tt) : "—"}
                     </span>
                   </Link>
                 </li>
@@ -132,7 +138,7 @@ export function ConversationList() {
           onClick={() => fetchNextPage()}
           disabled={isFetchingNextPage}
         >
-          {isFetchingNextPage ? "Loading…" : "Load more"}
+          {isFetchingNextPage ? t("loadingMore") : t("loadMore")}
         </Button>
       )}
     </div>

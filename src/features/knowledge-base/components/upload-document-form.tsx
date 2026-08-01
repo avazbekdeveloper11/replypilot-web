@@ -4,6 +4,7 @@ import * as React from "react";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useTranslations } from "next-intl";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -15,8 +16,8 @@ import { FormAlert } from "@/components/feedback/form-alert";
 import { ApiError } from "@/lib/api/errors";
 
 import {
-  uploadTextSchema,
-  uploadFileTitleSchema,
+  buildUploadTextSchema,
+  buildUploadFileTitleSchema,
   type UploadTextValues,
   type UploadFileTitleValues,
 } from "../schemas/upload.schema";
@@ -30,14 +31,15 @@ const ACCEPTED_FILE_EXTENSIONS = ".txt,.md";
 export function UploadDocumentForm() {
   const router = useRouter();
   const uploadMutation = useUploadDocument();
+  const t = useTranslations("knowledgeBase");
 
   return (
     <Card>
       <CardContent>
         <Tabs defaultValue="text">
           <TabsList>
-            <TabsTrigger value="text">Paste text</TabsTrigger>
-            <TabsTrigger value="file">Upload a file</TabsTrigger>
+            <TabsTrigger value="text">{t("pasteText")}</TabsTrigger>
+            <TabsTrigger value="file">{t("uploadAFile")}</TabsTrigger>
           </TabsList>
 
           <TabsContent value="text" className="pt-4">
@@ -66,6 +68,10 @@ function TextUploadForm({
   onSuccess: () => void;
   mutation: ReturnType<typeof useUploadDocument>;
 }) {
+  const t = useTranslations("knowledgeBase");
+  const tv = useTranslations("validation");
+  const uploadTextSchema = React.useMemo(() => buildUploadTextSchema(tv), [tv]);
+
   const form = useForm<UploadTextValues>({
     resolver: zodResolver(uploadTextSchema),
     defaultValues: { title: "", content: "" },
@@ -81,7 +87,7 @@ function TextUploadForm({
   return (
     <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-4" noValidate>
       <div className="flex flex-col gap-1.5">
-        <Label htmlFor="text-title">Title</Label>
+        <Label htmlFor="text-title">{t("titleLabel")}</Label>
         <Input
           id="text-title"
           placeholder="Refund policy"
@@ -94,11 +100,11 @@ function TextUploadForm({
       </div>
 
       <div className="flex flex-col gap-1.5">
-        <Label htmlFor="text-content">Content</Label>
+        <Label htmlFor="text-content">{t("contentLabel")}</Label>
         <Textarea
           id="text-content"
           rows={12}
-          placeholder="Paste the text you want the AI to be able to answer from…"
+          placeholder={t("contentPlaceholder")}
           aria-invalid={!!form.formState.errors.content}
           {...form.register("content")}
         />
@@ -111,13 +117,13 @@ function TextUploadForm({
         <FormAlert variant="error">
           {mutation.error instanceof ApiError
             ? mutation.error.message
-            : "Something went wrong. Please try again."}
+            : t("genericError")}
         </FormAlert>
       )}
 
       <div>
         <Button type="submit" disabled={mutation.isPending}>
-          {mutation.isPending ? "Uploading…" : "Upload document"}
+          {mutation.isPending ? t("uploading") : t("uploadDocument")}
         </Button>
       </div>
     </form>
@@ -133,6 +139,9 @@ function FileUploadForm({
 }) {
   const [file, setFile] = React.useState<File | null>(null);
   const [fileError, setFileError] = React.useState<string | null>(null);
+  const t = useTranslations("knowledgeBase");
+  const tv = useTranslations("validation");
+  const uploadFileTitleSchema = React.useMemo(() => buildUploadFileTitleSchema(tv), [tv]);
 
   const form = useForm<UploadFileTitleValues>({
     resolver: zodResolver(uploadFileTitleSchema),
@@ -141,7 +150,7 @@ function FileUploadForm({
 
   function onSubmit(values: UploadFileTitleValues) {
     if (!file) {
-      setFileError("Choose a .txt or .md file");
+      setFileError(t("chooseFile"));
       return;
     }
     setFileError(null);
@@ -151,7 +160,7 @@ function FileUploadForm({
   return (
     <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-4" noValidate>
       <div className="flex flex-col gap-1.5">
-        <Label htmlFor="file-title">Title</Label>
+        <Label htmlFor="file-title">{t("titleLabel")}</Label>
         <Input
           id="file-title"
           placeholder="Refund policy"
@@ -164,7 +173,7 @@ function FileUploadForm({
       </div>
 
       <div className="flex flex-col gap-1.5">
-        <Label htmlFor="file-input">File</Label>
+        <Label htmlFor="file-input">{t("fileLabel")}</Label>
         <Input
           id="file-input"
           type="file"
@@ -175,9 +184,7 @@ function FileUploadForm({
             setFileError(null);
           }}
         />
-        <p className="text-xs text-muted-foreground">
-          .txt or .md only — PDF/DOCX parsing isn&apos;t implemented yet.
-        </p>
+        <p className="text-xs text-muted-foreground">{t("fileHint")}</p>
         {fileError && <p className="text-xs text-destructive">{fileError}</p>}
       </div>
 
@@ -185,13 +192,13 @@ function FileUploadForm({
         <FormAlert variant="error">
           {mutation.error instanceof ApiError
             ? mutation.error.message
-            : "Something went wrong. Please try again."}
+            : t("genericError")}
         </FormAlert>
       )}
 
       <div>
         <Button type="submit" disabled={mutation.isPending}>
-          {mutation.isPending ? "Uploading…" : "Upload document"}
+          {mutation.isPending ? t("uploading") : t("uploadDocument")}
         </Button>
       </div>
     </form>

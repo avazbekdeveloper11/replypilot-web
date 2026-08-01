@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useTranslations } from "next-intl";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -19,7 +20,7 @@ import {
 import { FormAlert } from "@/components/feedback/form-alert";
 import { ApiError } from "@/lib/api/errors";
 
-import { registerSchema, type RegisterValues } from "../schemas/register.schema";
+import { buildRegisterSchema, type RegisterValues } from "../schemas/register.schema";
 import { useRegister } from "../hooks/use-register";
 
 /** Strips organization_name down to the backend's `alphanum` slug rule
@@ -32,7 +33,11 @@ function slugify(name: string): string {
 
 export function RegisterForm() {
   const router = useRouter();
+  const t = useTranslations("auth");
+  const tv = useTranslations("validation");
   const [slugTouched, setSlugTouched] = React.useState(false);
+
+  const registerSchema = React.useMemo(() => buildRegisterSchema(tv), [tv]);
 
   const form = useForm<RegisterValues>({
     resolver: zodResolver(registerSchema),
@@ -72,7 +77,7 @@ export function RegisterForm() {
         onError: (err) => {
           if (err instanceof ApiError && err.code === "CONFLICT") {
             form.setError("organization_slug", {
-              message: "That workspace URL is taken — try a different one.",
+              message: t("slugTaken"),
             });
           }
         },
@@ -87,10 +92,8 @@ export function RegisterForm() {
   return (
     <Card>
       <CardHeader>
-        <CardTitle className="text-lg">Create your account</CardTitle>
-        <CardDescription>
-          Sets up a new workspace and makes you its Owner.
-        </CardDescription>
+        <CardTitle className="text-lg">{t("createAccountTitle")}</CardTitle>
+        <CardDescription>{t("createAccountDescription")}</CardDescription>
       </CardHeader>
       <CardContent>
         <form
@@ -99,7 +102,7 @@ export function RegisterForm() {
           noValidate
         >
           <div className="flex flex-col gap-1.5">
-            <Label htmlFor="organization_name">Organization name</Label>
+            <Label htmlFor="organization_name">{t("organizationNameLabel")}</Label>
             <Input
               id="organization_name"
               placeholder="Acme Inc."
@@ -116,7 +119,7 @@ export function RegisterForm() {
           </div>
 
           <div className="flex flex-col gap-1.5">
-            <Label htmlFor="organization_slug">Workspace URL</Label>
+            <Label htmlFor="organization_slug">{t("workspaceUrlLabel")}</Label>
             <Input
               id="organization_slug"
               placeholder="acmeinc"
@@ -125,7 +128,7 @@ export function RegisterForm() {
                 onChange: () => setSlugTouched(true),
               })}
             />
-            <p className="text-xs text-muted-foreground">Letters and numbers only.</p>
+            <p className="text-xs text-muted-foreground">{t("lettersNumbersOnly")}</p>
             {form.formState.errors.organization_slug && (
               <p className="text-xs text-destructive">
                 {form.formState.errors.organization_slug.message}
@@ -134,7 +137,7 @@ export function RegisterForm() {
           </div>
 
           <div className="flex flex-col gap-1.5">
-            <Label htmlFor="full_name">Your name</Label>
+            <Label htmlFor="full_name">{t("yourNameLabel")}</Label>
             <Input
               id="full_name"
               autoComplete="name"
@@ -150,7 +153,7 @@ export function RegisterForm() {
           </div>
 
           <div className="flex flex-col gap-1.5">
-            <Label htmlFor="email">Email</Label>
+            <Label htmlFor="email">{t("emailLabel")}</Label>
             <Input
               id="email"
               type="email"
@@ -165,7 +168,7 @@ export function RegisterForm() {
           </div>
 
           <div className="flex flex-col gap-1.5">
-            <Label htmlFor="password">Password</Label>
+            <Label htmlFor="password">{t("passwordLabel")}</Label>
             <Input
               id="password"
               type="password"
@@ -182,7 +185,7 @@ export function RegisterForm() {
           </div>
 
           <div className="flex flex-col gap-1.5">
-            <Label htmlFor="confirm_password">Confirm password</Label>
+            <Label htmlFor="confirm_password">{t("confirmPasswordLabel")}</Label>
             <Input
               id="confirm_password"
               type="password"
@@ -202,19 +205,19 @@ export function RegisterForm() {
             <FormAlert variant="error">
               {registerMutation.error instanceof ApiError
                 ? registerMutation.error.message
-                : "Something went wrong. Please try again."}
+                : t("genericError")}
             </FormAlert>
           )}
 
           <Button type="submit" className="w-full" disabled={registerMutation.isPending}>
-            {registerMutation.isPending ? "Creating account…" : "Create account"}
+            {registerMutation.isPending ? t("creatingAccount") : t("createAccountBtn")}
           </Button>
         </form>
 
         <p className="mt-6 text-center text-sm text-muted-foreground">
-          Already have an account?{" "}
+          {t("alreadyHaveAccount")}{" "}
           <Link href="/login" className="text-brand hover:underline">
-            Log in
+            {t("logIn")}
           </Link>
         </p>
       </CardContent>

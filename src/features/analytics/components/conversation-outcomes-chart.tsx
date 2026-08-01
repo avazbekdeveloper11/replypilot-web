@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { Bar, BarChart, CartesianGrid, Cell, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -8,32 +9,37 @@ import { ErrorState } from "@/components/feedback/error-state";
 
 import { useConversationOutcomes } from "../hooks/use-conversation-outcomes";
 
-const SEGMENTS: { key: "ai_active" | "pending_human" | "human_active" | "resolved" | "closed"; label: string; color: string }[] = [
-  { key: "ai_active", label: "AI active", color: "var(--color-brand)" },
-  { key: "pending_human", label: "Pending human", color: "var(--color-warning)" },
-  { key: "human_active", label: "Human active", color: "var(--color-warning)" },
-  { key: "resolved", label: "Resolved", color: "var(--color-success)" },
-  { key: "closed", label: "Closed", color: "var(--color-muted-foreground)" },
+/** labelKey is a key into the shared "conversationStatus" namespace
+ * (module scope has no React context to translate at definition time —
+ * same reasoning as config/navigation.ts). */
+const SEGMENTS: { key: "ai_active" | "pending_human" | "human_active" | "resolved" | "closed"; labelKey: string; color: string }[] = [
+  { key: "ai_active", labelKey: "aiActive", color: "var(--color-brand)" },
+  { key: "pending_human", labelKey: "pendingHuman", color: "var(--color-warning)" },
+  { key: "human_active", labelKey: "humanActive", color: "var(--color-warning)" },
+  { key: "resolved", labelKey: "resolved", color: "var(--color-success)" },
+  { key: "closed", labelKey: "closed", color: "var(--color-muted-foreground)" },
 ];
 
 export function ConversationOutcomesChart() {
   const { data, isPending, isError, error, refetch } = useConversationOutcomes();
+  const t = useTranslations("analytics");
+  const ts = useTranslations("conversationStatus");
 
   const rows = data
-    ? SEGMENTS.map((s) => ({ label: s.label, count: data[s.key], color: s.color }))
+    ? SEGMENTS.map((s) => ({ label: ts(s.labelKey), count: data[s.key], color: s.color }))
     : [];
 
   return (
     <Card>
       <CardHeader>
-        <CardTitle className="text-sm font-medium">Conversations by status</CardTitle>
+        <CardTitle className="text-sm font-medium">{t("conversationsByStatus")}</CardTitle>
       </CardHeader>
       <CardContent>
         {isPending ? (
           <Skeleton className="h-64 w-full" />
         ) : isError ? (
           <ErrorState
-            title="Couldn't load chart data"
+            title={t("couldntLoadChartData")}
             description={error instanceof Error ? error.message : undefined}
             onRetry={() => refetch()}
           />
@@ -58,7 +64,7 @@ export function ConversationOutcomesChart() {
                   width={110}
                 />
                 <Tooltip
-                  formatter={(value) => [value, "Conversations"]}
+                  formatter={(value) => [value, t("conversationsTooltip")]}
                   contentStyle={{
                     backgroundColor: "var(--color-popover)",
                     border: "1px solid var(--color-border)",

@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+import { useTranslations } from "next-intl";
 import { EllipsisHorizontalIcon } from "@heroicons/react/24/outline";
 
 import { Button } from "@/components/ui/button";
@@ -41,6 +42,7 @@ export function MemberRowActions({ member }: { member: TeamMember }) {
   const [roleDialogOpen, setRoleDialogOpen] = React.useState(false);
   const [removeDialogOpen, setRemoveDialogOpen] = React.useState(false);
   const [selectedRoleId, setSelectedRoleId] = React.useState(member.role.id);
+  const t = useTranslations("team");
 
   const rolesQuery = useRoles();
   const updateRoleMutation = useUpdateMemberRole();
@@ -61,7 +63,7 @@ export function MemberRowActions({ member }: { member: TeamMember }) {
     <>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <Button variant="ghost" size="icon" aria-label="Member actions">
+          <Button variant="ghost" size="icon" aria-label={t("memberActions")}>
             <EllipsisHorizontalIcon className="size-4" />
           </Button>
         </DropdownMenuTrigger>
@@ -73,7 +75,7 @@ export function MemberRowActions({ member }: { member: TeamMember }) {
               setRoleDialogOpen(true);
             }}
           >
-            Change role
+            {t("changeRole")}
           </DropdownMenuItem>
           <DropdownMenuItem
             variant="destructive"
@@ -82,7 +84,7 @@ export function MemberRowActions({ member }: { member: TeamMember }) {
               setRemoveDialogOpen(true);
             }}
           >
-            Remove from organization
+            {t("removeFromOrganization")}
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
@@ -90,7 +92,7 @@ export function MemberRowActions({ member }: { member: TeamMember }) {
       <Dialog open={roleDialogOpen} onOpenChange={setRoleDialogOpen}>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Change role</DialogTitle>
+            <DialogTitle>{t("changeRole")}</DialogTitle>
             <DialogDescription>{member.user.full_name}</DialogDescription>
           </DialogHeader>
 
@@ -111,13 +113,13 @@ export function MemberRowActions({ member }: { member: TeamMember }) {
             <FormAlert variant="error">
               {updateRoleMutation.error instanceof ApiError
                 ? updateRoleMutation.error.message
-                : "Something went wrong. Please try again."}
+                : t("genericError")}
             </FormAlert>
           )}
 
           <DialogFooter>
             <Button onClick={submitRoleChange} disabled={updateRoleMutation.isPending}>
-              {updateRoleMutation.isPending ? "Saving…" : "Save"}
+              {updateRoleMutation.isPending ? t("saving") : t("save")}
             </Button>
           </DialogFooter>
         </DialogContent>
@@ -126,18 +128,15 @@ export function MemberRowActions({ member }: { member: TeamMember }) {
       <Dialog open={removeDialogOpen} onOpenChange={setRemoveDialogOpen}>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Remove {member.user.full_name}?</DialogTitle>
-            <DialogDescription>
-              They lose access to this organization immediately. This can&apos;t be
-              undone from here — they&apos;d need to be re-invited.
-            </DialogDescription>
+            <DialogTitle>{t("removeMemberTitle", { name: member.user.full_name })}</DialogTitle>
+            <DialogDescription>{t("removeMemberDescription")}</DialogDescription>
           </DialogHeader>
 
           {removeMutation.isError && (
             <FormAlert variant="error">
               {removeMutation.error instanceof ApiError
                 ? removeMutation.error.message
-                : "Something went wrong. Please try again."}
+                : t("genericError")}
             </FormAlert>
           )}
 
@@ -147,7 +146,7 @@ export function MemberRowActions({ member }: { member: TeamMember }) {
               onClick={submitRemove}
               disabled={removeMutation.isPending}
             >
-              {removeMutation.isPending ? "Removing…" : "Remove"}
+              {removeMutation.isPending ? t("removing") : t("remove")}
             </Button>
           </DialogFooter>
         </DialogContent>

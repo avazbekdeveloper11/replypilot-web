@@ -3,6 +3,7 @@
 import * as React from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useTranslations } from "next-intl";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -10,12 +11,19 @@ import { Label } from "@/components/ui/label";
 import { FormAlert } from "@/components/feedback/form-alert";
 import { ApiError } from "@/lib/api/errors";
 
-import { changePasswordSchema, type ChangePasswordValues } from "../schemas/change-password.schema";
+import {
+  buildChangePasswordSchema,
+  type ChangePasswordValues,
+} from "../schemas/change-password.schema";
 import { useChangePassword } from "../hooks/use-change-password";
 
 export function ChangePasswordForm() {
   const mutation = useChangePassword();
   const [justChanged, setJustChanged] = React.useState(false);
+  const t = useTranslations("profile");
+  const tv = useTranslations("validation");
+
+  const changePasswordSchema = React.useMemo(() => buildChangePasswordSchema(tv), [tv]);
 
   const form = useForm<ChangePasswordValues>({
     resolver: zodResolver(changePasswordSchema),
@@ -38,7 +46,7 @@ export function ChangePasswordForm() {
   return (
     <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-4" noValidate>
       <div className="flex flex-col gap-1.5">
-        <Label htmlFor="current_password">Current password</Label>
+        <Label htmlFor="current_password">{t("currentPasswordLabel")}</Label>
         <Input
           id="current_password"
           type="password"
@@ -54,7 +62,7 @@ export function ChangePasswordForm() {
       </div>
 
       <div className="flex flex-col gap-1.5">
-        <Label htmlFor="new_password">New password</Label>
+        <Label htmlFor="new_password">{t("newPasswordLabel")}</Label>
         <Input
           id="new_password"
           type="password"
@@ -68,7 +76,7 @@ export function ChangePasswordForm() {
       </div>
 
       <div className="flex flex-col gap-1.5">
-        <Label htmlFor="confirm_password">Confirm new password</Label>
+        <Label htmlFor="confirm_password">{t("confirmNewPasswordLabel")}</Label>
         <Input
           id="confirm_password"
           type="password"
@@ -85,19 +93,17 @@ export function ChangePasswordForm() {
 
       {mutation.isError && (
         <FormAlert variant="error">
-          {mutation.error instanceof ApiError
-            ? mutation.error.message
-            : "Something went wrong. Please try again."}
+          {mutation.error instanceof ApiError ? mutation.error.message : t("genericError")}
         </FormAlert>
       )}
 
       {justChanged && !mutation.isError && (
-        <FormAlert variant="success">Password changed.</FormAlert>
+        <FormAlert variant="success">{t("passwordChanged")}</FormAlert>
       )}
 
       <div>
         <Button type="submit" disabled={mutation.isPending}>
-          {mutation.isPending ? "Changing…" : "Change password"}
+          {mutation.isPending ? t("changing") : t("changePassword")}
         </Button>
       </div>
     </form>

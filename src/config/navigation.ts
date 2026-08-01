@@ -15,7 +15,8 @@ import {
 export type IconType = ComponentType<SVGProps<SVGSVGElement>>;
 
 export interface NavItem {
-  title: string;
+  /** Key into the "nav" message namespace — SidebarNav resolves it via t(). */
+  titleKey: string;
   href: string;
   icon: IconType;
   /** Matches this route and every nested route (e.g. /conversations/[id]). */
@@ -23,7 +24,8 @@ export interface NavItem {
 }
 
 export interface NavGroup {
-  label: string;
+  /** Key into the "nav" message namespace. */
+  labelKey: string;
   items: NavItem[];
 }
 
@@ -32,45 +34,51 @@ export interface NavGroup {
  * this, nothing hardcodes a route list elsewhere. Adding a page means
  * adding it here once; config/permissions.ts (later) will gate entries by
  * role the same way, reading from this same registry.
+ *
+ * Labels are translation keys, not literal strings — this file has no
+ * React context to call useTranslations() from (it's imported by both
+ * client and server code), so SidebarNav resolves titleKey/labelKey via
+ * its own t() call. Keep these in sync with messages/*.json's "nav"
+ * namespace.
  */
 export const navigation: NavGroup[] = [
   {
-    label: "Workspace",
+    labelKey: "groupWorkspace",
     items: [
-      { title: "Dashboard", href: "/dashboard", icon: HomeIcon },
+      { titleKey: "dashboard", href: "/dashboard", icon: HomeIcon },
       {
-        title: "Conversations",
+        titleKey: "conversations",
         href: "/conversations",
         icon: ChatBubbleLeftRightIcon,
         matchPrefix: true,
       },
-      { title: "AI Inbox", href: "/ai-inbox", icon: SparklesIcon },
+      { titleKey: "aiInbox", href: "/ai-inbox", icon: SparklesIcon },
       {
-        title: "Knowledge Base",
+        titleKey: "knowledgeBase",
         href: "/knowledge-base",
         icon: BookOpenIcon,
         matchPrefix: true,
       },
-      { title: "Analytics", href: "/analytics", icon: ChartBarIcon },
+      { titleKey: "analytics", href: "/analytics", icon: ChartBarIcon },
     ],
   },
   {
-    label: "Organization",
+    labelKey: "groupOrganization",
     items: [
       {
-        title: "Instagram",
+        titleKey: "instagram",
         href: "/instagram",
         icon: LinkIcon,
         matchPrefix: true,
       },
-      { title: "Team", href: "/team", icon: UsersIcon },
+      { titleKey: "team", href: "/team", icon: UsersIcon },
       {
-        title: "Billing",
+        titleKey: "billing",
         href: "/billing",
         icon: CreditCardIcon,
         matchPrefix: true,
       },
-      { title: "Settings", href: "/settings", icon: Cog6ToothIcon },
+      { titleKey: "settings", href: "/settings", icon: Cog6ToothIcon },
     ],
   },
 ];
@@ -84,8 +92,8 @@ export const navigation: NavGroup[] = [
  * just avoids showing a link that would 403.
  */
 const adminNavGroup: NavGroup = {
-  label: "Platform",
-  items: [{ title: "Admin", href: "/admin", icon: ShieldCheckIcon }],
+  labelKey: "groupPlatform",
+  items: [{ titleKey: "admin", href: "/admin", icon: ShieldCheckIcon }],
 };
 
 export function getNavigation(isPlatformAdmin: boolean): NavGroup[] {

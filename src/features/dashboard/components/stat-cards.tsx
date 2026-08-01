@@ -1,6 +1,7 @@
 "use client";
 
 import type * as React from "react";
+import { useTranslations } from "next-intl";
 import {
   ChatBubbleLeftRightIcon,
   CheckCircleIcon,
@@ -17,27 +18,30 @@ import { useDashboardStats } from "../hooks/use-dashboard-stats";
 import type { DashboardStats } from "../types";
 
 interface StatDef {
-  label: string;
+  /** Key into the "dashboard" message namespace — module scope has no
+   * React context to translate at definition time (same reasoning as
+   * config/navigation.ts). */
+  labelKey: string;
   value: (s: DashboardStats) => number;
   icon: React.ComponentType<React.SVGProps<SVGSVGElement>>;
 }
 
 const STATS: StatDef[] = [
   {
-    label: "Total conversations",
+    labelKey: "totalConversations",
     value: (s) => s.total_conversations,
     icon: ChatBubbleLeftRightIcon,
   },
-  { label: "Unread", value: (s) => s.unread_conversations, icon: EnvelopeIcon },
-  { label: "AI active", value: (s) => s.ai_active_conversations, icon: SparklesIcon },
+  { labelKey: "unread", value: (s) => s.unread_conversations, icon: EnvelopeIcon },
+  { labelKey: "aiActive", value: (s) => s.ai_active_conversations, icon: SparklesIcon },
   {
-    label: "Pending human",
+    labelKey: "pendingHuman",
     value: (s) => s.pending_human_conversations,
     icon: UserGroupIcon,
   },
-  { label: "Resolved", value: (s) => s.resolved_conversations, icon: CheckCircleIcon },
+  { labelKey: "resolved", value: (s) => s.resolved_conversations, icon: CheckCircleIcon },
   {
-    label: "Connected accounts",
+    labelKey: "connectedAccounts",
     value: (s) => s.connected_instagram_accounts,
     icon: LinkIcon,
   },
@@ -48,6 +52,7 @@ const STATS: StatDef[] = [
  * response-time-card.tsx). */
 export function StatCards() {
   const { data, isPending, isError, error, refetch } = useDashboardStats();
+  const t = useTranslations("dashboard");
 
   if (isPending) {
     return (
@@ -69,7 +74,7 @@ export function StatCards() {
   if (isError) {
     return (
       <ErrorState
-        title="Couldn't load statistics"
+        title={t("couldntLoadStatistics")}
         description={error instanceof Error ? error.message : undefined}
         onRetry={() => refetch()}
       />
@@ -78,11 +83,11 @@ export function StatCards() {
 
   return (
     <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-6">
-      {STATS.map(({ label, value, icon: Icon }) => (
-        <Card key={label}>
+      {STATS.map(({ labelKey, value, icon: Icon }) => (
+        <Card key={labelKey}>
           <CardHeader className="flex flex-row items-center justify-between gap-2 pb-2">
             <CardTitle className="text-xs font-medium text-muted-foreground">
-              {label}
+              {t(labelKey)}
             </CardTitle>
             <Icon className="size-4 text-muted-foreground" aria-hidden="true" />
           </CardHeader>

@@ -1,5 +1,6 @@
 import { Suspense } from "react";
 import type { Metadata } from "next";
+import { getTranslations } from "next-intl/server";
 
 import { PageHeader } from "@/components/layout/page-header";
 import { InstagramCallbackView } from "@/features/instagram/components/instagram-callback-view";
@@ -11,10 +12,11 @@ export const metadata: Metadata = { title: "Connecting Instagram" };
 // InstagramCallbackView reads code/state/error query params via
 // useSearchParams(), which Next.js requires wrapping in Suspense — same
 // reasoning as app/(auth)/reset-password/page.tsx.
-export default function InstagramCallbackPage() {
+export default async function InstagramCallbackPage() {
+  const t = await getTranslations("instagram");
   return (
     <>
-      <PageHeader title="Connecting Instagram" />
+      <PageHeader title={t("connectingTitle")} />
       <Suspense fallback={<CallbackSkeleton />}>
         <InstagramCallbackView />
       </Suspense>

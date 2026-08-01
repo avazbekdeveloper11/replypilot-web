@@ -1,5 +1,7 @@
 "use client";
 
+import { useTranslations } from "next-intl";
+
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 
@@ -12,11 +14,12 @@ import { usePlatformStats } from "../hooks/use-platform-stats";
  */
 export function SubscriptionsByPlan() {
   const { data, isPending } = usePlatformStats();
+  const t = useTranslations("admin");
 
   return (
     <Card>
       <CardHeader>
-        <CardTitle className="text-sm font-medium">Active subscriptions by plan</CardTitle>
+        <CardTitle className="text-sm font-medium">{t("activeSubscriptionsByPlan")}</CardTitle>
       </CardHeader>
       <CardContent>
         {isPending ? (
@@ -25,7 +28,7 @@ export function SubscriptionsByPlan() {
             <Skeleton className="h-4 w-full" />
           </div>
         ) : !data || data.subscriptions_by_plan.length === 0 ? (
-          <p className="text-sm text-muted-foreground">No active subscriptions yet.</p>
+          <p className="text-sm text-muted-foreground">{t("noActiveSubscriptions")}</p>
         ) : (
           <ul className="flex flex-col gap-2">
             {data.subscriptions_by_plan.map((p) => (

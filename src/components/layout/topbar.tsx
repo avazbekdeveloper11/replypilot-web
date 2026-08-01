@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 import {
   Bars3Icon,
   BellIcon,
@@ -32,6 +33,7 @@ import {
 import { useMe } from "@/features/profile/hooks/use-me";
 import { useLogout } from "@/features/profile/hooks/use-logout";
 import { ThemeToggle } from "./theme-toggle";
+import { LanguageSwitcher } from "./language-switcher";
 
 function initialsFor(name: string) {
   return name
@@ -58,6 +60,7 @@ export function Topbar() {
   const { data: user } = useMe();
   const logoutMutation = useLogout();
   const router = useRouter();
+  const t = useTranslations("nav");
 
   const name = user?.full_name ?? "";
   const initials = name ? initialsFor(name) : "";
@@ -79,7 +82,7 @@ export function Topbar() {
         variant="ghost"
         size="icon"
         className="lg:hidden"
-        aria-label="Open sidebar"
+        aria-label={t("openSidebar")}
         onClick={() => setMobileSidebarOpen(true)}
       >
         <Bars3Icon className="size-5" />
@@ -89,22 +92,23 @@ export function Topbar() {
         <MagnifyingGlassIcon className="pointer-events-none absolute top-1/2 left-2.5 size-4 -translate-y-1/2 text-muted-foreground" />
         <Input
           type="search"
-          placeholder="Search conversations, leads, docs…"
+          placeholder={t("searchPlaceholder")}
           className="pl-8"
-          aria-label="Search"
+          aria-label={t("search")}
         />
       </div>
 
       <div className="ml-auto flex items-center gap-1">
         <ThemeToggle />
+        <LanguageSwitcher />
 
         <Tooltip>
           <TooltipTrigger asChild>
-            <Button variant="ghost" size="icon" aria-label="Notifications">
+            <Button variant="ghost" size="icon" aria-label={t("notifications")}>
               <BellIcon className="size-4.5" />
             </Button>
           </TooltipTrigger>
-          <TooltipContent>Notifications</TooltipContent>
+          <TooltipContent>{t("notifications")}</TooltipContent>
         </Tooltip>
 
         <DropdownMenu>
@@ -112,7 +116,7 @@ export function Topbar() {
             <Button
               variant="ghost"
               className="ml-1 h-9 gap-2 px-1.5"
-              aria-label="Open user menu"
+              aria-label={t("openUserMenu")}
             >
               <Avatar className="size-7">
                 <AvatarImage src={user?.avatar_url ?? undefined} alt={name} />
@@ -135,19 +139,19 @@ export function Topbar() {
             <DropdownMenuItem asChild>
               <Link href="/profile">
                 <UserCircleIcon />
-                Profile
+                {t("profile")}
               </Link>
             </DropdownMenuItem>
             <DropdownMenuItem asChild>
               <Link href="/settings">
                 <Cog6ToothIcon />
-                Settings
+                {t("settings")}
               </Link>
             </DropdownMenuItem>
             <DropdownMenuItem asChild>
               <Link href="/billing">
                 <CreditCardIcon />
-                Billing
+                {t("billing")}
               </Link>
             </DropdownMenuItem>
             <DropdownMenuSeparator />
@@ -160,7 +164,7 @@ export function Topbar() {
               }}
             >
               <ArrowRightStartOnRectangleIcon />
-              {logoutMutation.isPending ? "Logging out…" : "Log out"}
+              {logoutMutation.isPending ? t("loggingOut") : t("logOut")}
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

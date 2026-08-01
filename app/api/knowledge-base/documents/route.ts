@@ -5,23 +5,22 @@ import { errorResponse } from "@/lib/api/route-handler";
 import { getAccessToken } from "@/lib/auth/cookies";
 import type { KnowledgeDocument } from "@/features/knowledge-base/types";
 
-async function requireAccessToken() {
-  const accessToken = await getAccessToken();
-  if (!accessToken) {
-    return {
-      accessToken: null,
-      response: NextResponse.json(
-        { error: { code: "UNAUTHORIZED", message: "not signed in" } },
-        { status: 401 },
-      ),
-    };
-  }
-  return { accessToken, response: null };
+// Plain helper + early return, not a destructured { accessToken, response }
+// pair — TS can't correlate two separately-destructured fields back to a
+// discriminated union, so that shape made every handler below appear to
+// return `Promise<NextResponse | null>` and fail Next's build-time route
+// type validation (`null` isn't a valid Response). Same fix as every other
+// route handler in this codebase (e.g. app/api/organizations/me/route.ts).
+function unauthorized() {
+  return NextResponse.json(
+    { error: { code: "UNAUTHORIZED", message: "not signed in" } },
+    { status: 401 },
+  );
 }
 
 export async function GET() {
-  const { accessToken, response } = await requireAccessToken();
-  if (!accessToken) return response;
+  const accessToken = await getAccessToken();
+  if (!accessToken) return unauthorized();
 
   try {
     const documents = await goApiFetch<KnowledgeDocument[]>("/v1/knowledge-base/documents", {
@@ -42,8 +41,8 @@ export async function GET() {
  * left for fetch to set.
  */
 export async function POST(request: Request) {
-  const { accessToken, response } = await requireAccessToken();
-  if (!accessToken) return response;
+  const accessToken = await getAccessToken();
+  if (!accessToken) return unauthorized();
 
   const formData = await request.formData().catch(() => null);
   if (!formData || !formData.get("title")) {

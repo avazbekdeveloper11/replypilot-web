@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { BuildingOfficeIcon } from "@heroicons/react/24/outline";
 
 import { Badge } from "@/components/ui/badge";
@@ -34,13 +35,15 @@ const SUB_STATUS_VARIANT: Record<string, "success" | "warning" | "destructive" |
 
 export function OrganizationsTable() {
   const { data, isPending, isError, error, refetch } = useAdminOrganizations();
+  const t = useTranslations("admin");
+  const tOrgStatus = useTranslations("orgStatus");
 
   if (isPending) return <TableSkeleton columns={5} rows={6} />;
 
   if (isError) {
     return (
       <ErrorState
-        title="Couldn't load organizations"
+        title={t("couldntLoadOrganizations")}
         description={error instanceof Error ? error.message : undefined}
         onRetry={() => refetch()}
       />
@@ -51,8 +54,8 @@ export function OrganizationsTable() {
     return (
       <EmptyState
         icon={BuildingOfficeIcon}
-        title="No organizations yet"
-        description="Every organization that signs up will show up here."
+        title={t("noOrganizationsYet")}
+        description={t("noOrganizationsDescription")}
       />
     );
   }
@@ -61,10 +64,10 @@ export function OrganizationsTable() {
     <Table>
       <TableHeader>
         <TableRow>
-          <TableHead>Organization</TableHead>
-          <TableHead>Status</TableHead>
-          <TableHead>Members</TableHead>
-          <TableHead>Plan</TableHead>
+          <TableHead>{t("organizationColumn")}</TableHead>
+          <TableHead>{t("statusColumn")}</TableHead>
+          <TableHead>{t("membersColumn")}</TableHead>
+          <TableHead>{t("planColumn")}</TableHead>
           <TableHead className="w-10" />
         </TableRow>
       </TableHeader>
@@ -79,7 +82,9 @@ export function OrganizationsTable() {
             </TableCell>
             <TableCell>
               <Badge variant={ORG_STATUS_VARIANT[row.organization.status] ?? "secondary"}>
-                {row.organization.status}
+                {tOrgStatus.has(row.organization.status)
+                  ? tOrgStatus(row.organization.status)
+                  : row.organization.status}
               </Badge>
             </TableCell>
             <TableCell className="text-sm text-muted-foreground">{row.member_count}</TableCell>
@@ -89,7 +94,7 @@ export function OrganizationsTable() {
                   {row.plan_code}
                 </Badge>
               ) : (
-                <span className="text-sm text-muted-foreground">No plan</span>
+                <span className="text-sm text-muted-foreground">{t("noPlan")}</span>
               )}
             </TableCell>
             <TableCell>

@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { useTranslations } from "next-intl";
 import { ArrowLeftIcon } from "@heroicons/react/24/outline";
 
 import { Badge } from "@/components/ui/badge";
@@ -19,12 +20,13 @@ const STATUS_VARIANT: Record<string, "brand" | "warning" | "secondary" | "succes
   closed: "secondary",
 };
 
-const STATUS_LABEL: Record<string, string> = {
-  ai_active: "AI active",
-  pending_human: "Pending human",
-  human_active: "Human active",
-  resolved: "Resolved",
-  closed: "Closed",
+/** Keys into the shared "conversationStatus" namespace. */
+const STATUS_LABEL_KEY: Record<string, string> = {
+  ai_active: "aiActive",
+  pending_human: "pendingHuman",
+  human_active: "humanActive",
+  resolved: "resolved",
+  closed: "closed",
 };
 
 /**
@@ -35,6 +37,8 @@ const STATUS_LABEL: Record<string, string> = {
  */
 export function ConversationDetailView({ conversationId }: { conversationId: string }) {
   const { data, isPending, isError, error, refetch } = useConversation(conversationId);
+  const t = useTranslations("conversations");
+  const ts = useTranslations("conversationStatus");
 
   return (
     <div className="flex h-[calc(100vh-8rem)] flex-col gap-4">
@@ -43,7 +47,7 @@ export function ConversationDetailView({ conversationId }: { conversationId: str
         className="flex w-fit items-center gap-1 text-sm text-muted-foreground hover:text-foreground"
       >
         <ArrowLeftIcon className="size-3.5" />
-        Back to conversations
+        {t("backToConversations")}
       </Link>
 
       <Card className="flex flex-1 flex-col overflow-hidden py-0">
@@ -51,16 +55,16 @@ export function ConversationDetailView({ conversationId }: { conversationId: str
           {isPending ? (
             <Skeleton className="h-6 w-40" />
           ) : isError ? (
-            <span className="text-sm text-destructive">Couldn&apos;t load this conversation</span>
+            <span className="text-sm text-destructive">{t("couldntLoadThisConversation")}</span>
           ) : (
             <>
               <div className="flex flex-col">
                 <span className="text-sm font-semibold text-foreground">
-                  {data?.customer_username ?? "Unknown customer"}
+                  {data?.customer_username ?? t("unknownCustomer")}
                 </span>
               </div>
               <Badge variant={STATUS_VARIANT[data?.status ?? ""] ?? "secondary"}>
-                {STATUS_LABEL[data?.status ?? ""] ?? data?.status}
+                {STATUS_LABEL_KEY[data?.status ?? ""] ? ts(STATUS_LABEL_KEY[data?.status ?? ""]) : data?.status}
               </Badge>
             </>
           )}
@@ -69,7 +73,7 @@ export function ConversationDetailView({ conversationId }: { conversationId: str
           {isError ? (
             <ErrorState
               className="py-16"
-              title="Couldn't load this conversation"
+              title={t("couldntLoadThisConversation")}
               description={error instanceof Error ? error.message : undefined}
               onRetry={() => refetch()}
             />

@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -20,6 +21,7 @@ import type { InstagramAccount } from "../types";
 export function DisconnectAccountDialog({ account }: { account: InstagramAccount }) {
   const [open, setOpen] = React.useState(false);
   const mutation = useDisconnectInstagramAccount();
+  const t = useTranslations("instagram");
 
   return (
     <Dialog
@@ -31,24 +33,20 @@ export function DisconnectAccountDialog({ account }: { account: InstagramAccount
     >
       <DialogTrigger asChild>
         <Button variant="outline" size="sm">
-          Disconnect
+          {t("disconnect")}
         </Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Disconnect @{account.username ?? account.id}?</DialogTitle>
-          <DialogDescription>
-            ReplyPilot stops replying to this account&apos;s DMs immediately. This only
-            removes ReplyPilot&apos;s stored access — to fully revoke it, also remove
-            ReplyPilot from Instagram&apos;s own &quot;Apps and websites&quot; settings.
-          </DialogDescription>
+          <DialogTitle>
+            {t("disconnectTitle", { username: account.username ?? account.id })}
+          </DialogTitle>
+          <DialogDescription>{t("disconnectDescription")}</DialogDescription>
         </DialogHeader>
 
         {mutation.isError && (
           <FormAlert variant="error">
-            {mutation.error instanceof ApiError
-              ? mutation.error.message
-              : "Something went wrong. Please try again."}
+            {mutation.error instanceof ApiError ? mutation.error.message : t("genericError")}
           </FormAlert>
         )}
 
@@ -60,7 +58,7 @@ export function DisconnectAccountDialog({ account }: { account: InstagramAccount
               mutation.mutate(account.id, { onSuccess: () => setOpen(false) })
             }
           >
-            {mutation.isPending ? "Disconnecting…" : "Disconnect"}
+            {mutation.isPending ? t("disconnecting") : t("disconnect")}
           </Button>
         </DialogFooter>
       </DialogContent>

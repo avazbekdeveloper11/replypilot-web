@@ -1,5 +1,7 @@
 "use client";
 
+import { useTranslations } from "next-intl";
+
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 import { PlatformStatsCards } from "./platform-stats-cards";
@@ -13,6 +15,7 @@ import { GeminiSettingsCard } from "./gemini-settings-card";
  * Component that just renders PageHeader + this.
  */
 export function AdminView() {
+  const t = useTranslations("admin");
   return (
     <div className="flex flex-col gap-6">
       <PlatformStatsCards />
@@ -21,7 +24,7 @@ export function AdminView() {
         <div className="lg:col-span-2">
           <Card>
             <CardHeader>
-              <CardTitle>Organizations</CardTitle>
+              <CardTitle>{t("organizations")}</CardTitle>
             </CardHeader>
             <CardContent>
               <OrganizationsTable />

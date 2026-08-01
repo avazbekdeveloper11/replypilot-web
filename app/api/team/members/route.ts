@@ -5,20 +5,20 @@ import { errorResponse } from "@/lib/api/route-handler";
 import { getAccessToken } from "@/lib/auth/cookies";
 import type { TeamMember } from "@/features/team/types";
 
-async function requireAccessToken() {
-  const accessToken = await getAccessToken();
-  if (!accessToken) {
-    return { accessToken: null, response: NextResponse.json(
-      { error: { code: "UNAUTHORIZED", message: "not signed in" } },
-      { status: 401 },
-    ) };
-  }
-  return { accessToken, response: null };
+// Plain helper + early return — see the identical fix's doc comment in
+// app/api/knowledge-base/documents/route.ts for why the previous
+// destructured { accessToken, response } shape broke Next's build-time
+// route type validation.
+function unauthorized() {
+  return NextResponse.json(
+    { error: { code: "UNAUTHORIZED", message: "not signed in" } },
+    { status: 401 },
+  );
 }
 
 export async function GET() {
-  const { accessToken, response } = await requireAccessToken();
-  if (!accessToken) return response;
+  const accessToken = await getAccessToken();
+  if (!accessToken) return unauthorized();
 
   try {
     const members = await goApiFetch<TeamMember[]>("/v1/team/members", { accessToken });
@@ -29,8 +29,8 @@ export async function GET() {
 }
 
 export async function POST(request: Request) {
-  const { accessToken, response } = await requireAccessToken();
-  if (!accessToken) return response;
+  const accessToken = await getAccessToken();
+  if (!accessToken) return unauthorized();
 
   const body = await request.json().catch(() => null);
   if (!body?.email || !body?.role_id) {

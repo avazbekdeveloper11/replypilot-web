@@ -3,6 +3,8 @@
 import Link from "next/link";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useTranslations } from "next-intl";
+import * as React from "react";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -17,7 +19,7 @@ import {
 import { FormAlert } from "@/components/feedback/form-alert";
 
 import {
-  forgotPasswordSchema,
+  buildForgotPasswordSchema,
   type ForgotPasswordValues,
 } from "../schemas/forgot-password.schema";
 import { useForgotPassword } from "../hooks/use-forgot-password";
@@ -29,8 +31,12 @@ import { useForgotPassword } from "../hooks/use-forgot-password";
  * shows the same generic message, never "email not found".
  */
 export function ForgotPasswordForm() {
+  const t = useTranslations("auth");
+  const tv = useTranslations("validation");
+  const schema = React.useMemo(() => buildForgotPasswordSchema(tv), [tv]);
+
   const form = useForm<ForgotPasswordValues>({
-    resolver: zodResolver(forgotPasswordSchema),
+    resolver: zodResolver(schema),
     defaultValues: { email: "" },
   });
   const mutation = useForgotPassword();
@@ -43,15 +49,12 @@ export function ForgotPasswordForm() {
     return (
       <Card>
         <CardHeader>
-          <CardTitle className="text-lg">Check your email</CardTitle>
-          <CardDescription>
-            If an account exists for that email, we&apos;ve sent a link to reset
-            your password.
-          </CardDescription>
+          <CardTitle className="text-lg">{t("checkYourEmailTitle")}</CardTitle>
+          <CardDescription>{t("checkYourEmailDescription")}</CardDescription>
         </CardHeader>
         <CardContent>
           <Link href="/login" className="text-sm text-brand hover:underline">
-            Back to log in
+            {t("backToLogIn")}
           </Link>
         </CardContent>
       </Card>
@@ -61,16 +64,13 @@ export function ForgotPasswordForm() {
   return (
     <Card>
       <CardHeader>
-        <CardTitle className="text-lg">Reset your password</CardTitle>
-        <CardDescription>
-          Enter your email and we&apos;ll send you a link to reset your
-          password.
-        </CardDescription>
+        <CardTitle className="text-lg">{t("resetPasswordTitle")}</CardTitle>
+        <CardDescription>{t("resetPasswordDescription")}</CardDescription>
       </CardHeader>
       <CardContent>
         <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-4" noValidate>
           <div className="flex flex-col gap-1.5">
-            <Label htmlFor="email">Email</Label>
+            <Label htmlFor="email">{t("emailLabel")}</Label>
             <Input
               id="email"
               type="email"
@@ -86,18 +86,16 @@ export function ForgotPasswordForm() {
           </div>
 
           {mutation.isError && (
-            <FormAlert variant="error">
-              Something went wrong. Please try again.
-            </FormAlert>
+            <FormAlert variant="error">{t("genericError")}</FormAlert>
           )}
 
           <Button type="submit" className="w-full" disabled={mutation.isPending}>
-            {mutation.isPending ? "Sending…" : "Send reset link"}
+            {mutation.isPending ? t("sending") : t("sendResetLink")}
           </Button>
         </form>
         <p className="mt-6 text-center text-sm text-muted-foreground">
           <Link href="/login" className="text-brand hover:underline">
-            Back to log in
+            {t("backToLogIn")}
           </Link>
         </p>
       </CardContent>

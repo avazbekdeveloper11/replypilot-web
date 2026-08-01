@@ -1,6 +1,7 @@
 "use client";
 
 import { BellIcon } from "@heroicons/react/24/outline";
+import { useTranslations } from "next-intl";
 
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -20,11 +21,13 @@ import { formatRelativeTime } from "../lib/format";
  */
 export function NotificationsPanel() {
   const { data, isPending, isError, error, refetch } = useNotifications(8);
+  const t = useTranslations("dashboard");
+  const tt = useTranslations("time");
 
   return (
     <Card>
       <CardHeader className="flex flex-row items-center justify-between gap-2">
-        <CardTitle className="text-sm font-medium">Notifications</CardTitle>
+        <CardTitle className="text-sm font-medium">{t("notificationsTitle")}</CardTitle>
         <BellIcon className="size-4 text-muted-foreground" aria-hidden="true" />
       </CardHeader>
       <CardContent>
@@ -36,15 +39,15 @@ export function NotificationsPanel() {
           </div>
         ) : isError ? (
           <ErrorState
-            title="Couldn't load notifications"
+            title={t("couldntLoadNotifications")}
             description={error instanceof Error ? error.message : undefined}
             onRetry={() => refetch()}
           />
         ) : !data || data.length === 0 ? (
           <EmptyState
             icon={BellIcon}
-            title="You're all caught up"
-            description="No unread conversations right now."
+            title={t("allCaughtUp")}
+            description={t("noUnreadConversations")}
             className="py-8"
           />
         ) : (
@@ -53,7 +56,7 @@ export function NotificationsPanel() {
               <li key={item.conversation_id} className="flex items-start gap-3 py-3 first:pt-0 last:pb-0">
                 <div className="min-w-0 flex-1">
                   <p className="truncate text-sm font-medium text-foreground">
-                    {item.customer_username ?? "New message"}
+                    {item.customer_username ?? t("newMessage")}
                   </p>
                   {item.preview && (
                     <p className="truncate text-xs text-muted-foreground">{item.preview}</p>
@@ -63,7 +66,7 @@ export function NotificationsPanel() {
                   <Badge variant="brand">{item.unread_count}</Badge>
                   {item.last_message_at && (
                     <span className="text-[11px] text-muted-foreground">
-                      {formatRelativeTime(item.last_message_at)}
+                      {formatRelativeTime(item.last_message_at, tt)}
                     </span>
                   )}
                 </div>

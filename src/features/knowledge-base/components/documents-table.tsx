@@ -1,8 +1,10 @@
 "use client";
 
+import { useLocale, useTranslations } from "next-intl";
 import { BookOpenIcon } from "@heroicons/react/24/outline";
 
 import { Badge } from "@/components/ui/badge";
+import { intlLocale, type Locale } from "@/i18n/config";
 import {
   Table,
   TableBody,
@@ -26,22 +28,27 @@ const STATUS_VARIANT: Record<string, "success" | "warning" | "destructive" | "se
   failed: "destructive",
 };
 
-const SOURCE_LABEL: Record<string, string> = {
-  manual_text: "Pasted text",
-  file: "File upload",
-  url: "URL",
-  faq: "FAQ",
+/** Keys into the "documentSource" message namespace. */
+const SOURCE_LABEL_KEY: Record<string, string> = {
+  manual_text: "pastedText",
+  file: "fileUpload",
+  url: "url",
+  faq: "faq",
 };
 
 export function DocumentsTable() {
   const { data, isPending, isError, error, refetch } = useDocuments();
+  const t = useTranslations("knowledgeBase");
+  const tSource = useTranslations("documentSource");
+  const tStatus = useTranslations("documentStatus");
+  const locale = useLocale() as Locale;
 
   if (isPending) return <TableSkeleton columns={4} rows={5} />;
 
   if (isError) {
     return (
       <ErrorState
-        title="Couldn't load documents"
+        title={t("couldntLoadDocuments")}
         description={error instanceof Error ? error.message : undefined}
         onRetry={() => refetch()}
       />
@@ -52,8 +59,8 @@ export function DocumentsTable() {
     return (
       <EmptyState
         icon={BookOpenIcon}
-        title="No documents yet"
-        description="Upload a document to start grounding the AI's replies in your own content."
+        title={t("noDocumentsYet")}
+        description={t("noDocumentsDescription")}
       />
     );
   }
@@ -62,10 +69,10 @@ export function DocumentsTable() {
     <Table>
       <TableHeader>
         <TableRow>
-          <TableHead>Title</TableHead>
-          <TableHead>Source</TableHead>
-          <TableHead>Status</TableHead>
-          <TableHead>Uploaded</TableHead>
+          <TableHead>{t("title")}</TableHead>
+          <TableHead>{t("source")}</TableHead>
+          <TableHead>{t("status")}</TableHead>
+          <TableHead>{t("uploaded")}</TableHead>
           <TableHead className="w-10" />
         </TableRow>
       </TableHeader>
@@ -81,13 +88,15 @@ export function DocumentsTable() {
               </div>
             </TableCell>
             <TableCell className="text-sm text-muted-foreground">
-              {SOURCE_LABEL[doc.source_type] ?? doc.source_type}
+              {SOURCE_LABEL_KEY[doc.source_type] ? tSource(SOURCE_LABEL_KEY[doc.source_type]) : doc.source_type}
             </TableCell>
             <TableCell>
-              <Badge variant={STATUS_VARIANT[doc.status] ?? "secondary"}>{doc.status}</Badge>
+              <Badge variant={STATUS_VARIANT[doc.status] ?? "secondary"}>
+                {tStatus.has(doc.status) ? tStatus(doc.status) : doc.status}
+              </Badge>
             </TableCell>
             <TableCell className="text-sm text-muted-foreground">
-              {formatDocumentDate(doc.created_at)}
+              {formatDocumentDate(doc.created_at, intlLocale(locale))}
             </TableCell>
             <TableCell>
               <DocumentRowActions document={doc} />

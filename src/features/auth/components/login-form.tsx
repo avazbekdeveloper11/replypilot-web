@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useTranslations } from "next-intl";
 import { ArrowLeftIcon } from "@heroicons/react/24/outline";
 
 import { Button } from "@/components/ui/button";
@@ -28,8 +29,8 @@ import { FormAlert } from "@/components/feedback/form-alert";
 import { ApiError } from "@/lib/api/errors";
 
 import {
-  emailStepSchema,
-  passwordStepSchema,
+  buildEmailStepSchema,
+  buildPasswordStepSchema,
   type EmailStepValues,
   type PasswordStepValues,
 } from "../schemas/login.schema";
@@ -59,17 +60,22 @@ function safeRedirectTarget(next: string | null): string {
 export function LoginForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const t = useTranslations("auth");
+  const tv = useTranslations("validation");
   const [step, setStep] = React.useState<"email" | "password">("email");
   const [email, setEmail] = React.useState("");
   const [memberships, setMemberships] = React.useState<OrganizationMembership[]>([]);
 
+  const emailSchema = React.useMemo(() => buildEmailStepSchema(tv), [tv]);
+  const passwordSchema = React.useMemo(() => buildPasswordStepSchema(tv), [tv]);
+
   const emailForm = useForm<EmailStepValues>({
-    resolver: zodResolver(emailStepSchema),
+    resolver: zodResolver(emailSchema),
     defaultValues: { email: "" },
   });
 
   const passwordForm = useForm<PasswordStepValues>({
-    resolver: zodResolver(passwordStepSchema),
+    resolver: zodResolver(passwordSchema),
     defaultValues: { organization_id: "", password: "" },
   });
 
@@ -81,7 +87,7 @@ export function LoginForm() {
       onSuccess: (result) => {
         if (result.length === 0) {
           emailForm.setError("email", {
-            message: "This account has no active workspace to log into.",
+            message: t("noWorkspace"),
           });
           return;
         }
@@ -93,8 +99,8 @@ export function LoginForm() {
       onError: (err) => {
         const message =
           err instanceof ApiError && err.code === "NOT_FOUND"
-            ? "No account found with that email."
-            : "Something went wrong. Please try again.";
+            ? t("accountNotFound")
+            : t("genericError");
         emailForm.setError("email", { message });
       },
     });
@@ -120,11 +126,11 @@ export function LoginForm() {
   return (
     <Card>
       <CardHeader>
-        <CardTitle className="text-lg">Log in to ReplyPilot</CardTitle>
+        <CardTitle className="text-lg">{t("logInTitle")}</CardTitle>
         <CardDescription>
           {step === "email"
-            ? "Enter your email to continue."
-            : `Continue as ${email}`}
+            ? t("enterEmailToContinue")
+            : t("continueAs", { email })}
         </CardDescription>
       </CardHeader>
       <CardContent>
@@ -135,7 +141,7 @@ export function LoginForm() {
             noValidate
           >
             <div className="flex flex-col gap-1.5">
-              <Label htmlFor="email">Email</Label>
+              <Label htmlFor="email">{t("emailLabel")}</Label>
               <Input
                 id="email"
                 type="email"
@@ -151,7 +157,7 @@ export function LoginForm() {
               )}
             </div>
             <Button type="submit" className="w-full" disabled={orgsMutation.isPending}>
-              {orgsMutation.isPending ? "Checking…" : "Continue"}
+              {orgsMutation.isPending ? t("checking") : t("continueBtn")}
             </Button>
           </form>
         ) : (
@@ -162,7 +168,7 @@ export function LoginForm() {
           >
             {memberships.length > 1 && (
               <div className="flex flex-col gap-1.5">
-                <Label htmlFor="organization_id">Workspace</Label>
+                <Label htmlFor="organization_id">{t("workspaceLabel")}</Label>
                 <Select
                   value={passwordForm.watch("organization_id")}
                   onValueChange={(value) =>
@@ -170,7 +176,7 @@ export function LoginForm() {
                   }
                 >
                   <SelectTrigger id="organization_id" className="w-full">
-                    <SelectValue placeholder="Select a workspace" />
+                    <SelectValue placeholder={t("selectWorkspacePlaceholder")} />
                   </SelectTrigger>
                   <SelectContent>
                     {memberships.map((m) => (
@@ -185,12 +191,12 @@ export function LoginForm() {
 
             <div className="flex flex-col gap-1.5">
               <div className="flex items-center justify-between">
-                <Label htmlFor="password">Password</Label>
+                <Label htmlFor="password">{t("passwordLabel")}</Label>
                 <Link
                   href="/forgot-password"
                   className="text-xs text-brand hover:underline"
                 >
-                  Forgot password?
+                  {t("forgotPassword")}
                 </Link>
               </div>
               <Input
@@ -213,12 +219,12 @@ export function LoginForm() {
               <FormAlert variant="error">
                 {loginMutation.error instanceof ApiError
                   ? loginMutation.error.message
-                  : "Something went wrong. Please try again."}
+                  : t("genericError")}
               </FormAlert>
             )}
 
             <Button type="submit" className="w-full" disabled={loginMutation.isPending}>
-              {loginMutation.isPending ? "Logging in…" : "Log in"}
+              {loginMutation.isPending ? t("loggingIn") : t("logIn")}
             </Button>
             <button
               type="button"
@@ -226,16 +232,16 @@ export function LoginForm() {
               className="flex items-center justify-center gap-1 text-xs text-muted-foreground hover:text-foreground"
             >
               <ArrowLeftIcon className="size-3" />
-              Use a different email
+              {t("useDifferentEmail")}
             </button>
           </form>
         )}
 
         {step === "email" && (
           <p className="mt-6 text-center text-sm text-muted-foreground">
-            Don&apos;t have an account?{" "}
+            {t("noAccount")}{" "}
             <Link href="/register" className="text-brand hover:underline">
-              Sign up
+              {t("signUp")}
             </Link>
           </p>
         )}

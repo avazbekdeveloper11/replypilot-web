@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+import { useTranslations } from "next-intl";
 import { ChatBubbleLeftRightIcon } from "@heroicons/react/24/outline";
 
 import { Button } from "@/components/ui/button";
@@ -22,6 +23,7 @@ export function MessageThread({ conversationId }: { conversationId: string }) {
     hasNextPage,
     isFetchingNextPage,
   } = useMessages(conversationId);
+  const t = useTranslations("conversations");
 
   const bottomRef = React.useRef<HTMLDivElement>(null);
   const hasScrolledOnce = React.useRef(false);
@@ -54,7 +56,7 @@ export function MessageThread({ conversationId }: { conversationId: string }) {
     return (
       <ErrorState
         className="py-16"
-        title="Couldn't load messages"
+        title={t("couldntLoadMessages")}
         description={error instanceof Error ? error.message : undefined}
         onRetry={() => refetch()}
       />
@@ -66,8 +68,8 @@ export function MessageThread({ conversationId }: { conversationId: string }) {
       <EmptyState
         className="py-16"
         icon={ChatBubbleLeftRightIcon}
-        title="No messages yet"
-        description="This thread hasn't received anything yet."
+        title={t("noMessagesYet")}
+        description={t("noMessagesDescription")}
       />
     );
   }
@@ -82,7 +84,7 @@ export function MessageThread({ conversationId }: { conversationId: string }) {
           onClick={() => fetchNextPage()}
           disabled={isFetchingNextPage}
         >
-          {isFetchingNextPage ? "Loading…" : "Load older messages"}
+          {isFetchingNextPage ? t("loadingMore") : t("loadOlderMessages")}
         </Button>
       )}
       {messages.map((message) => (

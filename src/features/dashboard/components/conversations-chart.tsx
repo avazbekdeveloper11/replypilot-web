@@ -11,11 +11,13 @@ import {
   type ChartOptions,
 } from "chart.js";
 import { Line } from "react-chartjs-2";
+import { useLocale, useTranslations } from "next-intl";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { ErrorState } from "@/components/feedback/error-state";
 import { useConversationsTimeSeries } from "../hooks/use-conversations-timeseries";
+import { intlLocale, type Locale } from "@/i18n/config";
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Tooltip, Filler);
 
@@ -52,12 +54,14 @@ const CHART_OPTIONS: ChartOptions<"line"> = {
  * charts) — this is a deliberate, scoped exception, not drift. */
 export function ConversationsChart() {
   const { data, isPending, isError, error, refetch } = useConversationsTimeSeries(7);
+  const t = useTranslations("dashboard");
+  const locale = useLocale() as Locale;
 
   return (
     <Card>
       <CardHeader>
         <CardTitle className="text-sm font-medium">
-          Conversations — last 7 days
+          {t("conversationsLastNDays", { days: 7 })}
         </CardTitle>
       </CardHeader>
       <CardContent>
@@ -65,7 +69,7 @@ export function ConversationsChart() {
           <Skeleton className="h-56 w-full" />
         ) : isError ? (
           <ErrorState
-            title="Couldn't load chart data"
+            title={t("couldntLoadChartData")}
             description={error instanceof Error ? error.message : undefined}
             onRetry={() => refetch()}
           />
@@ -75,7 +79,7 @@ export function ConversationsChart() {
               options={CHART_OPTIONS}
               data={{
                 labels: (data ?? []).map((p) =>
-                  new Date(p.date).toLocaleDateString(undefined, {
+                  new Date(p.date).toLocaleDateString(intlLocale(locale), {
                     month: "short",
                     day: "numeric",
                   }),

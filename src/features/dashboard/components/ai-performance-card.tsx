@@ -1,6 +1,7 @@
 "use client";
 
 import { SparklesIcon } from "@heroicons/react/24/outline";
+import { useTranslations } from "next-intl";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -20,11 +21,13 @@ import { formatDuration, formatPercent } from "../lib/format";
  */
 export function AIPerformanceCard() {
   const { data, isPending, isError, error, refetch } = useAIPerformance();
+  const t = useTranslations("dashboard");
+  const tt = useTranslations("time");
 
   return (
     <Card>
       <CardHeader className="flex flex-row items-center justify-between gap-2">
-        <CardTitle className="text-sm font-medium">AI performance</CardTitle>
+        <CardTitle className="text-sm font-medium">{t("aiPerformance")}</CardTitle>
         <SparklesIcon className="size-4 text-muted-foreground" aria-hidden="true" />
       </CardHeader>
       <CardContent>
@@ -35,41 +38,41 @@ export function AIPerformanceCard() {
           </div>
         ) : isError ? (
           <ErrorState
-            title="Couldn't load AI performance"
+            title={t("couldntLoadAiPerformance")}
             description={error instanceof Error ? error.message : undefined}
             onRetry={() => refetch()}
           />
         ) : !data || data.total_responses === 0 ? (
           <EmptyState
-            title="No AI activity yet"
-            description="This project's AI reply pipeline hasn't been built yet — there's nothing in ai_responses to report on. This card will populate automatically once it exists."
+            title={t("noAiActivityYet")}
+            description={t("noAiActivityDescription")}
             className="py-8"
           />
         ) : (
           <dl className="grid grid-cols-3 gap-4">
             <div>
-              <dt className="text-xs text-muted-foreground">Responses</dt>
+              <dt className="text-xs text-muted-foreground">{t("responses")}</dt>
               <dd className="text-lg font-semibold tabular-nums">
                 {data.total_responses.toLocaleString()}
               </dd>
             </div>
             <div>
-              <dt className="text-xs text-muted-foreground">Avg. confidence</dt>
+              <dt className="text-xs text-muted-foreground">{t("avgConfidence")}</dt>
               <dd className="text-lg font-semibold tabular-nums">
                 {data.avg_confidence != null ? formatPercent(data.avg_confidence) : "—"}
               </dd>
             </div>
             <div>
-              <dt className="text-xs text-muted-foreground">Handoff rate</dt>
+              <dt className="text-xs text-muted-foreground">{t("handoffRate")}</dt>
               <dd className="text-lg font-semibold tabular-nums">
                 {data.handoff_rate != null ? formatPercent(data.handoff_rate) : "—"}
               </dd>
             </div>
             <div className="col-span-3">
-              <dt className="text-xs text-muted-foreground">Avg. latency</dt>
+              <dt className="text-xs text-muted-foreground">{t("avgLatency")}</dt>
               <dd className="text-lg font-semibold tabular-nums">
                 {data.avg_latency_ms != null
-                  ? formatDuration(data.avg_latency_ms / 1000)
+                  ? formatDuration(data.avg_latency_ms / 1000, tt)
                   : "—"}
               </dd>
             </div>

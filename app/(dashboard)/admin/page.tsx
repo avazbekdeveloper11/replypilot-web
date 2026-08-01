@@ -1,17 +1,16 @@
 import type { Metadata } from "next";
+import { getTranslations } from "next-intl/server";
 
 import { PageHeader } from "@/components/layout/page-header";
 import { AdminView } from "@/features/admin/components/admin-view";
 
 export const metadata: Metadata = { title: "Admin" };
 
-export default function AdminPage() {
+export default async function AdminPage() {
+  const t = await getTranslations("admin");
   return (
     <>
-      <PageHeader
-        title="Admin"
-        description="Platform-wide view across every organization. Visible to ReplyPilot staff only."
-      />
+      <PageHeader title={t("pageTitle")} description={t("pageDescription")} />
       <AdminView />
     </>
   );

@@ -3,6 +3,7 @@
 import * as React from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useTranslations } from "next-intl";
 import { PlusIcon } from "@heroicons/react/24/outline";
 
 import { Button } from "@/components/ui/button";
@@ -27,7 +28,7 @@ import {
 import { FormAlert } from "@/components/feedback/form-alert";
 import { ApiError } from "@/lib/api/errors";
 
-import { inviteSchema, type InviteValues } from "../schemas/invite.schema";
+import { buildInviteSchema, type InviteValues } from "../schemas/invite.schema";
 import { useRoles } from "../hooks/use-roles";
 import { useInviteMember } from "../hooks/use-invite-member";
 
@@ -41,6 +42,10 @@ export function InviteMemberDialog() {
   const [open, setOpen] = React.useState(false);
   const rolesQuery = useRoles();
   const inviteMutation = useInviteMember();
+  const t = useTranslations("team");
+  const tv = useTranslations("validation");
+
+  const inviteSchema = React.useMemo(() => buildInviteSchema(tv), [tv]);
 
   const form = useForm<InviteValues>({
     resolver: zodResolver(inviteSchema),
@@ -71,21 +76,18 @@ export function InviteMemberDialog() {
       <DialogTrigger asChild>
         <Button size="sm">
           <PlusIcon className="size-4" />
-          Invite member
+          {t("inviteMember")}
         </Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Invite a team member</DialogTitle>
-          <DialogDescription>
-            They need an existing ReplyPilot account — ask them to sign up first if
-            they don&apos;t have one yet.
-          </DialogDescription>
+          <DialogTitle>{t("inviteMemberTitle")}</DialogTitle>
+          <DialogDescription>{t("inviteMemberDescription")}</DialogDescription>
         </DialogHeader>
 
         <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-4" noValidate>
           <div className="flex flex-col gap-1.5">
-            <Label htmlFor="invite-email">Email</Label>
+            <Label htmlFor="invite-email">{t("emailLabel")}</Label>
             <Input
               id="invite-email"
               type="email"
@@ -99,13 +101,13 @@ export function InviteMemberDialog() {
           </div>
 
           <div className="flex flex-col gap-1.5">
-            <Label htmlFor="invite-role">Role</Label>
+            <Label htmlFor="invite-role">{t("role")}</Label>
             <Select
               value={form.watch("role_id")}
               onValueChange={(value) => form.setValue("role_id", value, { shouldValidate: true })}
             >
               <SelectTrigger id="invite-role" className="w-full">
-                <SelectValue placeholder="Select a role" />
+                <SelectValue placeholder={t("selectRolePlaceholder")} />
               </SelectTrigger>
               <SelectContent>
                 {(rolesQuery.data ?? []).map((role) => (
@@ -124,13 +126,13 @@ export function InviteMemberDialog() {
             <FormAlert variant="error">
               {inviteMutation.error instanceof ApiError
                 ? inviteMutation.error.message
-                : "Something went wrong. Please try again."}
+                : t("genericError")}
             </FormAlert>
           )}
 
           <DialogFooter>
             <Button type="submit" disabled={inviteMutation.isPending}>
-              {inviteMutation.isPending ? "Inviting…" : "Send invite"}
+              {inviteMutation.isPending ? t("inviting") : t("sendInvite")}
             </Button>
           </DialogFooter>
         </form>

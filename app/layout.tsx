@@ -1,5 +1,7 @@
 import type * as React from "react";
 import type { Metadata } from "next";
+import { NextIntlClientProvider } from "next-intl";
+import { getLocale, getMessages } from "next-intl/server";
 
 import { siteConfig } from "@/config/site";
 import { AppProviders } from "@/lib/providers";
@@ -22,14 +24,20 @@ export const metadata: Metadata = {
   description: siteConfig.description,
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  // Resolved by src/i18n/request.ts from the NEXT_LOCALE cookie (see that
+  // file's doc comment) — awaited here once and handed to both <html lang>
+  // and the client-side i18n context in one pass.
+  const locale = await getLocale();
+  const messages = await getMessages();
+
   return (
     <html
-      lang="en"
+      lang={locale}
       // suppressHydrationWarning is required with next-themes: the class
       // attribute it sets before hydration legitimately differs from the
       // server-rendered markup, and that's expected, not a bug.
@@ -37,7 +45,9 @@ export default function RootLayout({
       className="h-full antialiased"
     >
       <body className="flex min-h-full flex-col font-sans">
-        <AppProviders>{children}</AppProviders>
+        <NextIntlClientProvider locale={locale} messages={messages}>
+          <AppProviders>{children}</AppProviders>
+        </NextIntlClientProvider>
       </body>
     </html>
   );

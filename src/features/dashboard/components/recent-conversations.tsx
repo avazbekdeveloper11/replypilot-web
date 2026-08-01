@@ -1,6 +1,7 @@
 "use client";
 
 import { ChatBubbleLeftRightIcon } from "@heroicons/react/24/outline";
+import { useTranslations } from "next-intl";
 
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -27,12 +28,15 @@ const STATUS_VARIANT: Record<string, "brand" | "warning" | "secondary" | "succes
   closed: "secondary",
 };
 
-const STATUS_LABEL: Record<string, string> = {
-  ai_active: "AI active",
-  pending_human: "Pending human",
-  human_active: "Human active",
-  resolved: "Resolved",
-  closed: "Closed",
+/** Keys into the shared "conversationStatus" message namespace — reused
+ * verbatim by features/conversations and features/ai-inbox, which show
+ * the same status vocabulary. */
+const STATUS_LABEL_KEY: Record<string, string> = {
+  ai_active: "aiActive",
+  pending_human: "pendingHuman",
+  human_active: "humanActive",
+  resolved: "resolved",
+  closed: "closed",
 };
 
 /** Recent Conversations widget — GET /v1/conversations?limit=5, newest
@@ -41,45 +45,48 @@ const STATUS_LABEL: Record<string, string> = {
  * read-only for now. */
 export function RecentConversations() {
   const { data, isPending, isError, error, refetch } = useRecentConversations(5);
+  const t = useTranslations("dashboard");
+  const ts = useTranslations("conversationStatus");
+  const tt = useTranslations("time");
 
   return (
     <Card>
       <CardHeader>
-        <CardTitle className="text-sm font-medium">Recent conversations</CardTitle>
+        <CardTitle className="text-sm font-medium">{t("recentConversations")}</CardTitle>
       </CardHeader>
       <CardContent>
         {isPending ? (
           <TableSkeleton columns={3} rows={5} />
         ) : isError ? (
           <ErrorState
-            title="Couldn't load conversations"
+            title={t("couldntLoadConversations")}
             description={error instanceof Error ? error.message : undefined}
             onRetry={() => refetch()}
           />
         ) : !data || data.length === 0 ? (
           <EmptyState
             icon={ChatBubbleLeftRightIcon}
-            title="No conversations yet"
-            description="New Instagram DMs will show up here as soon as a connected account receives one."
+            title={t("noConversationsYet")}
+            description={t("noConversationsDescription")}
             className="py-8"
           />
         ) : (
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead>Customer</TableHead>
-                <TableHead>Status</TableHead>
-                <TableHead className="text-right">Last message</TableHead>
+                <TableHead>{t("customer")}</TableHead>
+                <TableHead>{t("status")}</TableHead>
+                <TableHead className="text-right">{t("lastMessage")}</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               {data.map((conv: ConversationSummary) => (
                 <TableRow key={conv.id}>
                   <TableCell className="font-medium">
-                    {conv.customer_username ?? "Unknown"}
+                    {conv.customer_username ?? t("unknown")}
                     {conv.unread_count > 0 && (
                       <Badge variant="brand" className="ml-2">
-                        {conv.unread_count} new
+                        {t("newCount", { count: conv.unread_count })}
                       </Badge>
                     )}
                     {conv.last_message_preview && (
@@ -90,11 +97,11 @@ export function RecentConversations() {
                   </TableCell>
                   <TableCell>
                     <Badge variant={STATUS_VARIANT[conv.status] ?? "secondary"}>
-                      {STATUS_LABEL[conv.status] ?? conv.status}
+                      {STATUS_LABEL_KEY[conv.status] ? ts(STATUS_LABEL_KEY[conv.status]) : conv.status}
                     </Badge>
                   </TableCell>
                   <TableCell className="text-right text-xs text-muted-foreground">
-                    {conv.last_message_at ? formatRelativeTime(conv.last_message_at) : "—"}
+                    {conv.last_message_at ? formatRelativeTime(conv.last_message_at, tt) : "—"}
                   </TableCell>
                 </TableRow>
               ))}

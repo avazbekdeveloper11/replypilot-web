@@ -1,6 +1,7 @@
 "use client";
 
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/outline";
+import { useTranslations } from "next-intl";
 
 import { useUIStore } from "@/stores/ui-store";
 import { cn } from "@/lib/utils";
@@ -16,6 +17,7 @@ import { SidebarNav } from "./sidebar-nav";
 export function Sidebar() {
   const collapsed = useUIStore((s) => s.sidebarCollapsed);
   const toggleCollapsed = useUIStore((s) => s.toggleSidebarCollapsed);
+  const t = useTranslations("nav");
 
   return (
     <aside
@@ -36,7 +38,7 @@ export function Sidebar() {
           size="icon"
           className="w-full text-sidebar-foreground/70 hover:text-sidebar-foreground"
           onClick={toggleCollapsed}
-          aria-label={collapsed ? "Expand sidebar" : "Collapse sidebar"}
+          aria-label={collapsed ? t("expandSidebar") : t("collapseSidebar")}
         >
           {collapsed ? (
             <ChevronRightIcon className="size-4.5" />

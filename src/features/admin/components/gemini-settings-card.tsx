@@ -1,7 +1,9 @@
 "use client";
 
+import * as React from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useTranslations, useLocale } from "next-intl";
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -11,10 +13,14 @@ import { Label } from "@/components/ui/label";
 import { FormAlert } from "@/components/feedback/form-alert";
 import { Skeleton } from "@/components/ui/skeleton";
 import { ApiError } from "@/lib/api/errors";
+import { intlLocale, type Locale } from "@/i18n/config";
 
 import { useGeminiSettings } from "../hooks/use-gemini-settings";
 import { useSetGeminiSettings } from "../hooks/use-set-gemini-settings";
-import { geminiSettingsSchema, type GeminiSettingsValues } from "../schemas/gemini-settings.schema";
+import {
+  buildGeminiSettingsSchema,
+  type GeminiSettingsValues,
+} from "../schemas/gemini-settings.schema";
 
 /**
  * Write-only by design, same principle as ChangePasswordForm: once a key
@@ -31,6 +37,11 @@ import { geminiSettingsSchema, type GeminiSettingsValues } from "../schemas/gemi
 export function GeminiSettingsCard() {
   const { data, isPending, isError, error } = useGeminiSettings();
   const mutation = useSetGeminiSettings();
+  const t = useTranslations("admin");
+  const tv = useTranslations("validation");
+  const locale = useLocale() as Locale;
+
+  const geminiSettingsSchema = React.useMemo(() => buildGeminiSettingsSchema(tv), [tv]);
 
   const form = useForm<GeminiSettingsValues>({
     resolver: zodResolver(geminiSettingsSchema),
@@ -46,32 +57,30 @@ export function GeminiSettingsCard() {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Gemini API key</CardTitle>
+        <CardTitle>{t("geminiApiKey")}</CardTitle>
       </CardHeader>
       <CardContent className="flex flex-col gap-4">
-        <p className="text-sm text-muted-foreground">
-          Used for AI reply generation and knowledge-base embeddings across every
-          organization. Rotating it here reaches both the API service and the AI
-          worker automatically — no redeploy needed.
-        </p>
+        <p className="text-sm text-muted-foreground">{t("geminiApiKeyDescription")}</p>
 
         {isPending ? (
           <Skeleton className="h-5 w-40" />
         ) : isError ? (
           <FormAlert variant="error">
-            {error instanceof ApiError ? error.message : "Couldn't load status."}
+            {error instanceof ApiError ? error.message : t("couldntLoadStatus")}
           </FormAlert>
         ) : (
           <div className="flex items-center gap-2 text-sm">
-            <span className="text-muted-foreground">Status:</span>
+            <span className="text-muted-foreground">{t("statusLabel")}</span>
             {data?.configured ? (
-              <Badge variant="success">Configured</Badge>
+              <Badge variant="success">{t("configured")}</Badge>
             ) : (
-              <Badge variant="warning">Not configured</Badge>
+              <Badge variant="warning">{t("notConfigured")}</Badge>
             )}
             {data?.configured && data.updated_at && (
               <span className="text-xs text-muted-foreground">
-                Last updated {new Date(data.updated_at).toLocaleString()}
+                {t("lastUpdated", {
+                  date: new Date(data.updated_at).toLocaleString(intlLocale(locale)),
+                })}
               </span>
             )}
           </div>
@@ -80,7 +89,7 @@ export function GeminiSettingsCard() {
         <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-3" noValidate>
           <div className="flex flex-col gap-1.5">
             <Label htmlFor="gemini_api_key">
-              {data?.configured ? "Rotate key" : "Set key"}
+              {data?.configured ? t("rotateKey") : t("setKey")}
             </Label>
             <Input
               id="gemini_api_key"
@@ -94,7 +103,7 @@ export function GeminiSettingsCard() {
               <p className="text-xs text-destructive">{form.formState.errors.api_key.message}</p>
             )}
             <p className="text-xs text-muted-foreground">
-              Get a key at{" "}
+              {t("getKeyAt")}{" "}
               <a
                 href="https://aistudio.google.com/apikey"
                 target="_blank"
@@ -103,24 +112,21 @@ export function GeminiSettingsCard() {
               >
                 aistudio.google.com/apikey
               </a>
-              . Real Gemini keys start with &quot;AIzaSy&quot; — double-check before
-              saving.
+              . {t("realKeyHint")}
             </p>
           </div>
 
           {mutation.isError && (
             <FormAlert variant="error">
-              {mutation.error instanceof ApiError
-                ? mutation.error.message
-                : "Something went wrong. Please try again."}
+              {mutation.error instanceof ApiError ? mutation.error.message : t("genericError")}
             </FormAlert>
           )}
 
-          {mutation.isSuccess && <FormAlert variant="success">Key saved.</FormAlert>}
+          {mutation.isSuccess && <FormAlert variant="success">{t("keySaved")}</FormAlert>}
 
           <div>
             <Button type="submit" disabled={mutation.isPending}>
-              {mutation.isPending ? "Saving…" : data?.configured ? "Rotate key" : "Save key"}
+              {mutation.isPending ? t("saving") : data?.configured ? t("rotateKey") : t("saveKey")}
             </Button>
           </div>
         </form>

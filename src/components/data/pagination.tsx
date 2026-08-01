@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/outline";
 
 import { cn } from "@/lib/utils";
@@ -29,6 +30,8 @@ export function Pagination({
   label?: string;
   className?: string;
 }) {
+  const t = useTranslations("common");
+
   return (
     <div
       className={cn(
@@ -45,7 +48,7 @@ export function Pagination({
           onClick={onPrev}
         >
           <ChevronLeftIcon className="size-4" />
-          Previous
+          {t("previous")}
         </Button>
         <Button
           variant="outline"
@@ -53,7 +56,7 @@ export function Pagination({
           disabled={!hasNext}
           onClick={onNext}
         >
-          Next
+          {t("next")}
           <ChevronRightIcon className="size-4" />
         </Button>
       </div>

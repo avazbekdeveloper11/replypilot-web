@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { LinkIcon } from "@heroicons/react/24/outline";
 
 import { Badge } from "@/components/ui/badge";
@@ -19,15 +20,19 @@ const STATUS_VARIANT: Record<string, "success" | "warning" | "destructive" | "se
   error: "destructive",
 };
 
-const STATUS_HINT: Record<string, string> = {
-  connected: "Active — receiving and replying to DMs.",
-  expired: "Access token expired. Reconnect to resume replies.",
-  revoked: "Access was revoked from Instagram's side. Reconnect to resume replies.",
-  error: "Something went wrong with this connection. Reconnect to resume replies.",
+// Keys into the "instagram" namespace's accountStatusHint.* — see
+// instagramAccountStatus namespace for the badge label equivalent.
+const STATUS_HINT_KEY: Record<string, string> = {
+  connected: "accountStatusHintConnected",
+  expired: "accountStatusHintExpired",
+  revoked: "accountStatusHintRevoked",
+  error: "accountStatusHintError",
 };
 
 export function ConnectedAccountsList() {
   const { data, isPending, isError, error, refetch } = useInstagramAccounts();
+  const t = useTranslations("instagram");
+  const tStatus = useTranslations("instagramAccountStatus");
 
   if (isPending) {
     return (
@@ -46,7 +51,7 @@ export function ConnectedAccountsList() {
         <CardContent className="p-0">
           <ErrorState
             className="py-16"
-            title="Couldn't load connected accounts"
+            title={t("couldntLoadAccounts")}
             description={error instanceof Error ? error.message : undefined}
             onRetry={() => refetch()}
           />
@@ -61,8 +66,8 @@ export function ConnectedAccountsList() {
         <CardContent className="p-0">
           <EmptyState
             icon={LinkIcon}
-            title="No Instagram account connected"
-            description="Connect your Instagram Business account so ReplyPilot can read and reply to your DMs."
+            title={t("noAccountConnected")}
+            description={t("noAccountConnectedDescription")}
             action={<ConnectInstagramButton />}
             className="py-16"
           />
@@ -79,14 +84,14 @@ export function ConnectedAccountsList() {
             <div className="flex flex-col gap-1">
               <div className="flex items-center gap-2">
                 <span className="text-sm font-medium text-foreground">
-                  @{account.username ?? "unknown"}
+                  @{account.username ?? t("unknownUsername")}
                 </span>
                 <Badge variant={STATUS_VARIANT[account.status] ?? "secondary"}>
-                  {account.status}
+                  {tStatus.has(account.status) ? tStatus(account.status) : account.status}
                 </Badge>
               </div>
               <span className="text-xs text-muted-foreground">
-                {STATUS_HINT[account.status] ?? ""}
+                {STATUS_HINT_KEY[account.status] ? t(STATUS_HINT_KEY[account.status]) : ""}
               </span>
             </div>
             <div className="flex items-center gap-2">
