@@ -4,6 +4,13 @@ import createNextIntlPlugin from "next-intl/plugin";
 const withNextIntl = createNextIntlPlugin("./src/i18n/request.ts");
 
 const nextConfig: NextConfig = {
+  // Produces a self-contained .next/standalone/ folder (server + only the
+  // node_modules actually used, traced via `next build`) instead of
+  // requiring the full node_modules tree at runtime. This is what makes
+  // the Dockerfile's runtime stage small — copy that one folder instead
+  // of npm-installing production deps into the final image.
+  output: "standalone",
+
   // Next.js 15's dev server blocks requests whose Host doesn't match
   // localhost by default (cross-origin request protection). The
   // Instagram OAuth connect flow requires HTTPS, which localhost can't
