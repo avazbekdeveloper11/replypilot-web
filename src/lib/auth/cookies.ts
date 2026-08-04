@@ -12,16 +12,31 @@ export const ACCESS_TOKEN_COOKIE = "rp_access_token";
 export const REFRESH_TOKEN_COOKIE = "rp_refresh_token";
 
 // The Go API's AuthResponse includes `expires_at` for the access token,
-// so its cookie maxAge is computed exactly from that. The refresh token
-// has no such field in the response — this mirrors the backend's own
-// default (JWT_REFRESH_TTL=168h in backend/.env.example). If that default
-// changes, update this constant too; there's no way to derive it from the
-// login response as-is.
+// but the access-token COOKIE deliberately does NOT expire at that exact
+// moment — see the bug this fixed: middleware.ts's auth gate only checks
+// cookie *presence*, not the token's actual validity, on the theory that
+// a present-but-expired token would still reach a Route Handler and get a
+// real 401 from the Go API, which `lib/api/client.ts`'s `apiFetch` then
+// silently recovers from via POST /api/auth/refresh. That recovery path
+// only gets a chance to run if the cookie is still THERE when the expired
+// token is used — with maxAge pinned to the JWT's own short TTL
+// (JWT_ACCESS_TTL, 15m by default), the cookie vanished from the browser
+// at exactly that mark, so middleware saw "no cookie" on the very next
+// navigation and hard-redirected to /login before any fetch/refresh logic
+// ever ran. Users saw this as "I get logged out constantly, and logging
+// back in immediately works" — logging back in worked because the
+// refresh token (7-day cookie) was still valid the whole time; nothing
+// was actually wrong with the session, the access-token cookie's own
+// lifetime was just shorter than the thing it gates.
+//
+// Both cookies now live for the refresh token's lifetime. The access
+// token's real, short TTL is still enforced — by the Go API rejecting it
+// with 401 once expired — not by the browser deleting the cookie early.
 const REFRESH_TOKEN_MAX_AGE_SECONDS = 7 * 24 * 60 * 60;
 
 interface SetAuthCookiesInput {
   accessToken: string;
-  accessTokenExpiresAt: string; // ISO8601, from AuthResponse.expires_at
+  accessTokenExpiresAt: string; // ISO8601, from AuthResponse.expires_at — no longer used for the cookie's own maxAge (see doc comment above), kept in the input shape in case a caller wants it later.
   refreshToken: string;
 }
 
@@ -29,17 +44,12 @@ export async function setAuthCookies(input: SetAuthCookiesInput) {
   const store = await cookies();
   const isProd = process.env.NODE_ENV === "production";
 
-  const accessMaxAge = Math.max(
-    0,
-    Math.floor((new Date(input.accessTokenExpiresAt).getTime() - Date.now()) / 1000),
-  );
-
   store.set(ACCESS_TOKEN_COOKIE, input.accessToken, {
     httpOnly: true,
     secure: isProd,
     sameSite: "lax",
     path: "/",
-    maxAge: accessMaxAge,
+    maxAge: REFRESH_TOKEN_MAX_AGE_SECONDS,
   });
 
   store.set(REFRESH_TOKEN_COOKIE, input.refreshToken, {
