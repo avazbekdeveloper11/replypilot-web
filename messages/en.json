@@ -50,7 +50,7 @@
     "loadingMore": "Loading…",
     "nothingWaitingDescription": "The AI is confidently handling every open conversation right now — low-confidence handoffs will show up here.",
     "nothingWaitingTitle": "Nothing waiting on a human",
-    "pageDescription": "Conversations the AI wasn't confident enough to answer on its own — take one over to reply yourself.",
+    "pageDescription": "The AI already replied to these, but flagged its own answer as low-confidence — worth a quick review. Take one over to reply yourself.",
     "pageTitle": "AI Inbox",
     "takeOver": "Take over",
     "unknownCustomer": "Unknown customer"
