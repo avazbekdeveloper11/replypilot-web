@@ -10,6 +10,12 @@ import { z } from "zod";
  * (CONFLICT from the API) is something the user can just retype, not a
  * dead end.
  *
+ * Split into two steps to match the backend's OTP-gated registration flow
+ * (auth.UseCase.RequestRegistrationCode + Register with Code): this schema
+ * covers step 1 (account details, submitted to request a code); the code
+ * itself is validated separately by buildRegisterCodeSchema below, since
+ * it doesn't exist yet when this step's form mounts.
+ *
  * A factory, not a module-level constant — see login.schema.ts's doc
  * comment on why (no React context at zod-schema-definition time).
  */
@@ -37,3 +43,16 @@ export function buildRegisterSchema(t: (key: string) => string) {
 }
 
 export type RegisterValues = z.infer<ReturnType<typeof buildRegisterSchema>>;
+
+/** Step 2 — the 6-digit code sent to the address entered in step 1. */
+export function buildRegisterCodeSchema(t: (key: string) => string) {
+  return z.object({
+    code: z
+      .string()
+      .min(1, t("codeRequired"))
+      .length(6, t("codeLength"))
+      .regex(/^\d+$/, t("codeLength")),
+  });
+}
+
+export type RegisterCodeValues = z.infer<ReturnType<typeof buildRegisterCodeSchema>>;

@@ -19,13 +19,15 @@ export async function POST(request: Request) {
     !body?.organization_slug ||
     !body?.full_name ||
     !body?.email ||
-    !body?.password
+    !body?.password ||
+    !body?.code
   ) {
     return NextResponse.json(
       {
         error: {
           code: "INVALID_INPUT",
-          message: "organization_name, organization_slug, full_name, email, and password are required",
+          message:
+            "organization_name, organization_slug, full_name, email, password, and code are required",
         },
       },
       { status: 400 },
@@ -41,6 +43,7 @@ export async function POST(request: Request) {
         full_name: body.full_name,
         email: body.email,
         password: body.password,
+        code: body.code,
       }),
     });
 

@@ -1,33 +1,16 @@
-import { Suspense } from "react";
+import { redirect } from "next/navigation";
 import type { Metadata } from "next";
 
-import { ResetPasswordForm } from "@/features/auth/components/reset-password-form";
-import { Card, CardContent } from "@/components/ui/card";
-import { Skeleton } from "@/components/ui/skeleton";
+export const metadata: Metadata = { title: "Reset password" };
 
-export const metadata: Metadata = { title: "Set a new password" };
-
-// ResetPasswordForm reads the `token` query param via useSearchParams(),
-// which Next.js requires to be wrapped in Suspense — without it the
-// whole route would be forced into fully client-side rendering (App
-// Router build-time requirement, not a stylistic choice).
+/**
+ * The backend no longer issues link-tokens for password reset (see
+ * auth.UseCase.ResetPassword — now verifies a 6-digit OTP against
+ * {email, code}, not a `?token=` query param). The whole flow now lives
+ * on /forgot-password (email -> code -> new password), so any old email
+ * still pointing at /reset-password?token=... is redirected there rather
+ * than 404ing.
+ */
 export default function ResetPasswordPage() {
-  return (
-    <Suspense fallback={<ResetPasswordSkeleton />}>
-      <ResetPasswordForm />
-    </Suspense>
-  );
-}
-
-function ResetPasswordSkeleton() {
-  return (
-    <Card>
-      <CardContent className="flex flex-col gap-4 pt-6">
-        <Skeleton className="h-5 w-40" />
-        <Skeleton className="h-9 w-full" />
-        <Skeleton className="h-9 w-full" />
-        <Skeleton className="h-9 w-full" />
-      </CardContent>
-    </Card>
-  );
+  redirect("/forgot-password");
 }
