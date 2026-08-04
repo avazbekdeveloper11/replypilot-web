@@ -5,13 +5,21 @@ import { useTranslations } from "next-intl";
 import { ArrowLeftIcon } from "@heroicons/react/24/outline";
 
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { ErrorState } from "@/components/feedback/error-state";
+import { FormAlert } from "@/components/feedback/form-alert";
 import { InstagramProfileLink } from "@/components/data/instagram-profile-link";
+import { ApiError } from "@/lib/api/errors";
 
 import { useConversation } from "../hooks/use-conversation";
+import { useResolveConversation } from "../hooks/use-resolve-conversation";
 import { MessageThread } from "./message-thread";
+
+/** Resolve is only valid from these two — see the backend usecase.Resolve
+ * doc comment on why ai_active is deliberately excluded. */
+const RESOLVABLE_STATUSES = new Set(["human_active", "pending_human"]);
 
 const STATUS_VARIANT: Record<string, "brand" | "warning" | "secondary" | "success"> = {
   ai_active: "brand",
@@ -38,8 +46,11 @@ const STATUS_LABEL_KEY: Record<string, string> = {
  */
 export function ConversationDetailView({ conversationId }: { conversationId: string }) {
   const { data, isPending, isError, error, refetch } = useConversation(conversationId);
+  const resolveMutation = useResolveConversation();
   const t = useTranslations("conversations");
   const ts = useTranslations("conversationStatus");
+
+  const canResolve = !!data && RESOLVABLE_STATUSES.has(data.status);
 
   return (
     <div className="flex h-[calc(100vh-8rem)] flex-col gap-4">
@@ -66,12 +77,33 @@ export function ConversationDetailView({ conversationId }: { conversationId: str
                   className="text-sm font-semibold"
                 />
               </div>
-              <Badge variant={STATUS_VARIANT[data?.status ?? ""] ?? "secondary"}>
-                {STATUS_LABEL_KEY[data?.status ?? ""] ? ts(STATUS_LABEL_KEY[data?.status ?? ""]) : data?.status}
-              </Badge>
+              <div className="flex items-center gap-2">
+                <Badge variant={STATUS_VARIANT[data?.status ?? ""] ?? "secondary"}>
+                  {STATUS_LABEL_KEY[data?.status ?? ""] ? ts(STATUS_LABEL_KEY[data?.status ?? ""]) : data?.status}
+                </Badge>
+                {canResolve && (
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    disabled={resolveMutation.isPending}
+                    onClick={() => resolveMutation.mutate(conversationId)}
+                  >
+                    {resolveMutation.isPending ? t("resolving") : t("markResolved")}
+                  </Button>
+                )}
+              </div>
             </>
           )}
         </CardHeader>
+        {resolveMutation.isError && (
+          <div className="border-b border-border px-4 py-2">
+            <FormAlert variant="error">
+              {resolveMutation.error instanceof ApiError
+                ? resolveMutation.error.message
+                : t("genericError")}
+            </FormAlert>
+          </div>
+        )}
         <CardContent className="flex-1 overflow-hidden p-0">
           {isError ? (
             <ErrorState

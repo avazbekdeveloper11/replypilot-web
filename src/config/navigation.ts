@@ -11,6 +11,7 @@ import {
   ShieldCheckIcon,
   LinkIcon,
   CubeIcon,
+  PhoneIcon,
 } from "@heroicons/react/24/outline";
 
 export type IconType = ComponentType<SVGProps<SVGSVGElement>>;
@@ -54,6 +55,7 @@ export const navigation: NavGroup[] = [
         matchPrefix: true,
       },
       { titleKey: "aiInbox", href: "/ai-inbox", icon: SparklesIcon },
+      { titleKey: "leads", href: "/leads", icon: PhoneIcon },
       {
         titleKey: "knowledgeBase",
         href: "/knowledge-base",

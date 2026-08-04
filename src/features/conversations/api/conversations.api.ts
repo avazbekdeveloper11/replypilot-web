@@ -31,3 +31,9 @@ export function listMessages(id: string, params: { cursor?: string; limit?: numb
 export function takeOverConversation(id: string) {
   return apiFetch<Conversation>(`/api/conversations/${id}/take-over`, { method: "PATCH" });
 }
+
+/** Only valid from status=human_active or pending_human — see the backend
+ * usecase's doc comment on Resolve. */
+export function resolveConversation(id: string) {
+  return apiFetch<Conversation>(`/api/conversations/${id}/resolve`, { method: "PATCH" });
+}
