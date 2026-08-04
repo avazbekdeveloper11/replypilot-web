@@ -3,11 +3,12 @@
 import * as React from "react";
 import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
-import { ChatBubbleLeftRightIcon } from "@heroicons/react/24/outline";
+import { ChatBubbleLeftRightIcon, MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { EmptyState } from "@/components/data/empty-state";
 import { ErrorState } from "@/components/feedback/error-state";
@@ -45,8 +46,23 @@ const FILTER_VALUES: (ConversationStatus | "all")[] = [
   "closed",
 ];
 
+/** Debounced by hand rather than a shared hook — this is the only search
+ * input in the app so far; extract a `useDebouncedValue` hook if a second
+ * one shows up. 300ms keeps refetches off single keystrokes without
+ * feeling laggy. */
+function useDebouncedValue<T>(value: T, delayMs: number): T {
+  const [debounced, setDebounced] = React.useState(value);
+  React.useEffect(() => {
+    const timer = setTimeout(() => setDebounced(value), delayMs);
+    return () => clearTimeout(timer);
+  }, [value, delayMs]);
+  return debounced;
+}
+
 export function ConversationList() {
   const [filter, setFilter] = React.useState<ConversationStatus | "all">("all");
+  const [searchInput, setSearchInput] = React.useState("");
+  const search = useDebouncedValue(searchInput, 300);
   const router = useRouter();
   const t = useTranslations("conversations");
   const ts = useTranslations("conversationStatus");
@@ -60,21 +76,35 @@ export function ConversationList() {
     fetchNextPage,
     hasNextPage,
     isFetchingNextPage,
-  } = useConversations(filter === "all" ? undefined : filter);
+  } = useConversations(filter === "all" ? undefined : filter, search || undefined);
 
   const conversations = data?.pages.flat() ?? [];
 
   return (
     <div className="flex flex-col gap-4">
-      <Tabs value={filter} onValueChange={(v) => setFilter(v as ConversationStatus | "all")}>
-        <TabsList>
-          {FILTER_VALUES.map((value) => (
-            <TabsTrigger key={value} value={value}>
-              {value === "all" ? ts("all") : ts(STATUS_LABEL_KEY[value])}
-            </TabsTrigger>
-          ))}
-        </TabsList>
-      </Tabs>
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+        <Tabs value={filter} onValueChange={(v) => setFilter(v as ConversationStatus | "all")}>
+          <TabsList>
+            {FILTER_VALUES.map((value) => (
+              <TabsTrigger key={value} value={value}>
+                {value === "all" ? ts("all") : ts(STATUS_LABEL_KEY[value])}
+              </TabsTrigger>
+            ))}
+          </TabsList>
+        </Tabs>
+
+        <div className="relative w-full sm:max-w-xs">
+          <MagnifyingGlassIcon className="pointer-events-none absolute top-1/2 left-2.5 size-4 -translate-y-1/2 text-muted-foreground" />
+          <Input
+            type="search"
+            value={searchInput}
+            onChange={(e) => setSearchInput(e.target.value)}
+            placeholder={t("searchByCustomer")}
+            className="pl-8"
+            aria-label={t("searchByCustomer")}
+          />
+        </div>
+      </div>
 
       <Card>
         <CardContent className="p-0">
@@ -93,8 +123,8 @@ export function ConversationList() {
             <EmptyState
               className="py-16"
               icon={ChatBubbleLeftRightIcon}
-              title={t("noConversationsHere")}
-              description={t("noConversationsDescription")}
+              title={search ? t("noSearchResults") : t("noConversationsHere")}
+              description={search ? t("noSearchResultsDescription") : t("noConversationsDescription")}
             />
           ) : (
             <ul className="divide-y divide-border">

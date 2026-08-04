@@ -3,11 +3,13 @@ import type { Conversation, ConversationStatus, Message } from "../types";
 
 export function listConversations(params: {
   status?: ConversationStatus;
+  search?: string;
   cursor?: string;
   limit?: number;
 }) {
   const qs = new URLSearchParams();
   if (params.status) qs.set("status", params.status);
+  if (params.search) qs.set("search", params.search);
   if (params.cursor) qs.set("cursor", params.cursor);
   if (params.limit) qs.set("limit", String(params.limit));
   const suffix = qs.toString() ? `?${qs.toString()}` : "";
