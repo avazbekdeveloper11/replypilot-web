@@ -17,6 +17,7 @@ import { FormAlert } from "@/components/feedback/form-alert";
 import { ApiError } from "@/lib/api/errors";
 
 import { useDeleteDocument } from "../hooks/use-delete-document";
+import { EditDocumentDialog } from "./edit-document-dialog";
 import type { KnowledgeDocument } from "../types";
 
 export function DocumentRowActions({ document }: { document: KnowledgeDocument }) {
@@ -29,7 +30,9 @@ export function DocumentRowActions({ document }: { document: KnowledgeDocument }
   }
 
   return (
-    <>
+    <div className="flex items-center justify-end gap-1">
+      <EditDocumentDialog document={document} />
+
       <Button
         variant="ghost"
         size="icon"
@@ -68,6 +71,6 @@ export function DocumentRowActions({ document }: { document: KnowledgeDocument }
           </DialogFooter>
         </DialogContent>
       </Dialog>
-    </>
+    </div>
   );
 }

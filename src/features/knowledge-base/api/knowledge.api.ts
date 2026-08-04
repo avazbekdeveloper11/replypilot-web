@@ -15,6 +15,25 @@ export function deleteDocument(id: string) {
   });
 }
 
+export interface UpdateDocumentInput {
+  id: string;
+  title: string;
+  // Omitted (not sent at all) means "title-only edit" — see
+  // KnowledgeHandler.Update's doc comment on the backend. Always sending
+  // it when the edit dialog is used, since the dialog always shows a
+  // content field once a document has any content to edit.
+  content?: string;
+}
+
+/** Same re-chunk/re-embed cost as uploadDocument when `content` is sent —
+ * see KnowledgeHandler.Update's doc comment. */
+export function updateDocument({ id, ...input }: UpdateDocumentInput) {
+  return apiFetch<KnowledgeDocument>(`/api/knowledge-base/documents/${id}`, {
+    method: "PATCH",
+    body: JSON.stringify(input),
+  });
+}
+
 export type UploadDocumentInput =
   | { title: string; kind: "text"; content: string }
   | { title: string; kind: "file"; file: File };

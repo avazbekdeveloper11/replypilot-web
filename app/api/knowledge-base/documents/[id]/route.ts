@@ -26,6 +26,36 @@ export async function GET(_request: Request, { params }: { params: Promise<{ id:
   }
 }
 
+export async function PATCH(request: Request, { params }: { params: Promise<{ id: string }> }) {
+  const accessToken = await getAccessToken();
+  if (!accessToken) {
+    return NextResponse.json(
+      { error: { code: "UNAUTHORIZED", message: "not signed in" } },
+      { status: 401 },
+    );
+  }
+
+  const { id } = await params;
+  const body = await request.json().catch(() => null);
+  if (!body) {
+    return NextResponse.json(
+      { error: { code: "INVALID_INPUT", message: "invalid request body" } },
+      { status: 400 },
+    );
+  }
+
+  try {
+    const document = await goApiFetch<KnowledgeDocument>(`/v1/knowledge-base/documents/${id}`, {
+      method: "PATCH",
+      body: JSON.stringify(body),
+      accessToken,
+    });
+    return NextResponse.json({ data: document });
+  } catch (err) {
+    return errorResponse(err);
+  }
+}
+
 export async function DELETE(_request: Request, { params }: { params: Promise<{ id: string }> }) {
   const accessToken = await getAccessToken();
   if (!accessToken) {
