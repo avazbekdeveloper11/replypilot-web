@@ -10,6 +10,7 @@ import {
   Cog6ToothIcon,
   ShieldCheckIcon,
   LinkIcon,
+  CubeIcon,
 } from "@heroicons/react/24/outline";
 
 export type IconType = ComponentType<SVGProps<SVGSVGElement>>;
@@ -60,6 +61,12 @@ export const navigation: NavGroup[] = [
         matchPrefix: true,
       },
       { titleKey: "analytics", href: "/analytics", icon: ChartBarIcon },
+      {
+        titleKey: "products",
+        href: "/products",
+        icon: CubeIcon,
+        matchPrefix: true,
+      },
     ],
   },
   {

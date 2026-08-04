@@ -4,16 +4,18 @@ import { useTranslations } from "next-intl";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ErrorState } from "@/components/feedback/error-state";
+import { ClickIntegrationCard } from "@/features/click/components/click-integration-card";
 
 import { useOrganization } from "../hooks/use-organization";
 import { OrganizationForm } from "./organization-form";
 
 /**
- * Scope: organization name + timezone only, matching what
- * organization.UseCase.UpdateSettings actually supports server-side.
- * Instagram account connections have their own dedicated page — see
+ * Scope: organization name + timezone, plus the Click payment integration
+ * card. Instagram account connections have their own dedicated page — see
  * src/features/instagram and the "Instagram" sidebar item
- * (src/config/navigation.ts), not this Organization settings card. AI
+ * (src/config/navigation.ts), not this Organization settings card. Click
+ * is light enough (2-3 fields, one row of state) to live here instead of
+ * getting its own nav entry — see ClickIntegrationCard's doc comment. AI
  * behavior tuning (tone, confidence threshold, etc.) has no backend
  * support yet — see usecase/ai's confidenceThreshold constant, which is
  * currently hardcoded, not a per-org setting. That one's a natural
@@ -49,13 +51,17 @@ export function SettingsView() {
   }
 
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle>{t("organization")}</CardTitle>
-      </CardHeader>
-      <CardContent>
-        <OrganizationForm organization={organization} />
-      </CardContent>
-    </Card>
+    <div className="flex flex-col gap-6">
+      <Card>
+        <CardHeader>
+          <CardTitle>{t("organization")}</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <OrganizationForm organization={organization} />
+        </CardContent>
+      </Card>
+
+      <ClickIntegrationCard />
+    </div>
   );
 }
