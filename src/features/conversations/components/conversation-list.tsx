@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { ChatBubbleLeftRightIcon } from "@heroicons/react/24/outline";
 
@@ -12,6 +12,7 @@ import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { EmptyState } from "@/components/data/empty-state";
 import { ErrorState } from "@/components/feedback/error-state";
 import { TableSkeleton } from "@/components/feedback/table-skeleton";
+import { InstagramProfileLink } from "@/components/data/instagram-profile-link";
 
 import { useConversations } from "../hooks/use-conversations";
 import { formatRelativeTime } from "../lib/format";
@@ -46,6 +47,7 @@ const FILTER_VALUES: (ConversationStatus | "all")[] = [
 
 export function ConversationList() {
   const [filter, setFilter] = React.useState<ConversationStatus | "all">("all");
+  const router = useRouter();
   const t = useTranslations("conversations");
   const ts = useTranslations("conversationStatus");
   const tt = useTranslations("time");
@@ -98,15 +100,26 @@ export function ConversationList() {
             <ul className="divide-y divide-border">
               {conversations.map((conv) => (
                 <li key={conv.id}>
-                  <Link
-                    href={`/conversations/${conv.id}`}
-                    className="flex items-center gap-4 px-6 py-4 hover:bg-accent/50"
+                  {/* Not a <Link>: the username inside needs its own
+                      target="_blank" anchor to Instagram, and anchors can't
+                      nest. Row navigation is a click handler instead — see
+                      InstagramProfileLink's doc comment. */}
+                  <div
+                    role="link"
+                    tabIndex={0}
+                    onClick={() => router.push(`/conversations/${conv.id}`)}
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter") router.push(`/conversations/${conv.id}`);
+                    }}
+                    className="flex cursor-pointer items-center gap-4 px-6 py-4 hover:bg-accent/50"
                   >
                     <div className="min-w-0 flex-1">
                       <div className="flex items-center gap-2">
-                        <span className="truncate text-sm font-medium text-foreground">
-                          {conv.customer_username ?? t("unknownCustomer")}
-                        </span>
+                        <InstagramProfileLink
+                          username={conv.customer_username}
+                          fallback={t("unknownCustomer")}
+                          className="truncate text-sm font-medium"
+                        />
                         {conv.unread_count > 0 && (
                           <Badge variant="brand">{conv.unread_count}</Badge>
                         )}
@@ -123,7 +136,7 @@ export function ConversationList() {
                     <span className="w-20 shrink-0 text-right text-xs text-muted-foreground">
                       {conv.last_message_at ? formatRelativeTime(conv.last_message_at, tt) : "—"}
                     </span>
-                  </Link>
+                  </div>
                 </li>
               ))}
             </ul>

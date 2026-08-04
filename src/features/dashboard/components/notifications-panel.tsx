@@ -7,6 +7,7 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { EmptyState } from "@/components/data/empty-state";
+import { InstagramProfileLink } from "@/components/data/instagram-profile-link";
 import { ErrorState } from "@/components/feedback/error-state";
 import { useNotifications } from "../hooks/use-notifications";
 import { formatRelativeTime } from "../lib/format";
@@ -55,9 +56,11 @@ export function NotificationsPanel() {
             {data.map((item) => (
               <li key={item.conversation_id} className="flex items-start gap-3 py-3 first:pt-0 last:pb-0">
                 <div className="min-w-0 flex-1">
-                  <p className="truncate text-sm font-medium text-foreground">
-                    {item.customer_username ?? t("newMessage")}
-                  </p>
+                  <InstagramProfileLink
+                    username={item.customer_username}
+                    fallback={t("newMessage")}
+                    className="truncate text-sm font-medium"
+                  />
                   {item.preview && (
                     <p className="truncate text-xs text-muted-foreground">{item.preview}</p>
                   )}

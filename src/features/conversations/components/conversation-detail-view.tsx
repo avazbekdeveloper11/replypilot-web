@@ -8,6 +8,7 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { ErrorState } from "@/components/feedback/error-state";
+import { InstagramProfileLink } from "@/components/data/instagram-profile-link";
 
 import { useConversation } from "../hooks/use-conversation";
 import { MessageThread } from "./message-thread";
@@ -59,9 +60,11 @@ export function ConversationDetailView({ conversationId }: { conversationId: str
           ) : (
             <>
               <div className="flex flex-col">
-                <span className="text-sm font-semibold text-foreground">
-                  {data?.customer_username ?? t("unknownCustomer")}
-                </span>
+                <InstagramProfileLink
+                  username={data?.customer_username}
+                  fallback={t("unknownCustomer")}
+                  className="text-sm font-semibold"
+                />
               </div>
               <Badge variant={STATUS_VARIANT[data?.status ?? ""] ?? "secondary"}>
                 {STATUS_LABEL_KEY[data?.status ?? ""] ? ts(STATUS_LABEL_KEY[data?.status ?? ""]) : data?.status}

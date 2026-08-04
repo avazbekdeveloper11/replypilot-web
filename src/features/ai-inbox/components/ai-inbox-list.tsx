@@ -8,6 +8,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { EmptyState } from "@/components/data/empty-state";
+import { InstagramProfileLink } from "@/components/data/instagram-profile-link";
 import { ErrorState } from "@/components/feedback/error-state";
 import { TableSkeleton } from "@/components/feedback/table-skeleton";
 import { useConversations } from "@/features/conversations/hooks/use-conversations";
@@ -82,9 +83,11 @@ export function AIInboxList() {
               >
                 <div className="min-w-0 flex-1">
                   <div className="flex items-center gap-2">
-                    <span className="truncate text-sm font-medium text-foreground">
-                      {conv.customer_username ?? t("unknownCustomer")}
-                    </span>
+                    <InstagramProfileLink
+                      username={conv.customer_username}
+                      fallback={t("unknownCustomer")}
+                      className="truncate text-sm font-medium"
+                    />
                     {conv.unread_count > 0 && <Badge variant="brand">{conv.unread_count}</Badge>}
                   </div>
                   {conv.last_message_preview && (

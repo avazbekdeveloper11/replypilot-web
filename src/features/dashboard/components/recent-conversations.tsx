@@ -14,6 +14,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { EmptyState } from "@/components/data/empty-state";
+import { InstagramProfileLink } from "@/components/data/instagram-profile-link";
 import { ErrorState } from "@/components/feedback/error-state";
 import { TableSkeleton } from "@/components/feedback/table-skeleton";
 import { useRecentConversations } from "../hooks/use-recent-conversations";
@@ -83,7 +84,7 @@ export function RecentConversations() {
               {data.map((conv: ConversationSummary) => (
                 <TableRow key={conv.id}>
                   <TableCell className="font-medium">
-                    {conv.customer_username ?? t("unknown")}
+                    <InstagramProfileLink username={conv.customer_username} fallback={t("unknown")} />
                     {conv.unread_count > 0 && (
                       <Badge variant="brand" className="ml-2">
                         {t("newCount", { count: conv.unread_count })}
