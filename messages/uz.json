@@ -510,6 +510,22 @@
     "sendInvite": "Taklif yuborish",
     "status": "Holat"
   },
+  "telegram": {
+    "awaitingPairing": "Bog'lanish kutilmoqda",
+    "awaitingPairingHint": "Bot ulandi, lekin uni o'z Telegram ilovangizda bog'lashingiz kerak: Telegram → Sozlamalar → Telegram Business → Chatbots'ni oching va shu botni qo'shing. Bu qilinmaguncha xabarlar bu yerga kelmaydi.",
+    "botTokenLabel": "Bot tokeni",
+    "cardTitle": "Telegram bot",
+    "connect": "Ulash",
+    "connectDescription": "Telegram'da @BotFather orqali bot yarating, so'ng uning tokenini shu yerga joylashtiring. Ulangandan keyin o'z Telegram ilovangizda Sozlamalar → Telegram Business → Chatbots'ni oching va bog'lashni tugatish uchun shu botni qo'shing — bu Telegram Premium funksiyasi va Telegram tomonida amalga oshadi, bu yerda emas.",
+    "connected": "Ulangan",
+    "connectedHint": "AI ulangan Telegram akkauntingizga yuborilgan xabarlarga xuddi Instagram DM'lariga javob bergani kabi javob beradi.",
+    "connecting": "Ulanmoqda…",
+    "disconnect": "Uzish",
+    "disconnectDescription": "AI Telegram'da javob berishni darhol to'xtatadi. Bu faqat saqlangan bot tokenini olib tashlaydi — Telegram yoki BotFather tomonida hech narsa o'zgarmaydi.",
+    "disconnectTitle": "Telegram bot uzilsinmi?",
+    "disconnecting": "Uzilmoqda…",
+    "genericError": "Nimadir xato ketdi. Qaytadan urinib ko'ring."
+  },
   "time": {
     "daysAgo": "{count} kun oldin",
     "durationHoursMinutes": "{hours} soat {minutes} daq",
@@ -521,6 +537,7 @@
   },
   "validation": {
     "apiKeyInvalid": "Bu haqiqiy API kalitiga o'xshamayapti",
+    "botTokenRequired": "Bot tokeni talab qilinadi",
     "chooseRole": "Rolni tanlang",
     "chooseTimezone": "Vaqt mintaqasini tanlang",
     "codeLength": "Kod 6 xonadan iborat bo'lishi kerak",

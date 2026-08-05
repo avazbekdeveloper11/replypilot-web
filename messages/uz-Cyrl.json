@@ -510,6 +510,22 @@
     "sendInvite": "Таклиф юбориш",
     "status": "Ҳолат"
   },
+  "telegram": {
+    "awaitingPairing": "Боғланиш кутилмоқда",
+    "awaitingPairingHint": "Бот уланди, лекин уни ўз Telegram иловангизда боғлашингиз керак: Telegram → Созламалар → Telegram Business → Chatbots'ни очинг ва шу ботни қўшинг. Бу қилинмагунча хабарлар бу ерга келмайди.",
+    "botTokenLabel": "Бот токени",
+    "cardTitle": "Telegram бот",
+    "connect": "Улаш",
+    "connectDescription": "Telegram'да @BotFather орқали бот яратинг, сўнг унинг токенини шу ерга жойлаштиринг. Уландандан кейин ўз Telegram иловангизда Созламалар → Telegram Business → Chatbots'ни очинг ва боғлашни тугатиш учун шу ботни қўшинг — бу Telegram Premium функцияси ва Telegram томонида амалга ошади, бу ерда эмас.",
+    "connected": "Уланган",
+    "connectedHint": "AI уланган Telegram аккаунтингизга юборилган хабарларга худди Instagram DM'ларига жавоб бергани каби жавоб беради.",
+    "connecting": "Уланмоқда…",
+    "disconnect": "Узиш",
+    "disconnectDescription": "AI Telegram'да жавоб беришни дарҳол тўхтатади. Бу фақат сақланган бот токенини олиб ташлайди — Telegram ёки BotFather томонида ҳеч нарса ўзгармайди.",
+    "disconnectTitle": "Telegram бот узилсинми?",
+    "disconnecting": "Узилмоқда…",
+    "genericError": "Нимадир хато кетди. Қайтадан уриниб кўринг."
+  },
   "time": {
     "daysAgo": "{count} кун олдин",
     "durationHoursMinutes": "{hours} соат {minutes} дақ",
@@ -521,6 +537,7 @@
   },
   "validation": {
     "apiKeyInvalid": "Бу ҳақиқий API калитига ўхшамаяпти",
+    "botTokenRequired": "Бот токени талаб қилинади",
     "chooseRole": "Ролни танланг",
     "chooseTimezone": "Вақт минтақасини танланг",
     "codeLength": "Код 6 хонадан иборат бўлиши керак",

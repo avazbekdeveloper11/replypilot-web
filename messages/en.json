@@ -510,6 +510,22 @@
     "sendInvite": "Send invite",
     "status": "Status"
   },
+  "telegram": {
+    "awaitingPairing": "Awaiting pairing",
+    "awaitingPairingHint": "The bot is connected, but you still need to pair it inside your own Telegram app: open Telegram → Settings → Telegram Business → Chatbots, and add this bot. Messages won't arrive here until that's done.",
+    "botTokenLabel": "Bot token",
+    "cardTitle": "Telegram bot",
+    "connect": "Connect",
+    "connectDescription": "Create a bot with @BotFather on Telegram, then paste its token here. After connecting, open your own Telegram app's Settings → Telegram Business → Chatbots and add this bot to finish pairing — that's a Telegram Premium feature and happens on Telegram's side, not here.",
+    "connected": "Connected",
+    "connectedHint": "The AI replies to messages sent to your connected Telegram account the same way it replies to Instagram DMs.",
+    "connecting": "Connecting…",
+    "disconnect": "Disconnect",
+    "disconnectDescription": "The AI immediately stops replying on Telegram. This only removes the stored bot token — nothing changes on Telegram's or BotFather's side.",
+    "disconnectTitle": "Disconnect Telegram bot?",
+    "disconnecting": "Disconnecting…",
+    "genericError": "Something went wrong. Please try again."
+  },
   "time": {
     "daysAgo": "{count}d ago",
     "durationHoursMinutes": "{hours}h {minutes}m",
@@ -521,6 +537,7 @@
   },
   "validation": {
     "apiKeyInvalid": "Doesn't look like a real API key",
+    "botTokenRequired": "Bot token is required",
     "chooseRole": "Choose a role",
     "chooseTimezone": "Choose a timezone",
     "codeLength": "Code must be 6 digits",

@@ -510,6 +510,22 @@
     "sendInvite": "Отправить приглашение",
     "status": "Статус"
   },
+  "telegram": {
+    "awaitingPairing": "Ожидает привязки",
+    "awaitingPairingHint": "Бот подключён, но вам ещё нужно привязать его в своём приложении Telegram: откройте Telegram → Настройки → Telegram для бизнеса → Чат-боты и добавьте этого бота. Пока это не сделано, сообщения сюда не поступят.",
+    "botTokenLabel": "Токен бота",
+    "cardTitle": "Telegram-бот",
+    "connect": "Подключить",
+    "connectDescription": "Создайте бота через @BotFather в Telegram, затем вставьте его токен сюда. После подключения откройте Настройки → Telegram для бизнеса → Чат-боты в своём приложении Telegram и добавьте этого бота, чтобы завершить привязку — это функция Telegram Premium и происходит на стороне Telegram, не здесь.",
+    "connected": "Подключён",
+    "connectedHint": "AI отвечает на сообщения, отправленные на ваш подключённый Telegram-аккаунт, так же, как отвечает на Instagram DM.",
+    "connecting": "Подключение…",
+    "disconnect": "Отключить",
+    "disconnectDescription": "AI сразу перестаёт отвечать в Telegram. Это удаляет только сохранённый токен бота — на стороне Telegram или BotFather ничего не меняется.",
+    "disconnectTitle": "Отключить Telegram-бота?",
+    "disconnecting": "Отключение…",
+    "genericError": "Что-то пошло не так. Попробуйте ещё раз."
+  },
   "time": {
     "daysAgo": "{count} дн назад",
     "durationHoursMinutes": "{hours} ч {minutes} мин",
@@ -521,6 +537,7 @@
   },
   "validation": {
     "apiKeyInvalid": "Не похоже на настоящий API-ключ",
+    "botTokenRequired": "Токен бота обязателен",
     "chooseRole": "Выберите роль",
     "chooseTimezone": "Выберите часовой пояс",
     "codeLength": "Код должен состоять из 6 цифр",

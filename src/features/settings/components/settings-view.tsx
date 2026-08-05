@@ -5,17 +5,20 @@ import { useTranslations } from "next-intl";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ErrorState } from "@/components/feedback/error-state";
 import { ClickIntegrationCard } from "@/features/click/components/click-integration-card";
+import { TelegramIntegrationCard } from "@/features/telegram/components/telegram-integration-card";
 
 import { useOrganization } from "../hooks/use-organization";
 import { OrganizationForm } from "./organization-form";
 
 /**
  * Scope: organization name + timezone, plus the Click payment integration
- * card. Instagram account connections have their own dedicated page — see
- * src/features/instagram and the "Instagram" sidebar item
- * (src/config/navigation.ts), not this Organization settings card. Click
- * is light enough (2-3 fields, one row of state) to live here instead of
- * getting its own nav entry — see ClickIntegrationCard's doc comment. AI
+ * card and the Telegram bot connection card. Instagram account connections
+ * have their own dedicated page — see src/features/instagram and the
+ * "Instagram" sidebar item (src/config/navigation.ts), not this
+ * Organization settings card. Click and Telegram are both light enough
+ * (a couple of fields, one row of state) to live here instead of getting
+ * their own nav entry — see ClickIntegrationCard's / TelegramIntegrationCard's
+ * doc comments. AI
  * behavior tuning (tone, confidence threshold, etc.) has no backend
  * support yet — see usecase/ai's confidenceThreshold constant, which is
  * currently hardcoded, not a per-org setting. That one's a natural
@@ -62,6 +65,7 @@ export function SettingsView() {
       </Card>
 
       <ClickIntegrationCard />
+      <TelegramIntegrationCard />
     </div>
   );
 }
