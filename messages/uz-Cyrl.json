@@ -217,11 +217,15 @@
     "pageTitle": "Суҳбатлар",
     "resolving": "Белгиланмоқда…",
     "searchByCustomer": "Мижоз юзернейми бўйича қидириш",
+    "send": "Юбориш",
     "senderAi": "AI",
     "senderSystem": "Тизим",
     "senderTeam": "Жамоа",
+    "takeOver": "Назоратни олиш",
+    "takingOver": "Назорат олинмоқда…",
     "unknownCustomer": "Номаълум мижоз",
-    "unsupportedMessageContent": "Қўллаб-қувватланмайдиган хабар мазмуни"
+    "unsupportedMessageContent": "Қўллаб-қувватланмайдиган хабар мазмуни",
+    "writeAReply": "Жавоб ёзинг…"
   },
   "dashboard": {
     "aiActive": "AI фаол",

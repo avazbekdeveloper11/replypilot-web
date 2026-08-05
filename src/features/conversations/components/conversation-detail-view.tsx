@@ -15,11 +15,18 @@ import { ApiError } from "@/lib/api/errors";
 
 import { useConversation } from "../hooks/use-conversation";
 import { useResolveConversation } from "../hooks/use-resolve-conversation";
+import { useTakeOverConversation } from "../hooks/use-take-over-conversation";
+import { MessageComposer } from "./message-composer";
 import { MessageThread } from "./message-thread";
 
 /** Resolve is only valid from these two — see the backend usecase.Resolve
  * doc comment on why ai_active is deliberately excluded. */
 const RESOLVABLE_STATUSES = new Set(["human_active", "pending_human"]);
+
+/** Take-over is valid from either of these — see the backend
+ * usecase.TakeOver doc comment. Not human_active: already taken over,
+ * nothing to do (the composer below is what's for). */
+const TAKEOVERABLE_STATUSES = new Set(["ai_active", "pending_human"]);
 
 const STATUS_VARIANT: Record<string, "brand" | "warning" | "secondary" | "success"> = {
   ai_active: "brand",
@@ -38,19 +45,16 @@ const STATUS_LABEL_KEY: Record<string, string> = {
   closed: "closed",
 };
 
-/**
- * Read-only: there's no send-message endpoint in this codebase yet (only
- * the webhook ingestion path writes messages, from the customer/Meta
- * side) — a composer here would be UI with nothing real to call. That
- * lands with the AI Inbox / human-handoff reply flow, not this page.
- */
 export function ConversationDetailView({ conversationId }: { conversationId: string }) {
   const { data, isPending, isError, error, refetch } = useConversation(conversationId);
   const resolveMutation = useResolveConversation();
+  const takeOverMutation = useTakeOverConversation();
   const t = useTranslations("conversations");
   const ts = useTranslations("conversationStatus");
 
   const canResolve = !!data && RESOLVABLE_STATUSES.has(data.status);
+  const canTakeOver = !!data && TAKEOVERABLE_STATUSES.has(data.status);
+  const canSendMessage = data?.status === "human_active";
 
   return (
     <div className="flex h-[calc(100vh-8rem)] flex-col gap-4">
@@ -81,6 +85,16 @@ export function ConversationDetailView({ conversationId }: { conversationId: str
                 <Badge variant={STATUS_VARIANT[data?.status ?? ""] ?? "secondary"}>
                   {STATUS_LABEL_KEY[data?.status ?? ""] ? ts(STATUS_LABEL_KEY[data?.status ?? ""]) : data?.status}
                 </Badge>
+                {canTakeOver && (
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    disabled={takeOverMutation.isPending}
+                    onClick={() => takeOverMutation.mutate(conversationId)}
+                  >
+                    {takeOverMutation.isPending ? t("takingOver") : t("takeOver")}
+                  </Button>
+                )}
                 {canResolve && (
                   <Button
                     variant="outline"
@@ -95,16 +109,18 @@ export function ConversationDetailView({ conversationId }: { conversationId: str
             </>
           )}
         </CardHeader>
-        {resolveMutation.isError && (
+        {(resolveMutation.isError || takeOverMutation.isError) && (
           <div className="border-b border-border px-4 py-2">
             <FormAlert variant="error">
               {resolveMutation.error instanceof ApiError
                 ? resolveMutation.error.message
-                : t("genericError")}
+                : takeOverMutation.error instanceof ApiError
+                  ? takeOverMutation.error.message
+                  : t("genericError")}
             </FormAlert>
           </div>
         )}
-        <CardContent className="flex-1 overflow-hidden p-0">
+        <CardContent className="flex flex-1 flex-col overflow-hidden p-0">
           {isError ? (
             <ErrorState
               className="py-16"
@@ -113,7 +129,12 @@ export function ConversationDetailView({ conversationId }: { conversationId: str
               onRetry={() => refetch()}
             />
           ) : (
-            <MessageThread conversationId={conversationId} />
+            <>
+              <div className="flex-1 overflow-hidden">
+                <MessageThread conversationId={conversationId} />
+              </div>
+              {canSendMessage && <MessageComposer conversationId={conversationId} />}
+            </>
           )}
         </CardContent>
       </Card>

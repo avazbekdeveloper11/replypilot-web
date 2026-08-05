@@ -34,3 +34,39 @@ export async function GET(
     return errorResponse(err);
   }
 }
+
+/** A human agent's reply — only succeeds once the conversation is
+ * human_active (see conversation.UseCase.SendMessage's doc comment on the
+ * backend; take over first via .../take-over otherwise). */
+export async function POST(
+  request: NextRequest,
+  { params }: { params: Promise<{ id: string }> },
+) {
+  const accessToken = await getAccessToken();
+  if (!accessToken) {
+    return NextResponse.json(
+      { error: { code: "UNAUTHORIZED", message: "not signed in" } },
+      { status: 401 },
+    );
+  }
+
+  const { id } = await params;
+  const body = await request.json().catch(() => null);
+  if (!body) {
+    return NextResponse.json(
+      { error: { code: "INVALID_INPUT", message: "invalid request body" } },
+      { status: 400 },
+    );
+  }
+
+  try {
+    const message = await goApiFetch<Message>(`/v1/conversations/${id}/messages`, {
+      method: "POST",
+      body: JSON.stringify(body),
+      accessToken,
+    });
+    return NextResponse.json({ data: message }, { status: 201 });
+  } catch (err) {
+    return errorResponse(err);
+  }
+}

@@ -39,3 +39,13 @@ export function takeOverConversation(id: string) {
 export function resolveConversation(id: string) {
   return apiFetch<Conversation>(`/api/conversations/${id}/resolve`, { method: "PATCH" });
 }
+
+/** A human agent's reply — only valid once the conversation is
+ * human_active (take over first, see takeOverConversation above). See
+ * the backend usecase's doc comment on SendMessage. */
+export function sendMessage(id: string, content: string) {
+  return apiFetch<Message>(`/api/conversations/${id}/messages`, {
+    method: "POST",
+    body: JSON.stringify({ content }),
+  });
+}

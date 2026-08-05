@@ -217,11 +217,15 @@
     "pageTitle": "Conversations",
     "resolving": "Resolving…",
     "searchByCustomer": "Search by customer username",
+    "send": "Send",
     "senderAi": "AI",
     "senderSystem": "System",
     "senderTeam": "Team",
+    "takeOver": "Take over",
+    "takingOver": "Taking over…",
     "unknownCustomer": "Unknown customer",
-    "unsupportedMessageContent": "Unsupported message content"
+    "unsupportedMessageContent": "Unsupported message content",
+    "writeAReply": "Write a reply…"
   },
   "dashboard": {
     "aiActive": "AI active",

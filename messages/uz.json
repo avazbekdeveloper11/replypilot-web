@@ -217,11 +217,15 @@
     "pageTitle": "Suhbatlar",
     "resolving": "Belgilanmoqda…",
     "searchByCustomer": "Mijoz username bo'yicha qidirish",
+    "send": "Yuborish",
     "senderAi": "AI",
     "senderSystem": "Tizim",
     "senderTeam": "Jamoa",
+    "takeOver": "Nazoratni olish",
+    "takingOver": "Nazorat olinmoqda…",
     "unknownCustomer": "Noma'lum mijoz",
-    "unsupportedMessageContent": "Qo'llab-quvvatlanmaydigan xabar mazmuni"
+    "unsupportedMessageContent": "Qo'llab-quvvatlanmaydigan xabar mazmuni",
+    "writeAReply": "Javob yozing…"
   },
   "dashboard": {
     "aiActive": "AI faol",

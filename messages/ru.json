@@ -217,11 +217,15 @@
     "pageTitle": "Переписки",
     "resolving": "Отмечается решённым…",
     "searchByCustomer": "Поиск по юзернейму клиента",
+    "send": "Отправить",
     "senderAi": "AI",
     "senderSystem": "Система",
     "senderTeam": "Команда",
+    "takeOver": "Взять на себя",
+    "takingOver": "Беру на себя…",
     "unknownCustomer": "Неизвестный клиент",
-    "unsupportedMessageContent": "Неподдерживаемое содержимое сообщения"
+    "unsupportedMessageContent": "Неподдерживаемое содержимое сообщения",
+    "writeAReply": "Напишите ответ…"
   },
   "dashboard": {
     "aiActive": "AI активен",
