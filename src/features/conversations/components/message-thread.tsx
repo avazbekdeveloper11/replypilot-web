@@ -75,7 +75,7 @@ export function MessageThread({ conversationId }: { conversationId: string }) {
   }
 
   return (
-    <div className="flex flex-col gap-4 overflow-y-auto p-6">
+    <div className="flex h-full flex-col gap-4 overflow-y-auto p-6">
       {hasNextPage && (
         <Button
           variant="outline"
