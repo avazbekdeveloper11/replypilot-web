@@ -56,6 +56,16 @@
     "unknownCustomer": "Unknown customer"
   },
   "analytics": {
+    "aiInsightsConversations": "Conversations",
+    "aiInsightsEmpty": "No AI insights yet — click Generate to get a summary of sales, leads, and what customers seem to think of you.",
+    "aiInsightsError": "Couldn't generate insights. Please try again.",
+    "aiInsightsGenerate": "Generate AI insights",
+    "aiInsightsGeneratedAt": "Generated {time}",
+    "aiInsightsGenerating": "Generating…",
+    "aiInsightsLeads": "Leads captured",
+    "aiInsightsRegenerate": "Regenerate",
+    "aiInsightsSales": "Sales via AI",
+    "aiInsightsTitle": "AI insights",
     "aiRepliesSent": "AI replies sent",
     "avgFirstResponseTime": "Average first-response time",
     "avgResponseTime": "Avg response time",
@@ -200,6 +210,12 @@
     "resolved": "Resolved"
   },
   "conversations": {
+    "aiSummaryEmpty": "No summary yet — click Generate to have AI summarize what this customer discussed.",
+    "aiSummaryGenerate": "Generate AI summary",
+    "aiSummaryGeneratedAt": "Generated {time}",
+    "aiSummaryGenerating": "Generating…",
+    "aiSummaryRegenerate": "Regenerate",
+    "aiSummaryTitle": "AI summary",
     "backToConversations": "Back to conversations",
     "couldntLoadConversations": "Couldn't load conversations",
     "couldntLoadMessages": "Couldn't load messages",

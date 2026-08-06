@@ -56,6 +56,16 @@
     "unknownCustomer": "Noma'lum mijoz"
   },
   "analytics": {
+    "aiInsightsConversations": "Suhbatlar",
+    "aiInsightsEmpty": "Hali AI tahlil yo'q — sotuvlar, lidlar va mijozlarning siz haqingizdagi fikri bo'yicha xulosa olish uchun \"Yaratish\"ni bosing.",
+    "aiInsightsError": "Tahlil yaratib bo'lmadi. Qaytadan urinib ko'ring.",
+    "aiInsightsGenerate": "AI tahlil yaratish",
+    "aiInsightsGeneratedAt": "Yaratildi: {time}",
+    "aiInsightsGenerating": "Yaratilmoqda…",
+    "aiInsightsLeads": "Yig'ilgan lidlar",
+    "aiInsightsRegenerate": "Yangilash",
+    "aiInsightsSales": "AI orqali sotuvlar",
+    "aiInsightsTitle": "AI tahlil",
     "aiRepliesSent": "Yuborilgan AI javoblari",
     "avgFirstResponseTime": "O'rtacha birinchi javob vaqti",
     "avgResponseTime": "O'rtacha javob vaqti",
@@ -200,6 +210,12 @@
     "resolved": "Hal qilingan"
   },
   "conversations": {
+    "aiSummaryEmpty": "Hali xulosa yo'q — AI ushbu mijoz bilan nima haqida gaplashilganini qisqacha yozib berishi uchun \"Yaratish\"ni bosing.",
+    "aiSummaryGenerate": "AI xulosa yaratish",
+    "aiSummaryGeneratedAt": "Yaratildi: {time}",
+    "aiSummaryGenerating": "Yaratilmoqda…",
+    "aiSummaryRegenerate": "Yangilash",
+    "aiSummaryTitle": "AI xulosa",
     "backToConversations": "Suhbatlarga qaytish",
     "couldntLoadConversations": "Suhbatlarni yuklab bo'lmadi",
     "couldntLoadMessages": "Xabarlarni yuklab bo'lmadi",

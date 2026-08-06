@@ -56,6 +56,16 @@
     "unknownCustomer": "Номаълум мижоз"
   },
   "analytics": {
+    "aiInsightsConversations": "Суҳбатлар",
+    "aiInsightsEmpty": "Ҳали AI таҳлил йўқ — сотувлар, лидлар ва мижозларнинг сиз ҳақингиздаги фикри бўйича хулоса олиш учун \"Яратиш\"ни босинг.",
+    "aiInsightsError": "Таҳлил яратиб бўлмади. Қайтадан уриниб кўринг.",
+    "aiInsightsGenerate": "AI таҳлил яратиш",
+    "aiInsightsGeneratedAt": "Яратилди: {time}",
+    "aiInsightsGenerating": "Яратилмоқда…",
+    "aiInsightsLeads": "Йиғилган лидлар",
+    "aiInsightsRegenerate": "Янгилаш",
+    "aiInsightsSales": "AI орқали сотувлар",
+    "aiInsightsTitle": "AI таҳлил",
     "aiRepliesSent": "Юборилган AI жавоблари",
     "avgFirstResponseTime": "Ўртача биринчи жавоб вақти",
     "avgResponseTime": "Ўртача жавоб вақти",
@@ -200,6 +210,12 @@
     "resolved": "Ҳал қилинган"
   },
   "conversations": {
+    "aiSummaryEmpty": "Ҳали хулоса йўқ — AI ушбу мижоз билан нима ҳақида гаплашилганини қисқача ёзиб бериши учун \"Яратиш\"ни босинг.",
+    "aiSummaryGenerate": "AI хулоса яратиш",
+    "aiSummaryGeneratedAt": "Яратилди: {time}",
+    "aiSummaryGenerating": "Яратилмоқда…",
+    "aiSummaryRegenerate": "Янгилаш",
+    "aiSummaryTitle": "AI хулоса",
     "backToConversations": "Суҳбатларга қайтиш",
     "couldntLoadConversations": "Суҳбатларни юклаб бўлмади",
     "couldntLoadMessages": "Хабарларни юклаб бўлмади",

@@ -16,6 +16,7 @@ import { ApiError } from "@/lib/api/errors";
 import { useConversation } from "../hooks/use-conversation";
 import { useResolveConversation } from "../hooks/use-resolve-conversation";
 import { useTakeOverConversation } from "../hooks/use-take-over-conversation";
+import { AISummaryPanel } from "./ai-summary-panel";
 import { MessageComposer } from "./message-composer";
 import { MessageThread } from "./message-thread";
 
@@ -130,6 +131,7 @@ export function ConversationDetailView({ conversationId }: { conversationId: str
             />
           ) : (
             <>
+              {data && <AISummaryPanel conversation={data} />}
               <div className="flex-1 overflow-hidden">
                 <MessageThread conversationId={conversationId} />
               </div>

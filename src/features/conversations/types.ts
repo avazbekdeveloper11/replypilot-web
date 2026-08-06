@@ -14,6 +14,12 @@ export interface Conversation {
   last_message_preview?: string;
   last_message_at?: string;
   unread_count: number;
+  /** Nil until an admin generates one (POST .../summary) — see
+   * entity.Conversation.AISummary's doc comment on the backend. Not kept
+   * live as new messages arrive; ai_summary_generated_at is shown
+   * alongside it so that's obvious in the UI. */
+  ai_summary?: string;
+  ai_summary_generated_at?: string;
 }
 
 export type MessageDirection = "inbound" | "outbound";

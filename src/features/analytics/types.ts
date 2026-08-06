@@ -19,3 +19,15 @@ export interface ConversationOutcomes {
   resolved: number;
   closed: number;
 }
+
+/** Mirrors AIInsightsResponse. sales_count/sales_amount_cents/lead_count/
+ * conversation_count are real numbers as of generated_at, not live — see
+ * entity.AIInsights' doc comment on the backend. */
+export interface AIInsights {
+  summary: string;
+  sales_count: number;
+  sales_amount_cents: number;
+  lead_count: number;
+  conversation_count: number;
+  generated_at: string;
+}

@@ -49,3 +49,10 @@ export function sendMessage(id: string, content: string) {
     body: JSON.stringify({ content }),
   });
 }
+
+/** Generates (or regenerates — always overwrites) an AI summary of this
+ * conversation. On-demand only, valid from any status. See the backend
+ * usecase's doc comment on Summarize. */
+export function summarizeConversation(id: string) {
+  return apiFetch<Conversation>(`/api/conversations/${id}/summary`, { method: "POST" });
+}

@@ -56,6 +56,16 @@
     "unknownCustomer": "Неизвестный клиент"
   },
   "analytics": {
+    "aiInsightsConversations": "Переписки",
+    "aiInsightsEmpty": "Пока нет AI-обзора — нажмите «Сгенерировать», чтобы получить сводку по продажам, лидам и мнению клиентов о вас.",
+    "aiInsightsError": "Не удалось сгенерировать обзор. Попробуйте ещё раз.",
+    "aiInsightsGenerate": "Сгенерировать AI-обзор",
+    "aiInsightsGeneratedAt": "Сгенерировано {time}",
+    "aiInsightsGenerating": "Генерация…",
+    "aiInsightsLeads": "Собрано лидов",
+    "aiInsightsRegenerate": "Обновить",
+    "aiInsightsSales": "Продажи через AI",
+    "aiInsightsTitle": "AI-обзор",
     "aiRepliesSent": "Отправлено AI-ответов",
     "avgFirstResponseTime": "Среднее время первого ответа",
     "avgResponseTime": "Среднее время ответа",
@@ -200,6 +210,12 @@
     "resolved": "Решено"
   },
   "conversations": {
+    "aiSummaryEmpty": "Пока нет обзора — нажмите «Сгенерировать», чтобы AI кратко описал, о чём говорил этот клиент.",
+    "aiSummaryGenerate": "Сгенерировать AI-обзор",
+    "aiSummaryGeneratedAt": "Сгенерировано {time}",
+    "aiSummaryGenerating": "Генерация…",
+    "aiSummaryRegenerate": "Обновить",
+    "aiSummaryTitle": "AI-обзор",
     "backToConversations": "Назад к перепискам",
     "couldntLoadConversations": "Не удалось загрузить переписки",
     "couldntLoadMessages": "Не удалось загрузить сообщения",
