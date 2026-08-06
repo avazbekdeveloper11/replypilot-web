@@ -202,7 +202,9 @@
     "couldntLoadConversations": "Суҳбатларни юклаб бўлмади",
     "couldntLoadMessages": "Хабарларни юклаб бўлмади",
     "couldntLoadThisConversation": "Бу суҳбатни юклаб бўлмади",
+    "filePlaceholder": "[Файл]",
     "genericError": "Нимадир хато кетди. Қайтадан уриниб кўринг.",
+    "imagePlaceholder": "[Расм]",
     "loadMore": "Кўпроқ юклаш",
     "loadOlderMessages": "Эски хабарларни юклаш",
     "loadingMore": "Юкланмоқда…",
@@ -213,6 +215,7 @@
     "noMessagesYet": "Ҳали хабарлар йўқ",
     "noSearchResults": "Мос суҳбат топилмади",
     "noSearchResultsDescription": "Бошқа юзернейм билан уриниб кўринг ёки қидирувни тозаланг.",
+    "openAttachment": "Иловани очиш",
     "pageDescription": "Уланган ҳисобларингиздаги барча DM суҳбатлари.",
     "pageTitle": "Суҳбатлар",
     "resolving": "Белгиланмоқда…",
@@ -225,6 +228,8 @@
     "takingOver": "Назорат олинмоқда…",
     "unknownCustomer": "Номаълум мижоз",
     "unsupportedMessageContent": "Қўллаб-қувватланмайдиган хабар мазмуни",
+    "videoPlaceholder": "[Видео]",
+    "voiceMessagePlaceholder": "[Овозли хабар]",
     "writeAReply": "Жавоб ёзинг…"
   },
   "dashboard": {

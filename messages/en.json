@@ -202,7 +202,9 @@
     "couldntLoadConversations": "Couldn't load conversations",
     "couldntLoadMessages": "Couldn't load messages",
     "couldntLoadThisConversation": "Couldn't load this conversation",
+    "filePlaceholder": "[File]",
     "genericError": "Something went wrong. Please try again.",
+    "imagePlaceholder": "[Image]",
     "loadMore": "Load more",
     "loadOlderMessages": "Load older messages",
     "loadingMore": "Loading…",
@@ -213,6 +215,7 @@
     "noMessagesYet": "No messages yet",
     "noSearchResults": "No matching conversations",
     "noSearchResultsDescription": "Try a different username, or clear the search.",
+    "openAttachment": "Open attachment",
     "pageDescription": "Every DM thread across your connected accounts.",
     "pageTitle": "Conversations",
     "resolving": "Resolving…",
@@ -225,6 +228,8 @@
     "takingOver": "Taking over…",
     "unknownCustomer": "Unknown customer",
     "unsupportedMessageContent": "Unsupported message content",
+    "videoPlaceholder": "[Video]",
+    "voiceMessagePlaceholder": "[Voice message]",
     "writeAReply": "Write a reply…"
   },
   "dashboard": {

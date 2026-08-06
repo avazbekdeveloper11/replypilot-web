@@ -202,7 +202,9 @@
     "couldntLoadConversations": "Suhbatlarni yuklab bo'lmadi",
     "couldntLoadMessages": "Xabarlarni yuklab bo'lmadi",
     "couldntLoadThisConversation": "Bu suhbatni yuklab bo'lmadi",
+    "filePlaceholder": "[Fayl]",
     "genericError": "Nimadir xato ketdi. Qaytadan urinib ko'ring.",
+    "imagePlaceholder": "[Rasm]",
     "loadMore": "Ko'proq yuklash",
     "loadOlderMessages": "Eski xabarlarni yuklash",
     "loadingMore": "Yuklanmoqda…",
@@ -213,6 +215,7 @@
     "noMessagesYet": "Hali xabarlar yo'q",
     "noSearchResults": "Mos suhbat topilmadi",
     "noSearchResultsDescription": "Boshqa username bilan urinib ko'ring yoki qidiruvni tozalang.",
+    "openAttachment": "Ilovani ochish",
     "pageDescription": "Ulangan hisoblaringizdagi barcha DM suhbatlari.",
     "pageTitle": "Suhbatlar",
     "resolving": "Belgilanmoqda…",
@@ -225,6 +228,8 @@
     "takingOver": "Nazorat olinmoqda…",
     "unknownCustomer": "Noma'lum mijoz",
     "unsupportedMessageContent": "Qo'llab-quvvatlanmaydigan xabar mazmuni",
+    "videoPlaceholder": "[Video]",
+    "voiceMessagePlaceholder": "[Ovozli xabar]",
     "writeAReply": "Javob yozing…"
   },
   "dashboard": {

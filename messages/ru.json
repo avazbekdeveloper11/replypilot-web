@@ -202,7 +202,9 @@
     "couldntLoadConversations": "Не удалось загрузить переписки",
     "couldntLoadMessages": "Не удалось загрузить сообщения",
     "couldntLoadThisConversation": "Не удалось загрузить эту переписку",
+    "filePlaceholder": "[Файл]",
     "genericError": "Что-то пошло не так. Попробуйте ещё раз.",
+    "imagePlaceholder": "[Изображение]",
     "loadMore": "Загрузить ещё",
     "loadOlderMessages": "Загрузить более ранние сообщения",
     "loadingMore": "Загрузка…",
@@ -213,6 +215,7 @@
     "noMessagesYet": "Пока нет сообщений",
     "noSearchResults": "Совпадений не найдено",
     "noSearchResultsDescription": "Попробуйте другой юзернейм или очистите поиск.",
+    "openAttachment": "Открыть вложение",
     "pageDescription": "Все переписки в директе по всем подключённым аккаунтам.",
     "pageTitle": "Переписки",
     "resolving": "Отмечается решённым…",
@@ -225,6 +228,8 @@
     "takingOver": "Беру на себя…",
     "unknownCustomer": "Неизвестный клиент",
     "unsupportedMessageContent": "Неподдерживаемое содержимое сообщения",
+    "videoPlaceholder": "[Видео]",
+    "voiceMessagePlaceholder": "[Голосовое сообщение]",
     "writeAReply": "Напишите ответ…"
   },
   "dashboard": {

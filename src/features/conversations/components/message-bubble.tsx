@@ -16,10 +16,52 @@ const SENDER_LABEL_KEY: Record<string, string> = {
   system: "senderSystem",
 };
 
+/** Keys into the "conversations" namespace — the label shown for a
+ * media message when there's no attachment_url to actually render (see
+ * Message.attachment_url's doc comment on when that happens). */
+const MEDIA_PLACEHOLDER_KEY: Record<string, string> = {
+  image: "imagePlaceholder",
+  video: "videoPlaceholder",
+  audio: "voiceMessagePlaceholder",
+  file: "filePlaceholder",
+};
+
+function MessageAttachment({ message }: { message: Message }) {
+  const t = useTranslations("conversations");
+  const { message_type, attachment_url, content } = message;
+
+  if (!attachment_url) {
+    const key = MEDIA_PLACEHOLDER_KEY[message_type];
+    return key ? <span className="italic opacity-70">{t(key)}</span> : null;
+  }
+
+  switch (message_type) {
+    case "image":
+      // eslint-disable-next-line @next/next/no-img-element -- remote,
+      // per-org attachment URLs; not something next/image's static
+      // optimization pipeline is set up for here.
+      return <img src={attachment_url} alt={content ?? ""} className="max-h-64 max-w-full rounded-lg object-contain" />;
+    case "video":
+      return <video controls src={attachment_url} className="max-h-64 max-w-full rounded-lg" />;
+    case "audio":
+      return <audio controls src={attachment_url} className="max-w-full" />;
+    case "file":
+      return (
+        <a href={attachment_url} target="_blank" rel="noreferrer" className="underline">
+          {t("openAttachment")}
+        </a>
+      );
+    default:
+      return null;
+  }
+}
+
 export function MessageBubble({ message }: { message: Message }) {
   const isInbound = message.direction === "inbound";
   const t = useTranslations("conversations");
   const locale = useLocale() as Locale;
+
+  const hasAttachment = message.message_type !== "text" && message.message_type !== "unsupported";
 
   return (
     <div className={cn("flex flex-col gap-1", isInbound ? "items-start" : "items-end")}>
@@ -31,7 +73,12 @@ export function MessageBubble({ message }: { message: Message }) {
             : "bg-brand text-brand-foreground",
         )}
       >
-        {message.content ?? (
+        {hasAttachment || message.content ? (
+          <div className="flex flex-col gap-2">
+            {hasAttachment && <MessageAttachment message={message} />}
+            {message.content && <span>{message.content}</span>}
+          </div>
+        ) : (
           <span className="italic opacity-70">{t("unsupportedMessageContent")}</span>
         )}
       </div>
