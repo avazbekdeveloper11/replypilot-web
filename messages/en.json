@@ -152,9 +152,9 @@
   "click": {
     "cardTitle": "Click payments",
     "connect": "Connect",
-    "connectDescription": "Enter your Click merchant/kassa ID so ReplyPilot can send customers a ready-to-pay link when they ask to buy something. No secret key needed — just the public merchant_id and service_id from your Click Merchant Cabinet.",
+    "connectDescription": "Enter your Click merchant/kassa ID so ReplyPilot can send customers a ready-to-pay link when they ask to buy something, and confirm the payment automatically once it's paid. You'll need the merchant_id, service_id, and secret key from your Click Merchant Cabinet — the secret key is required so ReplyPilot can verify Click's payment confirmation.",
     "connected": "Connected",
-    "connectedHint": "The AI sends this payment link to customers when they ask to buy a product from the catalog.",
+    "connectedHint": "The AI sends this payment link to customers when they ask to buy a product from the catalog. Once Click confirms the payment, the customer gets a thank-you message and this conversation gets a note showing exactly what was paid for.",
     "connecting": "Connecting…",
     "disconnect": "Disconnect",
     "disconnectDescription": "The AI immediately stops sending payment links to customers. This only removes the stored merchant_id/service_id — nothing changes on Click's side.",
@@ -164,6 +164,8 @@
     "merchantIdLabel": "Merchant ID",
     "merchantUserIdHint": "Optional — only needed if your Click setup requires a specific merchant user.",
     "merchantUserIdLabel": "Merchant user ID (optional)",
+    "secretKeyHint": "From your Click Merchant Cabinet, next to merchant_id/service_id. Encrypted at rest, never shown again after saving.",
+    "secretKeyLabel": "Secret key",
     "serviceIdLabel": "Service ID"
   },
   "common": {
@@ -568,6 +570,7 @@
     "productNameTooLong": "Keep it under 200 characters",
     "productPricePositive": "Price must be greater than 0",
     "productPriceRequired": "Enter a price",
+    "secretKeyRequired": "Secret key is required",
     "selectWorkspace": "Select a workspace",
     "serviceIdRequired": "Service ID is required",
     "slugAlphanumOnly": "Letters and numbers only, no spaces or symbols",

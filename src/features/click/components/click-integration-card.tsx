@@ -130,13 +130,14 @@ function ConnectForm() {
 
   const form = useForm<ClickFormValues>({
     resolver: zodResolver(clickSchema),
-    defaultValues: { merchant_id: "", service_id: "", merchant_user_id: "" },
+    defaultValues: { merchant_id: "", service_id: "", secret_key: "", merchant_user_id: "" },
   });
 
   function onSubmit(values: ClickFormValues) {
     connectMutation.mutate({
       merchant_id: values.merchant_id,
       service_id: values.service_id,
+      secret_key: values.secret_key,
       merchant_user_id: values.merchant_user_id?.trim() ? values.merchant_user_id : null,
     });
   }
@@ -166,6 +167,22 @@ function ConnectForm() {
         />
         {form.formState.errors.service_id && (
           <p className="text-xs text-destructive">{form.formState.errors.service_id.message}</p>
+        )}
+      </div>
+
+      <div className="flex flex-col gap-1.5">
+        <Label htmlFor="click-secret-key">{t("secretKeyLabel")}</Label>
+        <Input
+          id="click-secret-key"
+          type="password"
+          autoComplete="off"
+          aria-invalid={!!form.formState.errors.secret_key}
+          {...form.register("secret_key")}
+        />
+        {form.formState.errors.secret_key ? (
+          <p className="text-xs text-destructive">{form.formState.errors.secret_key.message}</p>
+        ) : (
+          <p className="text-xs text-muted-foreground">{t("secretKeyHint")}</p>
         )}
       </div>
 

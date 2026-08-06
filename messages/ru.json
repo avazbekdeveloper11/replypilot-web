@@ -152,9 +152,9 @@
   "click": {
     "cardTitle": "Платежи Click",
     "connect": "Подключить",
-    "connectDescription": "Введите свой merchant/kassa ID Click, чтобы ReplyPilot мог отправлять клиентам готовую ссылку на оплату, когда они хотят что-то купить. Секретный ключ не нужен — только публичные merchant_id и service_id из вашего Click Merchant Cabinet.",
+    "connectDescription": "Введите свой merchant/kassa ID Click, чтобы ReplyPilot мог отправлять клиентам готовую ссылку на оплату, когда они хотят что-то купить, и автоматически подтверждать оплату. Понадобятся merchant_id, service_id и секретный ключ из вашего Click Merchant Cabinet — секретный ключ нужен, чтобы ReplyPilot мог проверить подтверждение оплаты от Click.",
     "connected": "Подключён",
-    "connectedHint": "AI отправляет клиентам эту ссылку на оплату, когда они спрашивают о покупке товара из каталога.",
+    "connectedHint": "AI отправляет клиентам эту ссылку на оплату, когда они спрашивают о покупке товара из каталога. Как только Click подтвердит оплату, клиент получит благодарственное сообщение, а в этом диалоге появится отметка о том, за что именно заплачено.",
     "connecting": "Подключение…",
     "disconnect": "Отключить",
     "disconnectDescription": "AI сразу перестаёт отправлять клиентам ссылки на оплату. Это удаляет только сохранённые merchant_id/service_id — на стороне Click ничего не меняется.",
@@ -164,6 +164,8 @@
     "merchantIdLabel": "Merchant ID",
     "merchantUserIdHint": "Необязательно — нужно, только если ваша настройка Click требует конкретного merchant user.",
     "merchantUserIdLabel": "Merchant user ID (необязательно)",
+    "secretKeyHint": "Из вашего Click Merchant Cabinet, рядом с merchant_id/service_id. Хранится в зашифрованном виде, после сохранения больше не показывается.",
+    "secretKeyLabel": "Секретный ключ",
     "serviceIdLabel": "Service ID"
   },
   "common": {
@@ -568,6 +570,7 @@
     "productNameTooLong": "Не более 200 символов",
     "productPricePositive": "Цена должна быть больше 0",
     "productPriceRequired": "Введите цену",
+    "secretKeyRequired": "Секретный ключ обязателен",
     "selectWorkspace": "Выберите рабочее пространство",
     "serviceIdRequired": "Service ID обязателен",
     "slugAlphanumOnly": "Только буквы и цифры, без пробелов и символов",

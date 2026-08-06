@@ -152,9 +152,9 @@
   "click": {
     "cardTitle": "Click orqali to'lovlar",
     "connect": "Ulash",
-    "connectDescription": "ReplyPilot mijoz biror narsa sotib olmoqchi bo'lganda tayyor to'lov havolasini yuborishi uchun Click merchant/kassa ID'ingizni kiriting. Maxfiy kalit kerak emas — faqat Click Merchant Cabinet'dagi ochiq merchant_id va service_id.",
+    "connectDescription": "ReplyPilot mijoz biror narsa sotib olmoqchi bo'lganda tayyor to'lov havolasini yuborishi va to'lovni avtomatik tasdiqlashi uchun Click merchant/kassa ID'ingizni kiriting. Click Merchant Cabinet'dagi merchant_id, service_id va maxfiy kalit kerak bo'ladi — maxfiy kalit ReplyPilot Click'ning to'lov tasdiqlashini tekshira olishi uchun zarur.",
     "connected": "Ulangan",
-    "connectedHint": "Mijoz katalogdagi mahsulotni sotib olmoqchi bo'lganda AI unga shu to'lov havolasini yuboradi.",
+    "connectedHint": "Mijoz katalogdagi mahsulotni sotib olmoqchi bo'lganda AI unga shu to'lov havolasini yuboradi. Click to'lovni tasdiqlashi bilanoq mijozga rahmat xabari yuboriladi va shu suhbatda aynan nima uchun to'lov qilingani ko'rsatiladi.",
     "connecting": "Ulanmoqda…",
     "disconnect": "Uzish",
     "disconnectDescription": "AI mijozlarga to'lov havolalarini yuborishni darhol to'xtatadi. Bu faqat saqlangan merchant_id/service_id'ni olib tashlaydi — Click tomonida hech narsa o'zgarmaydi.",
@@ -164,6 +164,8 @@
     "merchantIdLabel": "Merchant ID",
     "merchantUserIdHint": "Ixtiyoriy — faqat Click sozlamalaringiz muayyan merchant user'ni talab qilsa kerak bo'ladi.",
     "merchantUserIdLabel": "Merchant user ID (ixtiyoriy)",
+    "secretKeyHint": "Click Merchant Cabinet'dagi merchant_id/service_id yonida. Shifrlangan holda saqlanadi, saqlangandan keyin qayta ko'rsatilmaydi.",
+    "secretKeyLabel": "Maxfiy kalit",
     "serviceIdLabel": "Service ID"
   },
   "common": {
@@ -568,6 +570,7 @@
     "productNameTooLong": "200 belgidan oshmasin",
     "productPricePositive": "Narx 0 dan katta bo'lishi kerak",
     "productPriceRequired": "Narxni kiriting",
+    "secretKeyRequired": "Maxfiy kalit talab qilinadi",
     "selectWorkspace": "Ish maydonini tanlang",
     "serviceIdRequired": "Service ID talab qilinadi",
     "slugAlphanumOnly": "Faqat harflar va raqamlar, bo'shliq yoki belgilarsiz",

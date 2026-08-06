@@ -152,9 +152,9 @@
   "click": {
     "cardTitle": "Click орқали тўловлар",
     "connect": "Улаш",
-    "connectDescription": "ReplyPilot мижоз бирор нарса сотиб олмоқчи бўлганда тайёр тўлов ҳаволасини юбориши учун Click merchant/kassa ID'ингизни киритинг. Махфий калит керак эмас — фақат Click Merchant Cabinet'даги очиқ merchant_id ва service_id.",
+    "connectDescription": "ReplyPilot мижоз бирор нарса сотиб олмоқчи бўлганда тайёр тўлов ҳаволасини юбориши ва тўловни автоматик тасдиқлаши учун Click merchant/kassa ID'ингизни киритинг. Click Merchant Cabinet'даги merchant_id, service_id ва махфий калит керак бўлади — махфий калит ReplyPilot Click'нинг тўлов тасдиғини текшира олиши учун зарур.",
     "connected": "Уланган",
-    "connectedHint": "Мижоз каталогдаги маҳсулотни сотиб олмоқчи бўлганда AI унга шу тўлов ҳаволасини юборади.",
+    "connectedHint": "Мижоз каталогдаги маҳсулотни сотиб олмоқчи бўлганда AI унга шу тўлов ҳаволасини юборади. Click тўловни тасдиқлаши биланоқ мижозга раҳмат хабари юборилади ва шу суҳбатда айнан нима учун тўлов қилингани кўрсатилади.",
     "connecting": "Уланмоқда…",
     "disconnect": "Узиш",
     "disconnectDescription": "AI мижозларга тўлов ҳаволаларини юборишни дарҳол тўхтатади. Бу фақат сақланган merchant_id/service_id'ни олиб ташлайди — Click томонида ҳеч нарса ўзгармайди.",
@@ -164,6 +164,8 @@
     "merchantIdLabel": "Merchant ID",
     "merchantUserIdHint": "Ихтиёрий — фақат Click созламаларингиз муайян merchant user'ни талаб қилса керак бўлади.",
     "merchantUserIdLabel": "Merchant user ID (ихтиёрий)",
+    "secretKeyHint": "Click Merchant Cabinet'даги merchant_id/service_id ёнида. Шифрланган ҳолда сақланади, сақлангандан кейин қайта кўрсатилмайди.",
+    "secretKeyLabel": "Махфий калит",
     "serviceIdLabel": "Service ID"
   },
   "common": {
@@ -568,6 +570,7 @@
     "productNameTooLong": "200 белгидан ошмасин",
     "productPricePositive": "Нарх 0 дан катта бўлиши керак",
     "productPriceRequired": "Нархни киритинг",
+    "secretKeyRequired": "Махфий калит талаб қилинади",
     "selectWorkspace": "Иш майдонини танланг",
     "serviceIdRequired": "Service ID талаб қилинади",
     "slugAlphanumOnly": "Фақат ҳарфлар ва рақамлар, бўшлиқ ёки белгиларсиз",

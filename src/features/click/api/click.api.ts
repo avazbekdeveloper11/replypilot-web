@@ -12,6 +12,7 @@ export function getClickIntegration() {
 export interface ConnectClickInput {
   merchant_id: string;
   service_id: string;
+  secret_key: string;
   merchant_user_id?: string | null;
 }
 
