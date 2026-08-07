@@ -5,6 +5,7 @@ import { useTranslations } from "next-intl";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ErrorState } from "@/components/feedback/error-state";
 import { ClickIntegrationCard } from "@/features/click/components/click-integration-card";
+import { CommentAutomationCard } from "@/features/comment-automation/components/comment-automation-card";
 import { TelegramIntegrationCard } from "@/features/telegram/components/telegram-integration-card";
 
 import { useOrganization } from "../hooks/use-organization";
@@ -66,6 +67,7 @@ export function SettingsView() {
 
       <ClickIntegrationCard />
       <TelegramIntegrationCard />
+      <CommentAutomationCard />
     </div>
   );
 }

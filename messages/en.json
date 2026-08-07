@@ -178,6 +178,20 @@
     "secretKeyLabel": "Secret key",
     "serviceIdLabel": "Service ID"
   },
+  "commentAutomation": {
+    "cardTitle": "Comment → DM automation",
+    "description": "When someone comments on one of your Instagram posts, the AI sends them a DM and handles the conversation from there. Instagram allows one automatic DM per comment.",
+    "disable": "Turn off",
+    "disabled": "Off",
+    "enable": "Turn on",
+    "enabled": "On",
+    "genericError": "Something went wrong. Please try again.",
+    "publicReplyHint": "Optional. Posted publicly under the comment, exactly as written — the AI never changes it. Leave empty to only send the DM.",
+    "publicReplyLabel": "Public reply under the comment",
+    "publicReplyPlaceholder": "Replied in your DMs 👉",
+    "saveChanges": "Save changes",
+    "saving": "Saving…"
+  },
   "common": {
     "back": "Back",
     "cancel": "Cancel",

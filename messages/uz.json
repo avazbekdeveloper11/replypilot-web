@@ -178,6 +178,20 @@
     "secretKeyLabel": "Maxfiy kalit",
     "serviceIdLabel": "Service ID"
   },
+  "commentAutomation": {
+    "cardTitle": "Izoh → avtomatik DM",
+    "description": "Kimdir Instagram postingizga izoh qoldirsa, AI unga shaxsiy xabar yozadi va suhbatni o'zi davom ettiradi. Instagram har bir izohga faqat bitta avtomatik DM yuborishga ruxsat beradi.",
+    "disable": "O'chirish",
+    "disabled": "O'chiq",
+    "enable": "Yoqish",
+    "enabled": "Yoqilgan",
+    "genericError": "Nimadir xato ketdi. Qaytadan urinib ko'ring.",
+    "publicReplyHint": "Ixtiyoriy. Izoh ostiga aynan shu ko'rinishda chiqadi — AI uni o'zgartirmaydi. Faqat shaxsiy xabar yuborilishi uchun bo'sh qoldiring.",
+    "publicReplyLabel": "Izoh ostidagi ochiq javob",
+    "publicReplyPlaceholder": "Shaxsiyga yozdik 👉",
+    "saveChanges": "O'zgarishlarni saqlash",
+    "saving": "Saqlanmoqda…"
+  },
   "common": {
     "back": "Orqaga",
     "cancel": "Bekor qilish",
