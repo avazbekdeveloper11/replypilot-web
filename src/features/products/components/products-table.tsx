@@ -70,7 +70,9 @@ export function ProductsTable() {
               </div>
             </TableCell>
             <TableCell className="text-sm text-muted-foreground">
-              {formatPriceCents(product.price_cents, product.currency)}
+              {product.price_cents != null
+                ? formatPriceCents(product.price_cents, product.currency)
+                : t("priceOnRequest")}
             </TableCell>
             <TableCell>
               <Badge variant={product.is_active ? "success" : "secondary"}>

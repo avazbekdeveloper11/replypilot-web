@@ -8,7 +8,8 @@ export function listProducts() {
 export interface CreateProductInput {
   name: string;
   description?: string | null;
-  price_cents: number;
+  /** null means "price on request" — see Product.price_cents's doc comment. */
+  price_cents: number | null;
 }
 
 export function createProduct(input: CreateProductInput) {

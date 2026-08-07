@@ -61,7 +61,7 @@ export function ProductFormDialog({
     defaultValues: {
       name: product?.name ?? "",
       description: product?.description ?? "",
-      price: product ? product.price_cents / 100 : (undefined as unknown as number),
+      price: product?.price_cents != null ? product.price_cents / 100 : undefined,
       is_active: product?.is_active ?? true,
     },
   });
@@ -71,7 +71,7 @@ export function ProductFormDialog({
     form.reset({
       name: product?.name ?? "",
       description: product?.description ?? "",
-      price: product ? product.price_cents / 100 : (undefined as unknown as number),
+      price: product?.price_cents != null ? product.price_cents / 100 : undefined,
       is_active: product?.is_active ?? true,
     });
     mutation.reset();
@@ -82,7 +82,10 @@ export function ProductFormDialog({
     const basePayload = {
       name: values.name,
       description: values.description && values.description.trim() !== "" ? values.description : null,
-      price_cents: Math.round(values.price * 100),
+      // Left empty -> null -> "narxi so'rov asosida" on the backend, not 0
+      // (a real free-of-charge product is a different, explicit state this
+      // form doesn't offer — see entity.Product's doc comment).
+      price_cents: values.price != null ? Math.round(values.price * 100) : null,
     };
 
     if (product) {
@@ -126,10 +129,18 @@ export function ProductFormDialog({
               step="any"
               inputMode="decimal"
               aria-invalid={!!form.formState.errors.price}
-              {...form.register("price", { valueAsNumber: true })}
+              {...form.register("price", {
+                // Not valueAsNumber: true — an empty input becomes NaN under
+                // that option, not undefined, which would trip .positive()
+                // instead of leaving an intentionally-blank ("price on
+                // request") field valid. See product.schema.ts's doc comment.
+                setValueAs: (v) => (v === "" || v === null ? undefined : Number(v)),
+              })}
             />
-            {form.formState.errors.price && (
+            {form.formState.errors.price ? (
               <p className="text-xs text-destructive">{form.formState.errors.price.message}</p>
+            ) : (
+              <p className="text-xs text-muted-foreground">{t("priceOptionalHint")}</p>
             )}
           </div>
 
