@@ -568,7 +568,16 @@
     "sleeping": "Спящие"
   },
   "settings": {
+    "businessHoursDescription": "Ограничьте автоматические ответы AI дневным окном. Вне этих часов входящие сообщения передаются человеку вместо ответа AI. По умолчанию выключено — AI отвечает круглосуточно, пока вы это не включите.",
+    "businessHoursEndLabel": "Конец",
+    "businessHoursStartLabel": "Начало",
+    "businessHoursTimezoneHint": "Применяется в часовом поясе вашей организации ({timezone}) — указан выше.",
+    "businessHoursTitle": "Рабочие часы AI",
     "couldntLoadSettings": "Не удалось загрузить настройки организации",
+    "disable": "Выключить",
+    "disabled": "Выключено",
+    "enable": "Включить",
+    "enabled": "Включено",
     "genericError": "Что-то пошло не так. Попробуйте ещё раз.",
     "loadingSettings": "Загрузка настроек организации…",
     "organization": "Организация",

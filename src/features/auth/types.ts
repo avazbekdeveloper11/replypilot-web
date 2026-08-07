@@ -18,6 +18,12 @@ export interface Organization {
   slug: string;
   status: string;
   timezone: string;
+  /** Business-hours AI gating — see backend entity.Organization's doc
+   * comment. business_hours_start/end are "HH:MM" (24-hour), absent
+   * when not configured. */
+  business_hours_enabled: boolean;
+  business_hours_start?: string;
+  business_hours_end?: string;
 }
 
 export interface OrganizationMembership {

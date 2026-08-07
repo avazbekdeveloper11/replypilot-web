@@ -568,7 +568,16 @@
     "sleeping": "Sleeping"
   },
   "settings": {
+    "businessHoursDescription": "Restrict automated AI replies to a daily window. Outside these hours, incoming messages are handed to a human instead of getting an AI reply. Off by default — AI replies around the clock until you turn this on.",
+    "businessHoursEndLabel": "End",
+    "businessHoursStartLabel": "Start",
+    "businessHoursTimezoneHint": "Applied in your organization's timezone ({timezone}) — set above.",
+    "businessHoursTitle": "AI business hours",
     "couldntLoadSettings": "Couldn't load organization settings",
+    "disable": "Turn off",
+    "disabled": "Off",
+    "enable": "Turn on",
+    "enabled": "On",
     "genericError": "Something went wrong. Please try again.",
     "loadingSettings": "Loading organization settings…",
     "organization": "Organization",

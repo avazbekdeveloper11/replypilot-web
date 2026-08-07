@@ -568,7 +568,16 @@
     "sleeping": "Ухлаб ётган"
   },
   "settings": {
+    "businessHoursDescription": "AI нинг автоматик жавобларини кунлик вақт оралиғи билан чекланг. Шу вақтдан ташқарида келган хабарлар AI жавоби ўрнига инсонга топширилади. Стандарт ҳолатда ўчиқ — буни ёқмагунингизча AI кеча-кундуз жавоб бераверади.",
+    "businessHoursEndLabel": "Тугаши",
+    "businessHoursStartLabel": "Бошланиши",
+    "businessHoursTimezoneHint": "Ташкилотингиз вақт минтақасида қўлланилади ({timezone}) — юқорида белгиланган.",
+    "businessHoursTitle": "AI иш вақти",
     "couldntLoadSettings": "Ташкилот созламаларини юклаб бўлмади",
+    "disable": "Ўчириш",
+    "disabled": "Ўчиқ",
+    "enable": "Ёқиш",
+    "enabled": "Ёқилган",
     "genericError": "Нимадир хато кетди. Қайтадан уриниб кўринг.",
     "loadingSettings": "Ташкилот созламалари юкланмоқда…",
     "organization": "Ташкилот",

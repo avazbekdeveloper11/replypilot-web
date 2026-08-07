@@ -11,3 +11,17 @@ export function updateOrganization(input: { name: string; timezone: string }) {
     body: JSON.stringify(input),
   });
 }
+
+export interface UpdateBusinessHoursInput {
+  enabled: boolean;
+  /** "HH:MM", required when enabled is true. */
+  start?: string;
+  end?: string;
+}
+
+export function updateBusinessHours(input: UpdateBusinessHoursInput) {
+  return apiFetch<Organization>("/api/organizations/me/business-hours", {
+    method: "PATCH",
+    body: JSON.stringify(input),
+  });
+}

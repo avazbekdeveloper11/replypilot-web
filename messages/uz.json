@@ -568,7 +568,16 @@
     "sleeping": "Uxlab yotgan"
   },
   "settings": {
+    "businessHoursDescription": "AI ning avtomatik javoblarini kunlik vaqt oralig'i bilan cheklang. Shu vaqtdan tashqarida kelgan xabarlar AI javobi o'rniga insonga topshiriladi. Standart holatda o'chiq — buni yoqmaguningizcha AI kecha-kunduz javob beraveradi.",
+    "businessHoursEndLabel": "Tugashi",
+    "businessHoursStartLabel": "Boshlanishi",
+    "businessHoursTimezoneHint": "Tashkilotingiz vaqt mintaqasida qo'llaniladi ({timezone}) — yuqorida belgilangan.",
+    "businessHoursTitle": "AI ish vaqti",
     "couldntLoadSettings": "Tashkilot sozlamalarini yuklab bo'lmadi",
+    "disable": "O'chirish",
+    "disabled": "O'chiq",
+    "enable": "Yoqish",
+    "enabled": "Yoqilgan",
     "genericError": "Nimadir xato ketdi. Qaytadan urinib ko'ring.",
     "loadingSettings": "Tashkilot sozlamalari yuklanmoqda…",
     "organization": "Tashkilot",

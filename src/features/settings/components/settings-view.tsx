@@ -9,6 +9,7 @@ import { CommentAutomationCard } from "@/features/comment-automation/components/
 import { TelegramIntegrationCard } from "@/features/telegram/components/telegram-integration-card";
 
 import { useOrganization } from "../hooks/use-organization";
+import { BusinessHoursCard } from "./business-hours-card";
 import { OrganizationForm } from "./organization-form";
 
 /**
@@ -65,6 +66,7 @@ export function SettingsView() {
         </CardContent>
       </Card>
 
+      <BusinessHoursCard organization={organization} />
       <ClickIntegrationCard />
       <TelegramIntegrationCard />
       <CommentAutomationCard />
