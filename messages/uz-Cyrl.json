@@ -55,6 +55,35 @@
     "takeOver": "Ўз зиммасига олиш",
     "unknownCustomer": "Номаълум мижоз"
   },
+  "amocrm": {
+    "backToSettings": "Созламаларга қайтиш",
+    "cardTitle": "amoCRM",
+    "connect": "amoCRM улаш",
+    "connectDescription": "Мижозларни контакт сифатида ва харид тарихи ҳақида изоҳ билан юбориш учун amoCRM ҳисобингизни уланг.",
+    "connected": "{subdomain}.amocrm.ru га уланди",
+    "connectedHint": "Мижозларни amoCRM'га мижозлар базасидаги батафсил кўринишдан юбориш мумкин.",
+    "connecting": "Уланмоқда…",
+    "connectingTitle": "amoCRM уланмоқда",
+    "connectionCancelled": "Уланиш бекор қилинди.",
+    "couldntConnect": "amoCRM уланмади",
+    "couldntStartConnect": "amoCRM уланишини бошлаб бўлмади. Қайтадан уриниб кўринг.",
+    "disconnect": "Узиш",
+    "disconnectDescription": "ReplyPilot мижозларни amoCRM'га юборишни тўхтатади. amoCRM'да аллақачон яратилган контактлар ўчирилмайди.",
+    "disconnectTitle": "amoCRM узилсинми?",
+    "disconnecting": "Узилмоқда…",
+    "genericError": "Нимадир хато кетди. Қайтадан уриниб кўринг.",
+    "reconnectHint": "Бу уланишни янгилаш керак — синхронлашни давом эттириш учун қайта уланг.",
+    "redirecting": "amoCRM'га йўналтирилмоқда…",
+    "status": {
+      "connected": "Уланган",
+      "error": "Хато",
+      "expired": "Муддати ўтган",
+      "revoked": "Бекор қилинган"
+    },
+    "syncToAmoCRM": "amoCRM'га юбориш",
+    "synced": "Синхронланди",
+    "syncing": "Синхронланмоқда…"
+  },
   "analytics": {
     "aiInsightsConversations": "Суҳбатлар",
     "aiInsightsEmpty": "Ҳали AI таҳлил йўқ — сотувлар, лидлар ва мижозларнинг сиз ҳақингиздаги фикри бўйича хулоса олиш учун \"Яратиш\"ни босинг.",

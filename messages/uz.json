@@ -55,6 +55,35 @@
     "takeOver": "O'z zimmasiga olish",
     "unknownCustomer": "Noma'lum mijoz"
   },
+  "amocrm": {
+    "backToSettings": "Sozlamalarga qaytish",
+    "cardTitle": "amoCRM",
+    "connect": "amoCRM ulash",
+    "connectDescription": "Mijozlarni kontakt sifatida va xarid tarixi haqida izoh bilan yuborish uchun amoCRM hisobingizni ulang.",
+    "connected": "{subdomain}.amocrm.ru ga ulandi",
+    "connectedHint": "Mijozlarni amoCRM'ga mijozlar bazasidagi batafsil ko'rinishdan yuborish mumkin.",
+    "connecting": "Ulanmoqda…",
+    "connectingTitle": "amoCRM ulanmoqda",
+    "connectionCancelled": "Ulanish bekor qilindi.",
+    "couldntConnect": "amoCRM ulanmadi",
+    "couldntStartConnect": "amoCRM ulanishini boshlab bo'lmadi. Qaytadan urinib ko'ring.",
+    "disconnect": "Uzish",
+    "disconnectDescription": "ReplyPilot mijozlarni amoCRM'ga yuborishni to'xtatadi. amoCRM'da allaqachon yaratilgan kontaktlar o'chirilmaydi.",
+    "disconnectTitle": "amoCRM uzilsinmi?",
+    "disconnecting": "Uzilmoqda…",
+    "genericError": "Nimadir xato ketdi. Qaytadan urinib ko'ring.",
+    "reconnectHint": "Bu ulanishni yangilash kerak — sinxronlashni davom ettirish uchun qayta ulang.",
+    "redirecting": "amoCRM'ga yo'naltirilmoqda…",
+    "status": {
+      "connected": "Ulangan",
+      "error": "Xato",
+      "expired": "Muddati o'tgan",
+      "revoked": "Bekor qilingan"
+    },
+    "syncToAmoCRM": "amoCRM'ga yuborish",
+    "synced": "Sinxronlandi",
+    "syncing": "Sinxronlanmoqda…"
+  },
   "analytics": {
     "aiInsightsConversations": "Suhbatlar",
     "aiInsightsEmpty": "Hali AI tahlil yo'q — sotuvlar, lidlar va mijozlarning siz haqingizdagi fikri bo'yicha xulosa olish uchun \"Yaratish\"ni bosing.",

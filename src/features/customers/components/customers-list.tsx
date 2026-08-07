@@ -8,6 +8,7 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { SyncToAmoCRMButton } from "@/features/amocrm/components/sync-to-amocrm-button";
 import {
   Table,
   TableBody,
@@ -219,6 +220,11 @@ export function CustomersList() {
             </SheetTitle>
             <SheetDescription>{t("orderHistoryDescription")}</SheetDescription>
           </SheetHeader>
+          {selectedConversationId && (
+            <div className="px-4">
+              <SyncToAmoCRMButton conversationId={selectedConversationId} />
+            </div>
+          )}
           <div className="flex flex-col gap-2 overflow-y-auto px-4 pb-4">
             {ordersQuery.isPending ? (
               <TableSkeleton columns={1} rows={4} />

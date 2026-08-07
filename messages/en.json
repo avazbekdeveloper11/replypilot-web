@@ -55,6 +55,35 @@
     "takeOver": "Take over",
     "unknownCustomer": "Unknown customer"
   },
+  "amocrm": {
+    "backToSettings": "Back to settings",
+    "cardTitle": "amoCRM",
+    "connect": "Connect amoCRM",
+    "connectDescription": "Connect your amoCRM account to push customers as contacts, with a note summarizing their purchase history.",
+    "connected": "Connected to {subdomain}.amocrm.ru",
+    "connectedHint": "Customers can be pushed to amoCRM from the customer database's drill-down view.",
+    "connecting": "Connecting…",
+    "connectingTitle": "Connecting amoCRM",
+    "connectionCancelled": "Connection cancelled.",
+    "couldntConnect": "Couldn't connect amoCRM",
+    "couldntStartConnect": "Couldn't start the amoCRM connection. Please try again.",
+    "disconnect": "Disconnect",
+    "disconnectDescription": "ReplyPilot will stop pushing customers to amoCRM. Contacts already created in amoCRM are not deleted.",
+    "disconnectTitle": "Disconnect amoCRM?",
+    "disconnecting": "Disconnecting…",
+    "genericError": "Something went wrong. Please try again.",
+    "reconnectHint": "This connection needs to be renewed — reconnect to keep syncing customers.",
+    "redirecting": "Redirecting to amoCRM…",
+    "status": {
+      "connected": "Connected",
+      "error": "Error",
+      "expired": "Expired",
+      "revoked": "Revoked"
+    },
+    "syncToAmoCRM": "Sync to amoCRM",
+    "synced": "Synced",
+    "syncing": "Syncing…"
+  },
   "analytics": {
     "aiInsightsConversations": "Conversations",
     "aiInsightsEmpty": "No AI insights yet — click Generate to get a summary of sales, leads, and what customers seem to think of you.",

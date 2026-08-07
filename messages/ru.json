@@ -55,6 +55,35 @@
     "takeOver": "Взять на себя",
     "unknownCustomer": "Неизвестный клиент"
   },
+  "amocrm": {
+    "backToSettings": "Назад к настройкам",
+    "cardTitle": "amoCRM",
+    "connect": "Подключить amoCRM",
+    "connectDescription": "Подключите свой аккаунт amoCRM, чтобы отправлять клиентов как контакты с заметкой об истории покупок.",
+    "connected": "Подключено к {subdomain}.amocrm.ru",
+    "connectedHint": "Клиентов можно отправлять в amoCRM из карточки клиента в базе клиентов.",
+    "connecting": "Подключение…",
+    "connectingTitle": "Подключение amoCRM",
+    "connectionCancelled": "Подключение отменено.",
+    "couldntConnect": "Не удалось подключить amoCRM",
+    "couldntStartConnect": "Не удалось начать подключение amoCRM. Попробуйте ещё раз.",
+    "disconnect": "Отключить",
+    "disconnectDescription": "ReplyPilot перестанет отправлять клиентов в amoCRM. Уже созданные контакты в amoCRM не удаляются.",
+    "disconnectTitle": "Отключить amoCRM?",
+    "disconnecting": "Отключение…",
+    "genericError": "Что-то пошло не так. Попробуйте ещё раз.",
+    "reconnectHint": "Подключение нужно обновить — переподключитесь, чтобы синхронизация продолжилась.",
+    "redirecting": "Переход в amoCRM…",
+    "status": {
+      "connected": "Подключено",
+      "error": "Ошибка",
+      "expired": "Истекло",
+      "revoked": "Отозвано"
+    },
+    "syncToAmoCRM": "Отправить в amoCRM",
+    "synced": "Синхронизировано",
+    "syncing": "Синхронизация…"
+  },
   "analytics": {
     "aiInsightsConversations": "Переписки",
     "aiInsightsEmpty": "Пока нет AI-обзора — нажмите «Сгенерировать», чтобы получить сводку по продажам, лидам и мнению клиентов о вас.",
