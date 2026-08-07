@@ -15,3 +15,13 @@ export interface Product {
   is_active: boolean;
   created_at: string;
 }
+
+/** Mirrors ProductImportResponse — see ProductHandler.Import's doc
+ * comment. created_count/skipped_rows/total_rows_read let the import
+ * dialog report something more useful than a bare success toast. */
+export interface ProductImportResult {
+  created: Product[];
+  created_count: number;
+  skipped_rows: number;
+  total_rows_read: number;
+}

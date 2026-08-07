@@ -5,6 +5,7 @@ import { Card, CardContent } from "@/components/ui/card";
 
 import { ProductsTable } from "./products-table";
 import { AddProductButton } from "./add-product-button";
+import { ImportProductsDialog } from "./import-products-dialog";
 
 export async function ProductsView() {
   const t = await getTranslations("products");
@@ -14,7 +15,12 @@ export async function ProductsView() {
       <PageHeader
         title={t("pageTitle")}
         description={t("pageDescription")}
-        actions={<AddProductButton />}
+        actions={
+          <div className="flex items-center gap-2">
+            <ImportProductsDialog />
+            <AddProductButton />
+          </div>
+        }
       />
       <Card>
         <CardContent>
