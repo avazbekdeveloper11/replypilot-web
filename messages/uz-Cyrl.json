@@ -300,6 +300,23 @@
     "voiceMessagePlaceholder": "[Овозли хабар]",
     "writeAReply": "Жавоб ёзинг…"
   },
+  "customers": {
+    "couldntLoad": "Мижозларни юклаб бўлмади.",
+    "couldntLoadOrders": "Буюртмаларни юклаб бўлмади.",
+    "noCustomersDescription": "Кимдир сизга ёзиши билан мижозлар шу ерда пайдо бўлади.",
+    "noCustomersTitle": "Ҳозирча мижозлар йўқ",
+    "noOrdersTitle": "Ҳозирча буюртмалар йўқ",
+    "orderHistoryDescription": "Ушбу мижознинг тўлиқ буюртмалар тарихи, муваффақиятсиз уринишлар билан бирга.",
+    "pageDescription": "Ҳар бир мижоз ва у аслида нима сотиб олгани — энг кўп сарфлаганлардан бошлаб.",
+    "pageTitle": "Мижозлар",
+    "searchPlaceholder": "Username бўйича қидириш…",
+    "tableChannel": "Канал",
+    "tableCustomer": "Мижоз",
+    "tableLastMessage": "Охирги хабар",
+    "tableOrders": "Буюртмалар",
+    "tableTotalSpent": "Жами сарфлаган",
+    "unknownCustomer": "Номаълум"
+  },
   "dashboard": {
     "aiActive": "AI фаол",
     "aiPerformance": "AI самарадорлиги",
@@ -456,6 +473,7 @@
     "campaigns": "Кампаниялар",
     "collapseSidebar": "Панелни йиғиш",
     "conversations": "Суҳбатлар",
+    "customers": "Мижозлар",
     "dashboard": "Бошқарув панели",
     "expandSidebar": "Панелни кенгайтириш",
     "groupOrganization": "Ташкилот",
@@ -475,6 +493,12 @@
     "searchPlaceholder": "Суҳбатлар, лидлар, ҳужжатларни қидириш…",
     "settings": "Созламалар",
     "team": "Жамоа"
+  },
+  "orderStatus": {
+    "cancelled": "Бекор қилинган",
+    "failed": "Муваффақиятсиз",
+    "paid": "Тўланган",
+    "pending": "Кутилмоқда"
   },
   "orgStatus": {
     "active": "Фаол",

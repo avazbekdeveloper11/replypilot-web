@@ -300,6 +300,23 @@
     "voiceMessagePlaceholder": "[Голосовое сообщение]",
     "writeAReply": "Напишите ответ…"
   },
+  "customers": {
+    "couldntLoad": "Не удалось загрузить клиентов.",
+    "couldntLoadOrders": "Не удалось загрузить заказы.",
+    "noCustomersDescription": "Клиенты появятся здесь, как только кто-то вам напишет.",
+    "noCustomersTitle": "Пока нет клиентов",
+    "noOrdersTitle": "Пока нет заказов",
+    "orderHistoryDescription": "Полная история заказов этого клиента, включая неудавшиеся попытки.",
+    "pageDescription": "Каждый клиент и что он реально купил — сначала те, кто потратил больше всего.",
+    "pageTitle": "Клиенты",
+    "searchPlaceholder": "Поиск по имени пользователя…",
+    "tableChannel": "Канал",
+    "tableCustomer": "Клиент",
+    "tableLastMessage": "Последнее сообщение",
+    "tableOrders": "Заказы",
+    "tableTotalSpent": "Всего потрачено",
+    "unknownCustomer": "Неизвестно"
+  },
   "dashboard": {
     "aiActive": "AI активен",
     "aiPerformance": "Эффективность AI",
@@ -456,6 +473,7 @@
     "campaigns": "Кампании",
     "collapseSidebar": "Свернуть панель",
     "conversations": "Переписки",
+    "customers": "Клиенты",
     "dashboard": "Дашборд",
     "expandSidebar": "Развернуть панель",
     "groupOrganization": "Организация",
@@ -475,6 +493,12 @@
     "searchPlaceholder": "Поиск переписок, лидов, документов…",
     "settings": "Настройки",
     "team": "Команда"
+  },
+  "orderStatus": {
+    "cancelled": "Отменено",
+    "failed": "Неудачно",
+    "paid": "Оплачено",
+    "pending": "В ожидании"
   },
   "orgStatus": {
     "active": "Активна",

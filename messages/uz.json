@@ -300,6 +300,23 @@
     "voiceMessagePlaceholder": "[Ovozli xabar]",
     "writeAReply": "Javob yozing…"
   },
+  "customers": {
+    "couldntLoad": "Mijozlarni yuklab bo'lmadi.",
+    "couldntLoadOrders": "Buyurtmalarni yuklab bo'lmadi.",
+    "noCustomersDescription": "Kimdir sizga yozishi bilan mijozlar shu yerda paydo bo'ladi.",
+    "noCustomersTitle": "Hozircha mijozlar yo'q",
+    "noOrdersTitle": "Hozircha buyurtmalar yo'q",
+    "orderHistoryDescription": "Ushbu mijozning to'liq buyurtmalar tarixi, muvaffaqiyatsiz urinishlar bilan birga.",
+    "pageDescription": "Har bir mijoz va u aslida nima sotib olgani — eng ko'p sarflaganlardan boshlab.",
+    "pageTitle": "Mijozlar",
+    "searchPlaceholder": "Username bo'yicha qidirish…",
+    "tableChannel": "Kanal",
+    "tableCustomer": "Mijoz",
+    "tableLastMessage": "Oxirgi xabar",
+    "tableOrders": "Buyurtmalar",
+    "tableTotalSpent": "Jami sarflagan",
+    "unknownCustomer": "Noma'lum"
+  },
   "dashboard": {
     "aiActive": "AI faol",
     "aiPerformance": "AI samaradorligi",
@@ -456,6 +473,7 @@
     "campaigns": "Kampaniyalar",
     "collapseSidebar": "Panelni yig'ish",
     "conversations": "Suhbatlar",
+    "customers": "Mijozlar",
     "dashboard": "Boshqaruv paneli",
     "expandSidebar": "Panelni kengaytirish",
     "groupOrganization": "Tashkilot",
@@ -475,6 +493,12 @@
     "searchPlaceholder": "Suhbatlar, lidlar, hujjatlarni qidirish…",
     "settings": "Sozlamalar",
     "team": "Jamoa"
+  },
+  "orderStatus": {
+    "cancelled": "Bekor qilingan",
+    "failed": "Muvaffaqiyatsiz",
+    "paid": "To'langan",
+    "pending": "Kutilmoqda"
   },
   "orgStatus": {
     "active": "Faol",

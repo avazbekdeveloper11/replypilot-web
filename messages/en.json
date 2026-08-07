@@ -300,6 +300,23 @@
     "voiceMessagePlaceholder": "[Voice message]",
     "writeAReply": "Write a reply…"
   },
+  "customers": {
+    "couldntLoad": "Couldn't load customers.",
+    "couldntLoadOrders": "Couldn't load orders.",
+    "noCustomersDescription": "Customers appear here as soon as someone messages you.",
+    "noCustomersTitle": "No customers yet",
+    "noOrdersTitle": "No orders yet",
+    "orderHistoryDescription": "Full order history for this customer, including attempts that didn't go through.",
+    "pageDescription": "Every customer and what they've actually bought — biggest spenders first.",
+    "pageTitle": "Customers",
+    "searchPlaceholder": "Search by username…",
+    "tableChannel": "Channel",
+    "tableCustomer": "Customer",
+    "tableLastMessage": "Last message",
+    "tableOrders": "Orders",
+    "tableTotalSpent": "Total spent",
+    "unknownCustomer": "Unknown"
+  },
   "dashboard": {
     "aiActive": "AI active",
     "aiPerformance": "AI performance",
@@ -456,6 +473,7 @@
     "campaigns": "Campaigns",
     "collapseSidebar": "Collapse sidebar",
     "conversations": "Conversations",
+    "customers": "Customers",
     "dashboard": "Dashboard",
     "expandSidebar": "Expand sidebar",
     "groupOrganization": "Organization",
@@ -475,6 +493,12 @@
     "searchPlaceholder": "Search conversations, leads, docs…",
     "settings": "Settings",
     "team": "Team"
+  },
+  "orderStatus": {
+    "cancelled": "Cancelled",
+    "failed": "Failed",
+    "paid": "Paid",
+    "pending": "Pending"
   },
   "orgStatus": {
     "active": "Active",
