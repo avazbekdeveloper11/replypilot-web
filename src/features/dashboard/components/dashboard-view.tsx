@@ -1,7 +1,7 @@
 "use client";
 
 import { StatCards } from "./stat-cards";
-import { ResponseTimeCard } from "./response-time-card";
+import { AiWorkingTimeCard } from "./ai-working-time-card";
 import { AIPerformanceCard } from "./ai-performance-card";
 import { ConversationsChart } from "./conversations-chart";
 import { RecentConversations } from "./recent-conversations";
@@ -22,7 +22,7 @@ export function DashboardView() {
         <div className="lg:col-span-2">
           <ConversationsChart />
         </div>
-        <ResponseTimeCard />
+        <AiWorkingTimeCard />
       </div>
 
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">

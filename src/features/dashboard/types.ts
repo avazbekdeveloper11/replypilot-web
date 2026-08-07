@@ -2,15 +2,19 @@
  * Mirrors backend/internal/delivery/http/v1/dto.go's Dashboard* response
  * shapes exactly, same convention as src/features/auth/types.ts.
  *
- * Two of these are deliberately "real but empty by construction" today —
- * read the field comments before assuming a 0/null means the query is
- * broken:
- * - AIPerformanceStats: this codebase has no AI reply pipeline
- *   implemented yet, so total_responses is 0 and everything else null
- *   until it exists (docs/DASHBOARD_MILESTONE.md).
+ * One of these is easy to misread as "the query is broken" when it's just
+ * an org with no data yet:
+ * - AIPerformanceStats: total_responses is 0 (and everything else null)
+ *   for an org the AI pipeline hasn't replied for yet, not because the
+ *   pipeline doesn't exist — see usecase/ai.UseCase, which writes a row
+ *   to ai_responses on every AI-generated reply.
  * - DashboardStats.avg_first_response_seconds: null (not 0) means no
  *   conversation in the trailing 30 days has both an inbound message and
- *   a subsequent outbound reply yet.
+ *   a subsequent outbound reply yet. Kept in the API/type for now, but no
+ *   longer rendered on the Dashboard page directly — it's dragged up by
+ *   conversations waiting on a human handoff, so it doesn't fairly
+ *   represent AI speed; see AiWorkingTimeCard for what replaced it. The
+ *   Analytics page's response-time chart is unrelated (its own endpoint).
  */
 export interface DashboardStats {
   total_conversations: number;
@@ -35,6 +39,10 @@ export interface AIPerformanceStats {
   avg_confidence: number | null; // 0-1
   avg_latency_ms: number | null;
   handoff_rate: number | null; // 0-1
+  /** Sum (not average) of every response's latency — total AI working
+   * time, all-time. Shown on the Dashboard instead of avg-first-response
+   * time, which human handoffs drag up and so misrepresents AI speed. */
+  total_latency_ms: number | null;
 }
 
 /**

@@ -352,7 +352,6 @@
     "aiPerformance": "Эффективность AI",
     "allCaughtUp": "Все дела разобраны",
     "avgConfidence": "Ср. уверенность",
-    "avgFirstResponseTime": "Ср. время первого ответа",
     "avgLatency": "Ср. задержка",
     "connectedAccounts": "Подключённые аккаунты",
     "conversationsLastNDays": "Переписки — последние {days} дн.",
@@ -371,7 +370,6 @@
     "noConversationsDescription": "Новые сообщения Instagram появятся здесь, как только подключённый аккаунт их получит.",
     "noConversationsYet": "Пока нет переписок",
     "noUnreadConversations": "Сейчас нет непрочитанных переписок.",
-    "notEnoughResponseData": "Пока недостаточно данных — нужна хотя бы одна переписка с входящим сообщением и ответом за последние 30 дней.",
     "notificationsTitle": "Уведомления",
     "pageDescription": "Живые данные из подключённых Instagram-аккаунтов и переписок.",
     "pageTitle": "Дашборд",
@@ -380,6 +378,7 @@
     "resolved": "Решено",
     "responses": "Ответы",
     "status": "Статус",
+    "totalAiWorkingTime": "Общее время работы AI",
     "totalConversations": "Всего переписок",
     "unknown": "Неизвестно",
     "unread": "Непрочитанные"

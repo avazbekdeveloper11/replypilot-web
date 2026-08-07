@@ -48,8 +48,8 @@ const STATS: StatDef[] = [
 ];
 
 /** Statistics Cards widget — six counts from GET /v1/dashboard/stats,
- * refreshed every 60s alongside Response Time (same query, see
- * response-time-card.tsx). */
+ * refreshed every 60s. AiWorkingTimeCard and AIPerformanceCard read a
+ * separate query (GET /v1/dashboard/ai-performance), not this one. */
 export function StatCards() {
   const { data, isPending, isError, error, refetch } = useDashboardStats();
   const t = useTranslations("dashboard");

@@ -352,7 +352,6 @@
     "aiPerformance": "AI samaradorligi",
     "allCaughtUp": "Hammasi bajarildi",
     "avgConfidence": "O'rtacha ishonch",
-    "avgFirstResponseTime": "O'rtacha birinchi javob vaqti",
     "avgLatency": "O'rtacha kechikish",
     "connectedAccounts": "Ulangan hisoblar",
     "conversationsLastNDays": "Suhbatlar — so'nggi {days} kun",
@@ -371,7 +370,6 @@
     "noConversationsDescription": "Ulangan hisob xabar olishi bilan yangi Instagram DM'lar shu yerda paydo bo'ladi.",
     "noConversationsYet": "Hali suhbatlar yo'q",
     "noUnreadConversations": "Hozircha o'qilmagan suhbatlar yo'q.",
-    "notEnoughResponseData": "Hali yetarli ma'lumot yo'q — so'nggi 30 kunda kamida bitta kiruvchi xabar va javobi bo'lgan suhbat kerak.",
     "notificationsTitle": "Bildirishnomalar",
     "pageDescription": "Ulangan Instagram hisoblari va suhbatlaringizdan jonli.",
     "pageTitle": "Boshqaruv paneli",
@@ -380,6 +378,7 @@
     "resolved": "Hal qilingan",
     "responses": "Javoblar",
     "status": "Holat",
+    "totalAiWorkingTime": "AI jami ishlagan vaqti",
     "totalConversations": "Jami suhbatlar",
     "unknown": "Noma'lum",
     "unread": "O'qilmagan"

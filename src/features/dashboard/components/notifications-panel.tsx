@@ -26,12 +26,12 @@ export function NotificationsPanel() {
   const tt = useTranslations("time");
 
   return (
-    <Card>
+    <Card className="h-[26rem]">
       <CardHeader className="flex flex-row items-center justify-between gap-2">
         <CardTitle className="text-sm font-medium">{t("notificationsTitle")}</CardTitle>
         <BellIcon className="size-4 text-muted-foreground" aria-hidden="true" />
       </CardHeader>
-      <CardContent>
+      <CardContent className="flex-1 overflow-y-auto">
         {isPending ? (
           <div className="flex flex-col gap-3">
             {Array.from({ length: 3 }).map((_, i) => (

@@ -352,7 +352,6 @@
     "aiPerformance": "AI самарадорлиги",
     "allCaughtUp": "Ҳаммаси бажарилди",
     "avgConfidence": "Ўртача ишонч",
-    "avgFirstResponseTime": "Ўртача биринчи жавоб вақти",
     "avgLatency": "Ўртача кечикиш",
     "connectedAccounts": "Уланган ҳисоблар",
     "conversationsLastNDays": "Суҳбатлар — сўнгги {days} кун",
@@ -371,7 +370,6 @@
     "noConversationsDescription": "Уланган ҳисоб хабар олиши билан янги Instagram DM'лар шу ерда пайдо бўлади.",
     "noConversationsYet": "Ҳали суҳбатлар йўқ",
     "noUnreadConversations": "Ҳозирча ўқилмаган суҳбатлар йўқ.",
-    "notEnoughResponseData": "Ҳали етарли маълумот йўқ — сўнгги 30 кунда камида битта кирувчи хабар ва жавоби бўлган суҳбат керак.",
     "notificationsTitle": "Билдиришномалар",
     "pageDescription": "Уланган Instagram ҳисоблари ва суҳбатларингиздан жонли.",
     "pageTitle": "Бошқарув панели",
@@ -380,6 +378,7 @@
     "resolved": "Ҳал қилинган",
     "responses": "Жавоблар",
     "status": "Ҳолат",
+    "totalAiWorkingTime": "AI жами ишлаган вақти",
     "totalConversations": "Жами суҳбатлар",
     "unknown": "Номаълум",
     "unread": "Ўқилмаган"

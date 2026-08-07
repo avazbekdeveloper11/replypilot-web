@@ -51,11 +51,11 @@ export function RecentConversations() {
   const tt = useTranslations("time");
 
   return (
-    <Card>
+    <Card className="h-[26rem]">
       <CardHeader>
         <CardTitle className="text-sm font-medium">{t("recentConversations")}</CardTitle>
       </CardHeader>
-      <CardContent>
+      <CardContent className="flex-1 overflow-y-auto">
         {isPending ? (
           <TableSkeleton columns={3} rows={5} />
         ) : isError ? (

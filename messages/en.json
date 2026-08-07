@@ -352,7 +352,6 @@
     "aiPerformance": "AI performance",
     "allCaughtUp": "You're all caught up",
     "avgConfidence": "Avg. confidence",
-    "avgFirstResponseTime": "Avg. first response time",
     "avgLatency": "Avg. latency",
     "connectedAccounts": "Connected accounts",
     "conversationsLastNDays": "Conversations — last {days} days",
@@ -371,7 +370,6 @@
     "noConversationsDescription": "New Instagram DMs will show up here as soon as a connected account receives one.",
     "noConversationsYet": "No conversations yet",
     "noUnreadConversations": "No unread conversations right now.",
-    "notEnoughResponseData": "Not enough data yet — needs at least one conversation with both an inbound message and a reply in the last 30 days.",
     "notificationsTitle": "Notifications",
     "pageDescription": "Live from your connected Instagram accounts and conversations.",
     "pageTitle": "Dashboard",
@@ -380,6 +378,7 @@
     "resolved": "Resolved",
     "responses": "Responses",
     "status": "Status",
+    "totalAiWorkingTime": "Total AI working time",
     "totalConversations": "Total conversations",
     "unknown": "Unknown",
     "unread": "Unread"
