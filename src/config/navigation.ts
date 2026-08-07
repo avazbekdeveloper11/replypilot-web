@@ -12,7 +12,6 @@ import {
   LinkIcon,
   CubeIcon,
   PhoneIcon,
-  MegaphoneIcon,
   UserGroupIcon,
 } from "@heroicons/react/24/outline";
 
@@ -59,7 +58,12 @@ export const navigation: NavGroup[] = [
       { titleKey: "aiInbox", href: "/ai-inbox", icon: SparklesIcon },
       { titleKey: "leads", href: "/leads", icon: PhoneIcon },
       { titleKey: "customers", href: "/customers", icon: UserGroupIcon },
-      { titleKey: "campaigns", href: "/campaigns", icon: MegaphoneIcon },
+      // Campaigns hidden from nav: ListBroadcastCandidates's eligibility
+      // check is broken in practice — every recipient comes back outside
+      // Instagram's 24h messaging window, so "0 ta yuborish mumkin" no
+      // matter who's targeted. Re-enable once that's fixed. The route/page
+      // itself is untouched, just not linked from the sidebar.
+      // { titleKey: "campaigns", href: "/campaigns", icon: MegaphoneIcon },
       {
         titleKey: "knowledgeBase",
         href: "/knowledge-base",
