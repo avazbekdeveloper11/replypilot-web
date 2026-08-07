@@ -11,4 +11,18 @@ export interface TelegramAccount {
    * webhook is registered, but no messages will arrive until pairing is
    * done on Telegram's side. */
   paired: boolean;
+  /** Whether an admin has bound their own chat via the verification-code
+   * handshake (entity.TelegramAccount.NotifyChatID != nil on the backend) —
+   * independent of `paired`, since admin notifications work even without
+   * Business Bot pairing. See TelegramNotifyCodeResult and
+   * use-generate-notify-code.ts. */
+  notify_verified: boolean;
+  notify_on_lead: boolean;
+  notify_on_payment: boolean;
+}
+
+/** Mirrors TelegramNotifyCodeResponse on the backend — returned by
+ * generating/regenerating a verification code. */
+export interface TelegramNotifyCodeResult {
+  code: string;
 }

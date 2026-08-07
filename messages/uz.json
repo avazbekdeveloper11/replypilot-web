@@ -679,7 +679,16 @@
     "disconnectDescription": "AI Telegram'da javob berishni darhol to'xtatadi. Bu faqat saqlangan bot tokenini olib tashlaydi — Telegram yoki BotFather tomonida hech narsa o'zgarmaydi.",
     "disconnectTitle": "Telegram bot uzilsinmi?",
     "disconnecting": "Uzilmoqda…",
-    "genericError": "Nimadir xato ketdi. Qaytadan urinib ko'ring."
+    "genericError": "Nimadir xato ketdi. Qaytadan urinib ko'ring.",
+    "notifyCodeHint": "Sozlashni yakunlash uchun shu kodni botingizga Telegram'da oddiy xabar sifatida yuboring.",
+    "notifyCodeHintWithUsername": "Sozlashni yakunlash uchun shu kodni @{username} botiga Telegram'da oddiy xabar sifatida yuboring.",
+    "notifyDescription": "Yangi lead kelganda yoki to'lov yakunlanganda shu yerga Telegram xabari oling — yuqoridagi Business Bot bog'lanishidan alohida.",
+    "notifyGenerateCode": "Bildirishnomalarni sozlash",
+    "notifyGenerating": "Yaratilmoqda…",
+    "notifyOnLead": "Yangi leadlar haqida xabar bering",
+    "notifyOnPayment": "Yakunlangan to'lovlar haqida xabar bering",
+    "notifyTitle": "Admin bildirishnomalari",
+    "notifyVerified": "Bildirishnomalar ulandi"
   },
   "time": {
     "daysAgo": "{count} kun oldin",

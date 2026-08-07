@@ -679,7 +679,16 @@
     "disconnectDescription": "The AI immediately stops replying on Telegram. This only removes the stored bot token — nothing changes on Telegram's or BotFather's side.",
     "disconnectTitle": "Disconnect Telegram bot?",
     "disconnecting": "Disconnecting…",
-    "genericError": "Something went wrong. Please try again."
+    "genericError": "Something went wrong. Please try again.",
+    "notifyCodeHint": "Send this code as a plain message to your bot on Telegram to finish setup.",
+    "notifyCodeHintWithUsername": "Send this code as a plain message to @{username} on Telegram to finish setup.",
+    "notifyDescription": "Get a Telegram message here whenever a new lead comes in or a payment is completed — separate from Business Bot pairing above.",
+    "notifyGenerateCode": "Set up notifications",
+    "notifyGenerating": "Generating…",
+    "notifyOnLead": "Notify me about new leads",
+    "notifyOnPayment": "Notify me about completed payments",
+    "notifyTitle": "Admin notifications",
+    "notifyVerified": "Notifications connected"
   },
   "time": {
     "daysAgo": "{count}d ago",

@@ -679,7 +679,16 @@
     "disconnectDescription": "AI сразу перестаёт отвечать в Telegram. Это удаляет только сохранённый токен бота — на стороне Telegram или BotFather ничего не меняется.",
     "disconnectTitle": "Отключить Telegram-бота?",
     "disconnecting": "Отключение…",
-    "genericError": "Что-то пошло не так. Попробуйте ещё раз."
+    "genericError": "Что-то пошло не так. Попробуйте ещё раз.",
+    "notifyCodeHint": "Отправьте этот код обычным сообщением своему боту в Telegram, чтобы завершить настройку.",
+    "notifyCodeHintWithUsername": "Отправьте этот код обычным сообщением боту @{username} в Telegram, чтобы завершить настройку.",
+    "notifyDescription": "Получайте сообщение в Telegram при появлении нового лида или завершении оплаты — отдельно от привязки Business Bot выше.",
+    "notifyGenerateCode": "Настроить уведомления",
+    "notifyGenerating": "Генерация…",
+    "notifyOnLead": "Уведомлять о новых лидах",
+    "notifyOnPayment": "Уведомлять о завершённых оплатах",
+    "notifyTitle": "Уведомления администратора",
+    "notifyVerified": "Уведомления подключены"
   },
   "time": {
     "daysAgo": "{count} дн назад",

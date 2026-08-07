@@ -679,7 +679,16 @@
     "disconnectDescription": "AI Telegram'да жавоб беришни дарҳол тўхтатади. Бу фақат сақланган бот токенини олиб ташлайди — Telegram ёки BotFather томонида ҳеч нарса ўзгармайди.",
     "disconnectTitle": "Telegram бот узилсинми?",
     "disconnecting": "Узилмоқда…",
-    "genericError": "Нимадир хато кетди. Қайтадан уриниб кўринг."
+    "genericError": "Нимадир хато кетди. Қайтадан уриниб кўринг.",
+    "notifyCodeHint": "Созлашни якунлаш учун шу кодни ботингизга Telegram'да оддий хабар сифатида юборинг.",
+    "notifyCodeHintWithUsername": "Созлашни якунлаш учун шу кодни @{username} ботига Telegram'да оддий хабар сифатида юборинг.",
+    "notifyDescription": "Янги lead келганда ёки тўлов якунланганда шу ерга Telegram хабари олинг — юқоридаги Business Bot боғланишидан алоҳида.",
+    "notifyGenerateCode": "Билдиришномаларни созлаш",
+    "notifyGenerating": "Яратилмоқда…",
+    "notifyOnLead": "Янги lead'лар ҳақида хабар беринг",
+    "notifyOnPayment": "Якунланган тўловлар ҳақида хабар беринг",
+    "notifyTitle": "Админ билдиришномалари",
+    "notifyVerified": "Билдиришномалар уланди"
   },
   "time": {
     "daysAgo": "{count} кун олдин",
