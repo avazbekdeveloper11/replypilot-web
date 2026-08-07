@@ -7,6 +7,7 @@ import { UserGroupIcon, MagnifyingGlassIcon } from "@heroicons/react/24/outline"
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
   Table,
   TableBody,
@@ -33,7 +34,7 @@ import { intlLocale } from "@/i18n/config";
 import { useCustomers } from "../hooks/use-customers";
 import { useCustomerOrders } from "../hooks/use-customer-orders";
 import { formatOrderDate, formatRelativeTime } from "../lib/format";
-import type { CustomerSummary } from "../types";
+import type { CustomerSummary, RFMSegment } from "../types";
 
 /** Debounced by hand — same 300ms convention as
  * features/conversations/components/conversation-list.tsx's identical
@@ -54,6 +55,28 @@ const ORDER_STATUS_VARIANT: Record<string, "success" | "warning" | "destructive"
   cancelled: "secondary",
 };
 
+/** Segment → badge color, roughly "how good is this for the business":
+ * champion/loyal read positive, at_risk/sleeping read as needing
+ * attention, lost reads negative, new is neutral. */
+const SEGMENT_VARIANT: Record<RFMSegment, "brand" | "success" | "warning" | "destructive" | "outline"> = {
+  champion: "brand",
+  loyal: "success",
+  at_risk: "warning",
+  sleeping: "warning",
+  lost: "destructive",
+  new: "outline",
+};
+
+const SEGMENT_FILTER_VALUES: (RFMSegment | "all")[] = [
+  "all",
+  "champion",
+  "loyal",
+  "at_risk",
+  "sleeping",
+  "lost",
+  "new",
+];
+
 /**
  * The customer database — every conversation annotated with what that
  * customer has actually bought, biggest spenders first. Built so an
@@ -65,15 +88,20 @@ const ORDER_STATUS_VARIANT: Record<string, "success" | "warning" | "destructive"
 export function CustomersList() {
   const [searchInput, setSearchInput] = React.useState("");
   const search = useDebouncedValue(searchInput, 300);
+  const [segmentFilter, setSegmentFilter] = React.useState<RFMSegment | "all">("all");
   const [selectedConversationId, setSelectedConversationId] = React.useState<string | null>(null);
 
-  const { data, isPending, isError, error, refetch } = useCustomers(search);
+  const { data, isPending, isError, error, refetch } = useCustomers(
+    search,
+    segmentFilter === "all" ? undefined : segmentFilter,
+  );
   const selectedCustomer = data?.find((c) => c.conversation_id === selectedConversationId) ?? null;
   const ordersQuery = useCustomerOrders(selectedConversationId);
 
   const t = useTranslations("customers");
   const tt = useTranslations("time");
   const tOrderStatus = useTranslations("orderStatus");
+  const tSegment = useTranslations("rfmSegment");
   const locale = useLocale() as Locale;
 
   const customers = data ?? [];
@@ -89,6 +117,19 @@ export function CustomersList() {
           className="pl-9"
         />
       </div>
+
+      <Tabs
+        value={segmentFilter}
+        onValueChange={(v) => setSegmentFilter(v as RFMSegment | "all")}
+      >
+        <TabsList>
+          {SEGMENT_FILTER_VALUES.map((value) => (
+            <TabsTrigger key={value} value={value}>
+              {value === "all" ? tSegment("all") : tSegment(value)}
+            </TabsTrigger>
+          ))}
+        </TabsList>
+      </Tabs>
 
       <Card>
         <CardContent className="p-0">
@@ -116,6 +157,7 @@ export function CustomersList() {
                 <TableRow>
                   <TableHead>{t("tableCustomer")}</TableHead>
                   <TableHead>{t("tableChannel")}</TableHead>
+                  <TableHead>{t("tableSegment")}</TableHead>
                   <TableHead>{t("tableTotalSpent")}</TableHead>
                   <TableHead>{t("tableOrders")}</TableHead>
                   <TableHead>{t("tableLastMessage")}</TableHead>
@@ -139,6 +181,11 @@ export function CustomersList() {
                       )}
                     </TableCell>
                     <TableCell className="capitalize">{customer.channel}</TableCell>
+                    <TableCell>
+                      <Badge variant={SEGMENT_VARIANT[customer.segment]}>
+                        {tSegment(customer.segment)}
+                      </Badge>
+                    </TableCell>
                     <TableCell className="font-medium">
                       {formatPriceCents(customer.total_paid_cents, "UZS")}
                     </TableCell>
@@ -162,8 +209,13 @@ export function CustomersList() {
       >
         <SheetContent>
           <SheetHeader>
-            <SheetTitle>
+            <SheetTitle className="flex items-center gap-2">
               {selectedCustomer?.customer_username ?? t("unknownCustomer")}
+              {selectedCustomer && (
+                <Badge variant={SEGMENT_VARIANT[selectedCustomer.segment]}>
+                  {tSegment(selectedCustomer.segment)}
+                </Badge>
+              )}
             </SheetTitle>
             <SheetDescription>{t("orderHistoryDescription")}</SheetDescription>
           </SheetHeader>

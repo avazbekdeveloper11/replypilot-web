@@ -314,6 +314,7 @@
     "tableCustomer": "Мижоз",
     "tableLastMessage": "Охирги хабар",
     "tableOrders": "Буюртмалар",
+    "tableSegment": "Сегмент",
     "tableTotalSpent": "Жами сарфлаган",
     "unknownCustomer": "Номаълум"
   },
@@ -556,6 +557,15 @@
     "profileUpdated": "Профил янгиланди.",
     "saveChanges": "Ўзгаришларни сақлаш",
     "saving": "Сақланмоқда…"
+  },
+  "rfmSegment": {
+    "all": "Ҳаммаси",
+    "at_risk": "Хавф остида",
+    "champion": "Чемпионлар",
+    "lost": "Йўқотилган",
+    "loyal": "Содиқ",
+    "new": "Янги",
+    "sleeping": "Ухлаб ётган"
   },
   "settings": {
     "couldntLoadSettings": "Ташкилот созламаларини юклаб бўлмади",

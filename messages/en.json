@@ -314,6 +314,7 @@
     "tableCustomer": "Customer",
     "tableLastMessage": "Last message",
     "tableOrders": "Orders",
+    "tableSegment": "Segment",
     "tableTotalSpent": "Total spent",
     "unknownCustomer": "Unknown"
   },
@@ -556,6 +557,15 @@
     "profileUpdated": "Profile updated.",
     "saveChanges": "Save changes",
     "saving": "Saving…"
+  },
+  "rfmSegment": {
+    "all": "All",
+    "at_risk": "At risk",
+    "champion": "Champions",
+    "lost": "Lost",
+    "loyal": "Loyal",
+    "new": "New",
+    "sleeping": "Sleeping"
   },
   "settings": {
     "couldntLoadSettings": "Couldn't load organization settings",

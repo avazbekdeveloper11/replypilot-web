@@ -16,8 +16,12 @@ export async function GET(request: Request) {
 
   const { searchParams } = new URL(request.url);
   const search = searchParams.get("search");
-  const path = search
-    ? `/v1/customers?search=${encodeURIComponent(search)}`
+  const segment = searchParams.get("segment");
+  const upstreamParams = new URLSearchParams();
+  if (search) upstreamParams.set("search", search);
+  if (segment) upstreamParams.set("segment", segment);
+  const path = upstreamParams.toString()
+    ? `/v1/customers?${upstreamParams.toString()}`
     : "/v1/customers";
 
   try {

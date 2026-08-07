@@ -314,6 +314,7 @@
     "tableCustomer": "Клиент",
     "tableLastMessage": "Последнее сообщение",
     "tableOrders": "Заказы",
+    "tableSegment": "Сегмент",
     "tableTotalSpent": "Всего потрачено",
     "unknownCustomer": "Неизвестно"
   },
@@ -556,6 +557,15 @@
     "profileUpdated": "Профиль обновлён.",
     "saveChanges": "Сохранить изменения",
     "saving": "Сохранение…"
+  },
+  "rfmSegment": {
+    "all": "Все",
+    "at_risk": "Под угрозой",
+    "champion": "Чемпионы",
+    "lost": "Потерянные",
+    "loyal": "Лояльные",
+    "new": "Новые",
+    "sleeping": "Спящие"
   },
   "settings": {
     "couldntLoadSettings": "Не удалось загрузить настройки организации",

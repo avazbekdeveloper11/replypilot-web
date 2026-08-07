@@ -314,6 +314,7 @@
     "tableCustomer": "Mijoz",
     "tableLastMessage": "Oxirgi xabar",
     "tableOrders": "Buyurtmalar",
+    "tableSegment": "Segment",
     "tableTotalSpent": "Jami sarflagan",
     "unknownCustomer": "Noma'lum"
   },
@@ -556,6 +557,15 @@
     "profileUpdated": "Profil yangilandi.",
     "saveChanges": "O'zgarishlarni saqlash",
     "saving": "Saqlanmoqda…"
+  },
+  "rfmSegment": {
+    "all": "Barchasi",
+    "at_risk": "Xavf ostida",
+    "champion": "Chempionlar",
+    "lost": "Yo'qotilgan",
+    "loyal": "Sodiq",
+    "new": "Yangi",
+    "sleeping": "Uxlab yotgan"
   },
   "settings": {
     "couldntLoadSettings": "Tashkilot sozlamalarini yuklab bo'lmadi",
